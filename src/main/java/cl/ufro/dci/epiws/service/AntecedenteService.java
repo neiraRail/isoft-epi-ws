@@ -72,4 +72,8 @@ public class AntecedenteService {
     public void editarViaje(Long id, String antecedenteViaje){
         antecedenteRepository.findById(id).get().setAntViajeExtranjero(antecedenteViaje);
     }
+
+    public Iterable<Antecedente> buscarPorEmbarazo(boolean embarazo){
+        return antecedenteRepository.findAllByAntEmbarazo(embarazo);
+    }
 }
