@@ -26,11 +26,17 @@ public class PacienteService {
         pacienteRepository.deleteById(id);
     }
 
-    public Optional<Paciente> buscarPaciente(Long id){
-        return pacienteRepository.findById(id);
+    public Optional<Paciente> buscarPaciente(Long id)throws Exception{
+        if (pacienteRepository.findById(id).isPresent()){
+            return pacienteRepository.findById(id);
+        }else{
+            throw new NullPointerException();
+        }
     }
-    public void editarPaciente(long rut, String pacPuebloOriginario){
-        Paciente pacienteModificado = buscarPaciente(rut).get();
+
+    public void editarPaciente(long rut, String pacPuebloOriginario) throws Exception {
+        Paciente pacienteModificado;
+        pacienteModificado = buscarPaciente(rut).get();
         pacienteModificado.setPacPuebloOriginario(pacPuebloOriginario);
         pacienteRepository.save(pacienteModificado);
     }

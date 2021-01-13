@@ -42,14 +42,14 @@ public class PacienteController {
      * @return
      */
     @GetMapping("/buscar/{rut}")
-    public String buscaPaciente(@PathVariable long rut) {
+    public String buscaPaciente(@PathVariable long rut) throws Exception {
         try {
             Paciente pacienteEncontrado = ps.buscarPaciente(rut).get();
             return "\nNombres: " + pacienteEncontrado.getPacNombres()+"\n Apellidos: "+pacienteEncontrado.getPacApellidos()+"\n Sexo: "+pacienteEncontrado.getPacSexo()
                     +"\n FechaNacimiento: "+pacienteEncontrado.getPacFechaNacimiento()+"\n Nacionalidad: "+pacienteEncontrado.getPacNacionalidad()
                     +"\n PuebloOriginario: "+ pacienteEncontrado.getPacPuebloOriginario()+"\n Direccion: "+pacienteEncontrado.getPacDireccion()
                     +"\n Telefono: "+ pacienteEncontrado.getPacTelefono();
-        }catch (Exception e){
+        }catch (NullPointerException e){
             return "no encontrado";
         }
     }
