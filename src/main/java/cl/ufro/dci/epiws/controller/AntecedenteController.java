@@ -18,9 +18,10 @@ public class AntecedenteController {
     @CrossOrigin(origins = "*")
     @PostMapping("")
     public Antecedente guardarAntecedente(@RequestBody Antecedente antecedente) {
-        antecedenteService.guardar(antecedente);
-        return antecedente;
+        return antecedenteService.guardar(antecedente);
     }
+
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> borrarAntecedente(@PathVariable long id) {

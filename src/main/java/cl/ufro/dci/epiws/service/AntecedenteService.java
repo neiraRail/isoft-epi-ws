@@ -14,9 +14,12 @@ public class AntecedenteService {
 
     /** Método que permite guardar un nuevo antecedente clínico
      * @param nuevoAntecedente
+     * @return
      */
-    public void guardar(Antecedente nuevoAntecedente){
-        antecedenteRepository.save(nuevoAntecedente);
+    public Antecedente guardar(Antecedente nuevoAntecedente){
+
+
+        return antecedenteRepository.save(nuevoAntecedente);
     }
 
     /** Método que permite borrar un antecedente clínico a partir de su id

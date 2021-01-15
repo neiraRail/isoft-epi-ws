@@ -50,6 +50,16 @@ public class Antecedente {
         this.antViajeExtranjero = antViajeExtranjero;
     }
 
+    public Antecedente(Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
+        this.paciente = paciente;
+        this.antEmbarazo = antEmbarazo;
+        this.antEnfermedadCronica = antEnfermedadCronica;
+        this.antAlergias = antAlergias;
+        this.antTipoSangre = antTipoSangre;
+        this.antMedicamentos = antMedicamentos;
+        this.antViajeExtranjero = antViajeExtranjero;
+    }
+
     public Antecedente(){
 
     }
