@@ -21,34 +21,20 @@ public class AntecedenteController {
         return antecedenteService.guardar(antecedente);
     }
 
-
-
     @DeleteMapping("{id}")
     public ResponseEntity<Void> borrarAntecedente(@PathVariable long id) {
-        try {
-            antecedenteService.borrar(id);
-            return ResponseEntity.ok().build();
-        } catch (IndexOutOfBoundsException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Antecedentes clínicos del paciente  no encontrados");
-        }
+        antecedenteService.borrar(id);
+        return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("")
     public Iterable<Antecedente> listaAntecedentes() {
-        try {
             return antecedenteService.findAll();
-        } catch (IndexOutOfBoundsException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Antecedentes clínicos del paciente  no encontrados");
-        }
     }
 
     @GetMapping("{id}")
     public Antecedente buscar(@PathVariable long id){
-        if(antecedenteService.buscar(id).isEmpty()){
-            return null;
-        } else{
-            return antecedenteService.buscar(id).get();
-        }
+            return antecedenteService.buscar(id);
     }
 }
