@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/antecedentes")
+@RequestMapping("/api/antecedentes/")
 public class AntecedenteController {
 
     @Autowired
     private AntecedenteService antecedenteService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("")
     public Antecedente guardarAntecedente(@RequestBody Antecedente antecedente) {
         antecedenteService.guardar(antecedente);
@@ -31,8 +32,8 @@ public class AntecedenteController {
         }
     }
 
-
-    @GetMapping("/todosLosRegistros")
+    @CrossOrigin(origins = "*")
+    @GetMapping("")
     public Iterable<Antecedente> listaAntecedentes() {
         try {
             return antecedenteService.findAll();
@@ -41,7 +42,7 @@ public class AntecedenteController {
         }
     }
 
-    @GetMapping("/buscar/{id}")
+    @GetMapping("{id}")
     public Antecedente buscar(@PathVariable long id){
         if(antecedenteService.buscar(id).isEmpty()){
             return null;

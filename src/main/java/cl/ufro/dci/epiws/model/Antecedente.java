@@ -1,5 +1,7 @@
 package cl.ufro.dci.epiws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,8 +13,10 @@ public class Antecedente {
     @Column(name = "ant_id")
     private Long antId;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JsonIgnoreProperties("antecedenteList  ")
     @JoinColumn(name = "pac_rut")
+
     private Paciente paciente;
 
     @Column(name = "ant_embarazo")
