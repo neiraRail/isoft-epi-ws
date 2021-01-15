@@ -19,22 +19,14 @@ public class PacienteController {
     private PacienteService ps;
     private  ArrayList<Paciente> pacientes=new ArrayList<>();
 
-    /**
-     * @return
-     */
-    @PostMapping(" ")
-    public  String  listaPaciente () {
-        Paciente paciente = new Paciente(1,"",null,null,null,"","","","","","","","");
-        Paciente paciente2 = new Paciente(2,"",null,null,null,"","","","","","","","");
-        ps.save(paciente);
-        return "agregado";
-    }
     @PostMapping("/agregar/{rut}/{pacDv}/{pacNombres}/{pacApellidos}/{pacSexo}/{pacFechaNacimiento}/{pacNacionalidad}/{pacPuebloOriginario}/{pacDireccion}/{pacTelefono}")
     @ResponseBody
-    public String agregar(@PathVariable long rut, @PathVariable String pacDv, @PathVariable String pacNombres, @PathVariable String pacApellidos,@PathVariable String pacSexo,@PathVariable String pacFechaNacimiento,@PathVariable String pacNacionalidad,@PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono){
+    public String agregarPaciente(@PathVariable long rut, @PathVariable String pacDv, @PathVariable String pacNombres, @PathVariable String pacApellidos,@PathVariable String pacSexo,@PathVariable String pacFechaNacimiento,@PathVariable String pacNacionalidad,@PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono)throws Exception{
+
         Paciente paciente = new Paciente(rut,pacDv,null,null,null,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
         ps.save(paciente);
         return "El paciente se ha agregado";
+
     }
 
     /**
@@ -60,9 +52,13 @@ public class PacienteController {
      * @return
      */
     @GetMapping("/eliminar/{rut}")
-    public String eliminarPaciente(@PathVariable long rut){
-        ps.borrarPaciente(rut);
-        return "se ha eliminado el paciente";
+    public String eliminarPaciente(@PathVariable long rut) throws Exception{
+        try {
+            ps.borrarPaciente(rut);
+            return "Se ha eliminado al paciente";
+        }catch (NullPointerException e){
+            return "No se encuentra el registro de este paciente";
+        }
     }
 
     /**

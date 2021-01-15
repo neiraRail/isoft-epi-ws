@@ -18,12 +18,16 @@ public class PacienteService {
     }
 
 
-    public void save(Paciente paciente){
-        pacienteRepository.save(paciente);
+    public void save(Paciente paciente)throws Exception{
+            pacienteRepository.save(paciente);
     }
 
-    public void borrarPaciente(Long id){
-        pacienteRepository.deleteById(id);
+    public void borrarPaciente(Long id)throws Exception {
+        if (buscarPaciente(id) != null) {
+            pacienteRepository.deleteById(id);
+        } else {
+            throw new NullPointerException();
+        }
     }
 
     public Optional<Paciente> buscarPaciente(Long id)throws Exception{
