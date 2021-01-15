@@ -4,6 +4,8 @@ import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -38,10 +40,19 @@ public class PacienteService {
         }
     }
 
-    public void editarPaciente(long rut, String pacPuebloOriginario) throws Exception {
+    public void editarPaciente(long rut,String pacDv,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
+                               String pacNacionalidad,String pacPuebloOriginario,String pacDireccion,String pacTelefono) throws Exception {
         Paciente pacienteModificado;
         pacienteModificado = buscarPaciente(rut).get();
+        pacienteModificado.setPacDv(pacDv);
+        pacienteModificado.setPacNombres(pacNombres);
+        pacienteModificado.setPacApellidos(pacApellidos);
+        pacienteModificado.setPacSexo(pacSexo);
+        pacienteModificado.setPacFechaNacimiento(pacFechaNacimiento);
+        pacienteModificado.setPacNacionalidad(pacNacionalidad);
         pacienteModificado.setPacPuebloOriginario(pacPuebloOriginario);
+        pacienteModificado.setPacDireccion(pacDireccion);
+        pacienteModificado.setPacTelefono(pacTelefono);
         pacienteRepository.save(pacienteModificado);
     }
 }

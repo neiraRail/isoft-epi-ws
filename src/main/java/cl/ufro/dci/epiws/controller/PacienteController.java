@@ -63,10 +63,12 @@ public class PacienteController {
      * @param rut
      * @return
      */
-    @PostMapping("/editar/{rut}/{pacPuebloOriginario}")
-    public String editarPaciente(@PathVariable long rut,@PathVariable String pacPuebloOriginario) {
+    @PostMapping("/editar/{rut}/{pacDv}/{pacNombres}/{pacApellidos}/{pacSexo}/{pacFechaNacimiento}/{pacNacionalidad}/{pacPuebloOriginario}/{pacDireccion}/{pacTelefono}")
+    public String editarPaciente(@PathVariable long rut,@PathVariable String pacDv, @PathVariable String pacNombres,@PathVariable String pacApellidos,
+                                 @PathVariable String pacSexo,@PathVariable String pacFechaNacimiento, @PathVariable String pacNacionalidad,
+                                 @PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono) {
         try {
-            ps.editarPaciente(rut, pacPuebloOriginario);
+            ps.editarPaciente(rut, pacDv, pacNombres, pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
             return "editado";
         } catch (Exception e) {
             return "No encontrado";
