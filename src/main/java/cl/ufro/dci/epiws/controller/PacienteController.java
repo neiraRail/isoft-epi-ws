@@ -26,9 +26,7 @@ public class PacienteController {
         Paciente paciente = new Paciente(rut,pacDv,null,null,null,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
         ps.save(paciente);
         return "El paciente se ha agregado";
-
     }
-
     /**
      * @param rut
      * @return
