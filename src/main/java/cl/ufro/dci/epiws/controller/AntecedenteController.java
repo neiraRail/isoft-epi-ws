@@ -35,6 +35,7 @@ public class AntecedenteController {
 
     @GetMapping("{id}")
     public Antecedente buscar(@PathVariable long id){
-            return antecedenteService.buscar(id);
+        System.out.println("Entro al controler");
+        return antecedenteService.buscar(id);
     }
 }

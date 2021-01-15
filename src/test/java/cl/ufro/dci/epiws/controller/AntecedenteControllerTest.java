@@ -49,7 +49,7 @@ class AntecedenteControllerTest {
         antTipoSangre = "B+";
         antMedicamentos = "";
         antViajeExtranjero = "Canada";
-        antecedente = new Antecedente(1l,paciente,antEmbarazo,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
+        antecedente = new Antecedente(paciente,antEmbarazo,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
         MockitoAnnotations.initMocks(this); //Inicializa el controlador y los mocks
         mockMvc = MockMvcBuilders.standaloneSetup(antecedenteController).build();
 
@@ -58,7 +58,7 @@ class AntecedenteControllerTest {
     @Test
     public void testGetEstudiante() {
         when(antecedenteRepository.findById(1l)).thenReturn(Optional.of(antecedente));
-        assertEquals(antecedente,antecedenteController.buscar(1l));
+        assertEquals(antecedente,antecedenteController.buscar(1L));
     }
 
     @Test

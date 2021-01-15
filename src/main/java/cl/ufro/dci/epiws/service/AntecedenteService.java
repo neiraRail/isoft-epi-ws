@@ -37,6 +37,7 @@ public class AntecedenteService {
      * @param id
      */
     public Antecedente buscar(Long id){
+        System.out.println("Entro al servicio");
         return antecedenteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Antecedente no encontrado"));
     }
 
