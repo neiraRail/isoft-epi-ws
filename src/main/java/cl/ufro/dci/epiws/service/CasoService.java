@@ -1,6 +1,7 @@
-package cl.ufro.dci.app.service;
-import cl.ufro.dci.app.model.Caso;
-import cl.ufro.dci.app.repository.CasoRepository;
+package cl.ufro.dci.epiws.service;
+
+import cl.ufro.dci.epiws.model.Caso;
+import cl.ufro.dci.epiws.repository.CasoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
-package cl.ufro.dci.app.controller;
+package cl.ufro.dci.epiws.controller;
 
-import cl.ufro.dci.app.model.*;
-import cl.ufro.dci.app.service.CasoService;
-import cl.ufro.dci.app.service.PacienteService;
+import cl.ufro.dci.epiws.model.*;
+import cl.ufro.dci.epiws.service.CasoService;
+import cl.ufro.dci.epiws.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.interceptor.CacheableOperation;
 import org.springframework.web.bind.annotation.*;

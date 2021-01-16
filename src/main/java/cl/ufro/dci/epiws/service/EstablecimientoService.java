@@ -89,4 +89,12 @@ public class EstablecimientoService {
         return establecimientoRepository.existsById(id);
     }
 
+    /**
+     *  Metodo que busca establecimiento por nombre.
+     * @param nombre
+     * @return Establecimiento
+     */
+    public Establecimiento findByNombre(String nombre){
+        return establecimientoRepository.findByEstNombre(nombre);
+    }
 }

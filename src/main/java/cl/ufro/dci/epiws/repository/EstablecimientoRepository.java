@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface EstablecimientoRepository extends CrudRepository<Establecimiento, Long> {
 
+    public Establecimiento findByEstNombre(String estNombre);
 }

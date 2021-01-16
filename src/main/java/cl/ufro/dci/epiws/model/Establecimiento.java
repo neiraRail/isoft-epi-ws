@@ -1,6 +1,7 @@
 package cl.ufro.dci.epiws.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,16 +28,18 @@ public class Establecimiento {
 
 
 
-    public Establecimiento(Long estId, String estNombre, String estDireccion, Comuna comuna) {
+    public Establecimiento(Long estId, String estNombre, String estDireccion, Comuna comuna, List<Paciente> pacienteList) {
         this.estId = estId;
         this.estNombre = estNombre;
         this.estDireccion = estDireccion;
         this.comuna = comuna;
+        this.pacienteList = new ArrayList<>();
     }
 
     public Establecimiento() {
 
     }
+
     //constructor sin id.
     public Establecimiento(String estNombre, String estDireccion, Comuna comuna, List<Paciente> pacienteList) {
         this.estNombre = estNombre;

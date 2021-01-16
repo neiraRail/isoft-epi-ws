@@ -6,9 +6,11 @@ import cl.ufro.dci.epiws.service.ComunaService;
 import cl.ufro.dci.epiws.service.EstablecimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
 
-import java.util.List;
-
+/**
+ *  Clase controlador para administrar establecimientos.
+ */
 @RestController
 @RequestMapping("/api/establecimiento")
 public class EstablecimientoController {
@@ -25,10 +27,11 @@ public class EstablecimientoController {
      * @param direccion
      * @return String con mensaje si es que se agrega
      */
-    @PostMapping("/agregar/{nombre}/{direccion}")
+    @PostMapping("/agregar/{nombre}/{direccion}/{idcomuna}")
     @ResponseBody
-    public String agregar(@PathVariable String nombre, @PathVariable String direccion){
-        Establecimiento establecimiento = new Establecimiento(nombre,direccion,null,null);
+    public String agregar(@PathVariable String nombre, @PathVariable String direccion, @PathVariable Long idComuna){
+        Establecimiento establecimiento = new Establecimiento(nombre,direccion,comunaService.findById(idComuna),new ArrayList<>());
+        comunaService.findById(idComuna).getEstablecimientoList().add(establecimiento);
         establecimientoService.guardar(establecimiento);
         return "El establecimiento se ha agregado correctamente.";
     }
@@ -40,11 +43,7 @@ public class EstablecimientoController {
      */
     @GetMapping("/buscar")
     public Establecimiento buscar(@RequestParam ("est_id") Long idEstablecimiento){
-        if (establecimientoService.find(idEstablecimiento).isEmpty()) {
-            return null;
-        } else {
             return establecimientoService.find(idEstablecimiento).get();
-        }
     }
 
     /**

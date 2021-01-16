@@ -15,12 +15,35 @@ public class ComunaService {
     private ComunaRepository comunaRepository;
 
     /**
-     * Método que busca una comuna
+     * Método que busca una comuna.
      * @param nombre
      * @return String con mensaje si es que se agrega
      */
-    public Optional<Comuna> find(String nombre){
+    public Comuna findByNombre(String nombre){
         return comunaRepository.findByComNombre(nombre);
+    }
+
+    public Optional<Comuna> find (Long idComuna){
+        return comunaRepository.findById(idComuna);
+    }
+
+    public Comuna findById(Long id){
+        return comunaRepository.findById(id).get();
+    }
+
+    /** Método para guardar comuna.
+     * @param comuna
+     */
+    public void guardar(Comuna comuna){
+        comunaRepository.save(comuna);
+    }
+
+    /**
+     *  Método para eliminar comuna especifica.
+     * @param id
+     */
+    public void eliminar(Long id){
+        comunaRepository.deleteById(id);
     }
 
 }
