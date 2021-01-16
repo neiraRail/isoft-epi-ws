@@ -1,7 +1,9 @@
 package cl.ufro.dci.epiws.service;
 
 import cl.ufro.dci.epiws.model.Antecedente;
+import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.repository.AntecedenteRepository;
+import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,18 @@ import java.util.Optional;
 public class AntecedenteService {
     @Autowired
     private AntecedenteRepository antecedenteRepository;
+    @Autowired
+    private PacienteRepository pacienteRepository;
 
     /** Método que permite guardar un nuevo antecedente clínico
      * @param nuevoAntecedente
      * @return
      */
     public Antecedente guardar(Antecedente nuevoAntecedente){
-        //TODO validar paciente
+        long pacId = nuevoAntecedente.getPaciente().getPacRut();
+        if(!pacienteRepository.existsById(pacId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+        }
         return antecedenteRepository.save(nuevoAntecedente);
     }
 
