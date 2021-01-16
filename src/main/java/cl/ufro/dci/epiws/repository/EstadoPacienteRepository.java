@@ -1,12 +1,10 @@
 package cl.ufro.dci.epiws.repository;
 
 import cl.ufro.dci.epiws.model.Establecimiento;
+import cl.ufro.dci.epiws.model.EstadoPaciente;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface EstablecimientoRepository extends CrudRepository<Establecimiento, Long> {
-
+public interface EstadoPacienteRepository extends CrudRepository<EstadoPaciente, Long> {
 }
