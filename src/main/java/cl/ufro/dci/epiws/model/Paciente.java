@@ -10,8 +10,8 @@ public class Paciente {
     @Column(name = "pac_rut")
     private Long pacRut;
 
-    @Column(name = "pac_dv")
-    private String pacDv;
+    @Column(name = "pac_fechaFallecimiento")
+    private String pacFechaFallecimiento;
 
     @ManyToOne
     @JoinColumn(name = "est_id")
@@ -54,7 +54,7 @@ public class Paciente {
 
     /**
      * @param pacRut
-     * @param pacDv
+     * @param pacFechaFallecimiento
      * @param establecimiento
      * @param casos
      * @param antecedenteList
@@ -67,9 +67,9 @@ public class Paciente {
      * @param pacDireccion
      * @param pacTelefono
      */
-    public Paciente(long pacRut, String pacDv, Establecimiento establecimiento, List<Caso> casos, List<Antecedente> antecedenteList, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono) {
+    public Paciente(long pacRut,  Establecimiento establecimiento, List<Caso> casos, List<Antecedente> antecedenteList, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento,String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono) {
         this.pacRut = pacRut;
-        this.pacDv = pacDv;
+        this.pacFechaFallecimiento= pacFechaFallecimiento;
         this.establecimiento = establecimiento;
         this.casos = casos;
         this.antecedenteList = antecedenteList;
@@ -93,11 +93,11 @@ public class Paciente {
     public void setPacRut(long pacRut) {
         this.pacRut = pacRut;
     }
-    public String getPacDv(){
-        return pacDv;
+    public String getPacFechaFallecimiento(){
+        return pacFechaFallecimiento;
     }
-    public void setPacDv(String pacDv) {
-        this.pacDv = pacDv;
+    public void setPacFechaFallecimiento(String pacFechaFallecimiento) {
+        this.pacFechaFallecimiento = pacFechaFallecimiento;
     }
     public Establecimiento getEstablecimiento() {
         return establecimiento;

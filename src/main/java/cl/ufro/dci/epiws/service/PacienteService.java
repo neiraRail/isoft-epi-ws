@@ -40,11 +40,11 @@ public class PacienteService {
         }
     }
 
-    public void editarPaciente(long rut,String pacDv,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
+    public void editarPaciente(long rut,String fechaFallecimiento,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
                                String pacNacionalidad,String pacPuebloOriginario,String pacDireccion,String pacTelefono) throws Exception {
         Paciente pacienteModificado;
         pacienteModificado = buscarPaciente(rut).get();
-        pacienteModificado.setPacDv(pacDv);
+        pacienteModificado.setPacFechaFallecimiento(fechaFallecimiento);
         pacienteModificado.setPacNombres(pacNombres);
         pacienteModificado.setPacApellidos(pacApellidos);
         pacienteModificado.setPacSexo(pacSexo);
