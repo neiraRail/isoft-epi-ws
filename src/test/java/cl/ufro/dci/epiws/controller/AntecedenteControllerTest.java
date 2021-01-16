@@ -20,16 +20,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-class AntecedenteControllerTest {
+class AntecedenteServiceTest {
     private MockMvc mockMvc;
 
-    @Mock
-    private AntecedenteService antecedenteService;
     @Mock
     private AntecedenteRepository antecedenteRepository;
 
     @InjectMocks
-    private AntecedenteController antecedenteController;
+    private AntecedenteService antecedenteService;
+
 
     private Antecedente antecedente;
     private Paciente paciente;
@@ -51,19 +50,26 @@ class AntecedenteControllerTest {
         antViajeExtranjero = "Canada";
         antecedente = new Antecedente(paciente,antEmbarazo,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
         MockitoAnnotations.initMocks(this); //Inicializa el controlador y los mocks
-        mockMvc = MockMvcBuilders.standaloneSetup(antecedenteController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(antecedenteService).build();
 
     }
 
     @Test
-    public void testGetEstudiante() {
+    public void testBuscarEstudiante() {
         when(antecedenteRepository.findById(1l)).thenReturn(Optional.of(antecedente));
-        assertEquals(antecedente,antecedenteController.buscar(1L));
+        assertEquals(antecedente,antecedenteService.buscar(1L));
     }
 
     @Test
-    public void testPostEstudiante() {
+    public void testGuardarEstudiante() {
         when(antecedenteRepository.save(any(Antecedente.class))).thenReturn(antecedente);
-        assertEquals(antecedente,antecedenteController.guardarAntecedente(antecedente));
+        assertEquals(antecedente,antecedenteService.guardar(antecedente));
     }
+
+    @Test
+    public void testBorrarEstudiante() {
+
+    }
+
+
 }

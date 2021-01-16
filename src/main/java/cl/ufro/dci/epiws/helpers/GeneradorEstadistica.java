@@ -1,4 +1,4 @@
-package cl.ufro.dci.epiws.util;
+package cl.ufro.dci.epiws.helpers;
 
 import cl.ufro.dci.epiws.model.Antecedente;
 import cl.ufro.dci.epiws.service.AntecedenteService;
