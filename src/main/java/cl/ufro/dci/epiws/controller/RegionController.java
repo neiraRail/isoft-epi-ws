@@ -15,7 +15,13 @@ public class RegionController {
 
     /**
      * You can try this controller in http://localhost:8080/api/region/agregar
-     * @return
+     */
+
+    /**
+     * Método que permite agregar registros de regiones.
+     *
+     *
+     * @return String con mensaje si es que se agrega
      */
     @PostMapping("/agregar")
     public String agregar(){
@@ -24,11 +30,21 @@ public class RegionController {
         return "it's wordks";
     }
 
+    /**
+     * Método que permite buscar registros de regiones.
+     *
+     * @return String con mensaje si es que se agrega.
+     */
     @GetMapping("/buscar")
     public Region buscarRegion(@RequestParam String nombre) {
         return regionService.findByNombre(nombre);
     }
 
+    /**
+     * Método que permite eliminar registros de regiones.
+     *
+     * @return String con mensaje si es que se agrega
+     */
     @DeleteMapping("/eliminar/{idRegion}")
     public String eliminarRegion(@PathVariable Long idRegion){
         if (regionService.find(idRegion).isEmpty()){
@@ -39,6 +55,11 @@ public class RegionController {
         return "Se ha eliminado correctamente";
     }
 
+    /**
+     * Método que permite editar registros de regiones.
+     *
+     * @return String con mensaje si es que se agrega
+     */
     @PutMapping("/editarNombre/{idRegion}")
     public String editarNombre(@PathVariable ("idRegion") Long idRegion, @RequestBody Region region) {
         if (regionService.existById(idRegion)) {

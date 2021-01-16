@@ -18,6 +18,8 @@ public class Region {
     @OneToMany(mappedBy = "region")
     private List<Comuna> comunaList;
 
+    private List<Seremi> seremiList;
+
     public Region() {
     }
 
@@ -53,4 +55,13 @@ public class Region {
     public void setComunaList(List<Comuna> comunaList) {
         this.comunaList = comunaList;
     }
+
+    public List<Seremi> getSeremiList() {
+        return seremiList;
+    }
+
+    public void setSeremiList(List<Seremi> seremiList) {
+        this.seremiList = seremiList;
+    }
+
 }

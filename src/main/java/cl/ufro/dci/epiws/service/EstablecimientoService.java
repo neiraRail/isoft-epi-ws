@@ -12,7 +12,6 @@ import java.util.Optional;
 @Service
 public class EstablecimientoService {
 
-
     @Autowired
     private EstablecimientoRepository establecimientoRepository;
 

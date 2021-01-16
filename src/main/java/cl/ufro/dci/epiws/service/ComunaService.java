@@ -14,6 +14,13 @@ public class ComunaService {
     @Autowired
     private ComunaRepository comunaRepository;
 
+    /** Método para guardar una comuna.
+     * @param comuna
+     */
+    public void guardar(Comuna comuna){
+        comunaRepository.save(comuna);
+    }
+
     /**
      * Método que busca una comuna.
      * @param nombre
@@ -27,23 +34,39 @@ public class ComunaService {
         return comunaRepository.findById(idComuna);
     }
 
+
     public Comuna findById(Long id){
         return comunaRepository.findById(id).get();
     }
 
-    /** Método para guardar comuna.
-     * @param comuna
-     */
-    public void guardar(Comuna comuna){
-        comunaRepository.save(comuna);
+    public Iterable<Comuna> listarTodo(){
+        return comunaRepository.findAll();
     }
 
     /**
-     *  Método para eliminar comuna especifica.
+     *  Método para eliminar una communa por su id.
      * @param id
      */
     public void eliminar(Long id){
         comunaRepository.deleteById(id);
+    }
+
+    /** Metodo para editar el nombre de una comuna.
+     * @param id
+     * @param nombre
+     */
+    public void editarNombre(Long id,String nombre){
+        Comuna comunaModificada = comunaRepository.findById(id).get();
+        comunaModificada.setComNombre(nombre);
+        comunaRepository.save(comunaModificada);
+    }
+
+    /** Metodo que verifica que exista el id de una comuna.
+     * @param id
+     *
+     */
+    public boolean existById(Long id) {
+        return comunaRepository.existsById(id);
     }
 
 }

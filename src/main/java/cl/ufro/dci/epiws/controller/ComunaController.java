@@ -18,6 +18,11 @@ public class ComunaController {
     @Autowired
     private RegionService regionService;
 
+    /**
+     * Método que permite agregar registros de regiones.
+     * @param nombre
+     * @return String con mensaje si es que se agrega.
+     */
     @PostMapping("/agregar")
     @ResponseBody
     public String agregarComuna(@RequestParam String nombre, @RequestParam Long regionId){
@@ -26,12 +31,21 @@ public class ComunaController {
         comunaService.guardar(comuna);
         return "Se ha agregado la comuna exitosamente";
     }
-
+    /**
+     * Método que permite buscar registros de comunas.
+     * @param nombre
+     * @return String con mensaje si es que se agrega
+     */
     @GetMapping("/buscar")
     public Comuna buscarComuna(@RequestParam String nombre) {
         return comunaService.findByNombre(nombre);
     }
 
+    /**
+     * Método que permite eliminar registros de comunas.
+     *
+     * @return String con mensaje si es que se agrega
+     */
     @DeleteMapping("/eliminar/{idComuna}")
     public String eliminarComuna(@PathVariable Long idComuna){
         if (comunaService.find(idComuna).isEmpty()){
@@ -41,4 +55,5 @@ public class ComunaController {
         }
         return "Se ha eliminado correctamente";
     }
+
 }

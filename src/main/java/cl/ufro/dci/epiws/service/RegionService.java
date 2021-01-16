@@ -13,6 +13,9 @@ public class RegionService {
     @Autowired
     private RegionRepository regionRepository;
 
+    /** Metodo para guardar una nueva región.
+     * @param nuevaRegion
+     */
     public void save(Region nuevaRegion){
         regionRepository.save(nuevaRegion);
     }
@@ -25,19 +28,39 @@ public class RegionService {
         return regionRepository.findByRgnNombre(nombre);
     }
 
+    /** Metodo para buscar una región por su id.
+     * @param id
+     * @return
+     */
     public Optional<Region> find(Long id){
         return regionRepository.findById(id);
     }
 
+    public Iterable<Region> listarTodo(){
+        return regionRepository.findAll();
+    }
+
+    /** Metodo para eliminar una región por su id.
+     * @param id
+     */
     public void eliminar(Long id){
         regionRepository.deleteById(id);
     }
 
+    /** Metodo para editar el nombre de una región.
+     * @param id
+     * @param nombre
+     */
+    public void editarNombre(long id, String nombre){
+        regionRepository.findById(id).get().setRgnNombre(nombre);
+    }
+
+    /** Metodo que verifica que exista el id de una región.
+     * @param id
+     * @return
+     */
     public boolean existById(Long id) {
         return regionRepository.existsById(id);
     }
 
-    public void editarNombre(long id, String nombre){
-        regionRepository.findById(id).get().setRgnNombre(nombre);
-    }
 }
