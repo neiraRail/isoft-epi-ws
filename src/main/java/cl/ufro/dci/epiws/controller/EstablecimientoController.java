@@ -1,4 +1,4 @@
 package cl.ufro.dci.epiws.controller;
 
-public class AntecedenteController {
+public class EstablecimientoController {
 }

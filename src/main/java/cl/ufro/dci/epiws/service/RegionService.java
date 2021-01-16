@@ -1,4 +1,4 @@
 package cl.ufro.dci.epiws.service;
 
-public class AntecedenteService {
+public class RegionService {
 }
