@@ -9,10 +9,10 @@ import java.io.IOException;
 public class PDF {
 
     public PDF() {
-
+        //Constructor vacío por framework
     }
 
-    public PdfPTable crearTabla(int numColumnas, int ancho, float separacionVertical) throws IllegalArgumentException {
+    public PdfPTable crearTabla(int numColumnas, int ancho, float separacionVertical) {
         try {
             PdfPTable tabla = new PdfPTable(numColumnas);
             tabla.setWidthPercentage(ancho);
@@ -23,7 +23,7 @@ public class PDF {
         }
     }
 
-    public PdfPCell crearCelda(String texto, Font fuente, int espacioCeldas, int alineacion) throws IllegalArgumentException, NullPointerException {
+    public PdfPCell crearCelda(String texto, Font fuente, int espacioCeldas, int alineacion) {
         try {
             PdfPCell celda = new PdfPCell(new Phrase(texto, fuente));
             celda.setColspan(espacioCeldas);

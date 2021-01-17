@@ -176,7 +176,7 @@ public class PDFReporteCovid {
         return tabla;
     }
 
-    public Paciente validarDatosNulosPaciente(Optional<Paciente> paciente) throws NullPointerException {
+    public Paciente validarDatosNulosPaciente(Optional<Paciente> paciente) {
         if (paciente.isPresent()) {
             if (paciente.get().getEstablecimiento() == null) {
                 paciente.get().setEstablecimiento(new Establecimiento(0l, "", "", new Region(0l, "")));
