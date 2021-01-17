@@ -1,6 +1,5 @@
 package cl.ufro.dci.epiws.controller;
 
-import cl.ufro.dci.epiws.model.Establecimiento;
 import cl.ufro.dci.epiws.model.Region;
 import cl.ufro.dci.epiws.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +13,17 @@ public class RegionController {
     private RegionService regionService;
 
     /**
-     * You can try this controller in http://localhost:8080/api/region/agregar
-     */
-
-    /**
      * Método que permite agregar registros de regiones.
      *
      *
      * @return String con mensaje si es que se agrega
      */
     @PostMapping("/agregar")
-    public String agregar(){
-
-        regionService.save(new Region("Región de Arica y Parinacota"));
-        return "it's wordks";
+    @ResponseBody
+    public String agregar(@RequestParam String nombre){
+        Region region = new Region(nombre);
+        regionService.save(region);
+        return "it's works";
     }
 
     /**
@@ -46,6 +42,7 @@ public class RegionController {
      * @return String con mensaje si es que se agrega
      */
     @DeleteMapping("/eliminar/{idRegion}")
+    @ResponseBody
     public String eliminarRegion(@PathVariable Long idRegion){
         if (regionService.find(idRegion).isEmpty()){
             return null;

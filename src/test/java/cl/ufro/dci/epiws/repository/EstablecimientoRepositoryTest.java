@@ -3,7 +3,6 @@ package cl.ufro.dci.epiws.repository;
 import cl.ufro.dci.epiws.model.Comuna;
 import cl.ufro.dci.epiws.model.Establecimiento;
 import cl.ufro.dci.epiws.model.Region;
-import cl.ufro.dci.epiws.service.EstablecimientoService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +11,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 
@@ -21,9 +20,6 @@ import java.util.ArrayList;
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class EstablecimientoRepositoryTest {
-
-    @Autowired
-    private TestEntityManager entityManager;
 
     @Autowired
     private ComunaRepository comunaRepository;
@@ -52,20 +48,20 @@ class EstablecimientoRepositoryTest {
     @DisplayName("Test de agregado de establecimiento")
     public void agregado() {
         Establecimiento found = establecimientoRepository.findByEstNombre("Hospital regional");
-        Assert.assertEquals("Hospital regional",found.getEstNombre());
+        assertEquals("Hospital regional",found.getEstNombre());
     }
 
     @Test
     @DisplayName("Test de edicion establecimiento")
     public void edicion(){
         establecimientoRepository.findByEstNombre("Hospital regional").setEstDireccion("av. alemania");
-        Assert.assertEquals("av. alemania",establecimientoRepository.findByEstNombre("Hospital regional").getEstDireccion());
+        assertEquals("av. alemania",establecimientoRepository.findByEstNombre("Hospital regional").getEstDireccion());
     }
 
     @Test
     @DisplayName("test de eliminado")
     public void eliminacion(){
         establecimientoRepository.deleteById(1L);
-        Assert.assertEquals(false,establecimientoRepository.existsById(1L));
+        assertEquals(false,establecimientoRepository.existsById(1L));
     }
 }

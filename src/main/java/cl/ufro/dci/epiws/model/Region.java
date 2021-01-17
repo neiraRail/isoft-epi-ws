@@ -1,6 +1,7 @@
 package cl.ufro.dci.epiws.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,7 @@ public class Region {
     @OneToMany(mappedBy = "region")
     private List<Comuna> comunaList;
 
+    @OneToMany(mappedBy = "region")
     private List<Seremi> seremiList;
 
     public Region() {
@@ -25,11 +27,15 @@ public class Region {
 
     public Region(String rgnNombre) {
         this.rgnNombre = rgnNombre;
+        this.seremiList = new ArrayList<>();
+        this.comunaList = new ArrayList<>();
     }
 
     public Region(Long rgnId, String rgnNombre) {
         this.rgnId = rgnId;
         this.rgnNombre = rgnNombre;
+        this.seremiList = new ArrayList<>();
+        this.comunaList = new ArrayList<>();
     }
 
     public Long getRgnId() {

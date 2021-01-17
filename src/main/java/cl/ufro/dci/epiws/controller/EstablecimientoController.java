@@ -60,6 +60,7 @@ public class EstablecimientoController {
      * @return String con mensaje en caso que se elimine o no el registro de establecimiento.
      */
     @DeleteMapping("/eliminar/{idEstablecimiento}")
+    @ResponseBody
     public String eliminar(@PathVariable ("idEstablecimiento") Long idEstablecimiento){
         if (establecimientoService.find(idEstablecimiento).isEmpty()){
             return null;

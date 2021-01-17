@@ -14,7 +14,7 @@ public class Seremi {
     @Column(name = "ser_nombre")
     private String serNombre;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "rgn_id")
     private Region region;
 

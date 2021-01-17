@@ -5,9 +5,11 @@ import cl.ufro.dci.epiws.model.Seremi;
 import cl.ufro.dci.epiws.repository.RegionRepository;
 import cl.ufro.dci.epiws.repository.SeremiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class SeremiService {
 
     @Autowired

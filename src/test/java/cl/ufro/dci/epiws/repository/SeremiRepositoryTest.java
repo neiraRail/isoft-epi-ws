@@ -12,44 +12,51 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class RegionRepositoryTest {
+class SeremiRepositoryTest {
 
     @Autowired
     private RegionRepository regionRepository;
 
+    @Autowired
+    private SeremiRepository seremiRepository;
+
+    Seremi seremi;
     Region region;
 
     @BeforeAll
     void preparacion(){
         region = new Region("Araucania");
+        seremi = new Seremi(1L,"Seremi de salud araucania",region);
+        region.getSeremiList().add(seremi);
+
         regionRepository.save(region);
-        region = new Region("Arica y Parinacota");
-        regionRepository.save(region);
+        seremiRepository.save(seremi);
     }
 
     @Test
-    @DisplayName("Test de agregado de region")
+    @DisplayName("Test de agregado de seremi")
     public void agregar(){
-        region = new Region("Metropolitana de Santiago");
-        regionRepository.save(region);
-        assertEquals("Metropolitana de Santiago",regionRepository.findByRgnNombre("Metropolitana de Santiago").getRgnNombre());
+        seremi = new Seremi(2L,"Seremi de mineria",region);
+        regionRepository.findByRgnNombre("Araucania").getSeremiList().add(seremi);
+        seremiRepository.save(seremi);
+        assertEquals("Seremi de mineria",seremiRepository.findBySerNombre("Seremi de mineria").getSerNombre());
     }
 
     @Test
-    @DisplayName("Test de edicion de region")
+    @DisplayName("Test de edicion de seremi")
     public void editar(){
-        regionRepository.findByRgnNombre("Araucania").setRgnNombre("Atacama");
-        assertEquals("Atacama",regionRepository.findByRgnNombre("Atacama").getRgnNombre());
+        seremiRepository.findBySerNombre("Seremi de salud araucania").setSerNombre("Mineria");
+        assertEquals("Mineria",seremiRepository.findBySerNombre("Mineria").getSerNombre());
     }
 
     @Test
-    @DisplayName("Test de eliminado de region")
+    @DisplayName("Test de eliminado de seremi")
     public void eliminar(){
-        regionRepository.deleteById(2L);
-        assertEquals(false,regionRepository.existsById(2L));
+        seremiRepository.deleteById(1L);
+        assertEquals(false,seremiRepository.existsById(1L));
     }
-
 }
