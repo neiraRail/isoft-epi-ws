@@ -31,7 +31,6 @@ public class EstablecimientoController {
     @ResponseBody
     public String agregar(@PathVariable String nombre, @PathVariable String direccion, @PathVariable Long idComuna){
         Establecimiento establecimiento = new Establecimiento(nombre,direccion,comunaService.findById(idComuna),new ArrayList<>());
-        comunaService.findById(idComuna).getEstablecimientoList().add(establecimiento);
         establecimientoService.guardar(establecimiento);
         return "El establecimiento se ha agregado correctamente.";
     }

@@ -19,22 +19,17 @@ public class Region {
     @OneToMany(mappedBy = "region")
     private List<Comuna> comunaList;
 
-    @OneToMany(mappedBy = "region")
-    private List<Seremi> seremiList;
-
     public Region() {
     }
 
     public Region(String rgnNombre) {
         this.rgnNombre = rgnNombre;
-        this.seremiList = new ArrayList<>();
         this.comunaList = new ArrayList<>();
     }
 
     public Region(Long rgnId, String rgnNombre) {
         this.rgnId = rgnId;
         this.rgnNombre = rgnNombre;
-        this.seremiList = new ArrayList<>();
         this.comunaList = new ArrayList<>();
     }
 
@@ -60,14 +55,6 @@ public class Region {
 
     public void setComunaList(List<Comuna> comunaList) {
         this.comunaList = comunaList;
-    }
-
-    public List<Seremi> getSeremiList() {
-        return seremiList;
-    }
-
-    public void setSeremiList(List<Seremi> seremiList) {
-        this.seremiList = seremiList;
     }
 
 }

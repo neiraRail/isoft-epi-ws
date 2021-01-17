@@ -27,7 +27,6 @@ public class ComunaController {
     @ResponseBody
     public String agregarComuna(@RequestParam String nombre, @RequestParam Long regionId){
         Comuna comuna = new Comuna(1l,nombre,regionService.findById(regionId),new ArrayList<>());
-        regionService.findById(regionId).getComunaList().add(comuna);
         comunaService.guardar(comuna);
         return "Se ha agregado la comuna exitosamente";
     }
