@@ -25,30 +25,30 @@ class RegionRepositoryTest {
     void preparacion(){
         region = new Region("Araucania");
         regionRepository.save(region);
-        region = new Region("Arica y Parinacota");
-        regionRepository.save(region);
+        Region region1 = new Region("Arica y Parinacota");
+        regionRepository.save(region1);
     }
 
     @Test
     @DisplayName("Test de agregado de region")
     public void agregar(){
-        region = new Region("Metropolitana de Santiago");
-        regionRepository.save(region);
-        assertEquals("Metropolitana de Santiago",regionRepository.findByRgnNombre("Metropolitana de Santiago").getRgnNombre());
+        Region region2 = new Region("Metropolitana de Santiago");
+        regionRepository.save(region2);
+        assertEquals("Metropolitana de Santiago",regionRepository.findByRgnNombre("Metropolitana de Santiago").get().getRgnNombre());
     }
 
     @Test
     @DisplayName("Test de edicion de region")
     public void editar(){
-        regionRepository.findByRgnNombre("Araucania").setRgnNombre("Atacama");
-        assertEquals("Atacama",regionRepository.findByRgnNombre("Atacama").getRgnNombre());
+        regionRepository.findById(region.getRgnId()).get().setRgnNombre("Atacama");
+        assertEquals("Atacama",regionRepository.findByRgnNombre("Atacama").get().getRgnNombre());
     }
 
     @Test
     @DisplayName("Test de eliminado de region")
     public void eliminar(){
-        regionRepository.deleteById(2L);
-        assertEquals(false,regionRepository.existsById(2L));
+        regionRepository.deleteById(region.getRgnId());
+        assertEquals(false,regionRepository.existsById(region.getRgnId()));
     }
 
 }

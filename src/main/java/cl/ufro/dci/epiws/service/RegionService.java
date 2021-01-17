@@ -25,7 +25,7 @@ public class RegionService {
     }
 
     public Region findByNombre(String nombre){
-        return regionRepository.findByRgnNombre(nombre);
+        return regionRepository.findByRgnNombre(nombre).get();
     }
 
     /** Metodo para buscar una región por su id.

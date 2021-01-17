@@ -27,7 +27,7 @@ public class ComunaService {
      * @return String con mensaje si es que se agrega
      */
     public Comuna findByNombre(String nombre){
-        return comunaRepository.findByComNombre(nombre);
+        return comunaRepository.findByComNombre(nombre).get();
     }
 
     public Optional<Comuna> find (Long idComuna){

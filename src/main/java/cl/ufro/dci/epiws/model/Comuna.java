@@ -33,6 +33,12 @@ public class Comuna {
         this.establecimientoList = establecimientoList;
     }
 
+    public Comuna(String comNombre, Region region, List<Establecimiento> establecimientoList) {
+        this.comNombre = comNombre;
+        this.region = region;
+        this.establecimientoList = establecimientoList;
+    }
+
     public Long getComId() {
         return comId;
     }

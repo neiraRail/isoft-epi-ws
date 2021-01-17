@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ComunaRepository extends JpaRepository<Comuna, Long> {
 
-    Comuna findByComNombre(String nombre);
+    Optional<Comuna> findByComNombre(String nombre);
 
 }

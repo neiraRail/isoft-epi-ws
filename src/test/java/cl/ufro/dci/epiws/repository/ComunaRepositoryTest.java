@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,8 +34,8 @@ class ComunaRepositoryTest {
 
     @BeforeAll
     void preparacion(){
-        region = new Region(1L,"Araucania");
-        comuna = new Comuna(1L,"Temuco",region,new ArrayList<>());
+        region = new Region("Araucania");
+        comuna = new Comuna("Temuco",region,new ArrayList<>());
         regionRepository.save(region);
         comunaRepository.save(comuna);
     }
@@ -42,22 +43,22 @@ class ComunaRepositoryTest {
     @Test
     @DisplayName("Test de agregado de comuna")
     public void agregado() {
-        Comuna found = comunaRepository.findByComNombre("Temuco");
-        assertEquals("Temuco",found.getComNombre());
+        Optional<Comuna> found = comunaRepository.findById(comuna.getComId());
+        assertEquals("Temuco",found.get().getComNombre());
     }
 
     @Test
     @DisplayName("Test de edicion de comuna")
     public void edicion(){
-        comunaRepository.findByComNombre("Temuco").setComNombre("Lautaro");
-        assertEquals("Lautaro",comunaRepository.findByComNombre("Lautaro").getComNombre());
+        comunaRepository.findById(comuna.getComId()).get().setComNombre("Lautaro");
+        assertEquals("Lautaro",comunaRepository.findByComNombre("Lautaro").get().getComNombre());
     }
 
     @Test
     @DisplayName("test de eliminado de comuna")
     public void eliminacion(){
-        comunaRepository.deleteById(1L);
-        assertEquals(false,comunaRepository.existsById(1L));
+        comunaRepository.deleteById(comuna.getComId());
+        assertEquals(false,comunaRepository.existsById(comuna.getComId()));
     }
 
 }
