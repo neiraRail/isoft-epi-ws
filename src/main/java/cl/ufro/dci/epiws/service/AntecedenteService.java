@@ -1,7 +1,6 @@
 package cl.ufro.dci.epiws.service;
 
 import cl.ufro.dci.epiws.model.Antecedente;
-import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.repository.AntecedenteRepository;
 import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
 
 @Service
 public class AntecedenteService {
@@ -44,7 +42,6 @@ public class AntecedenteService {
      * @param id
      */
     public Antecedente buscar(Long id){
-        System.out.println("Entro al servicio");
         return antecedenteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Antecedente no encontrado"));
     }
 

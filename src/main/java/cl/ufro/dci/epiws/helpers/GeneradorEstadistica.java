@@ -12,9 +12,6 @@ public class GeneradorEstadistica {
     @Autowired
     private AntecedenteService antecedenteService;
 
-    public GeneradorEstadistica(){
-    }
-
     public float calcularPorcentajeEmbarazo(){
         ArrayList<Antecedente> antecedentes = (ArrayList<Antecedente>) antecedenteService.findAll();
         ArrayList<Antecedente> embarazos = (ArrayList<Antecedente>) antecedenteService.buscarPorEmbarazo(true);
