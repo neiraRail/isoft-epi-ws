@@ -1,4 +1,5 @@
 package cl.ufro.dci.epiws.model;
+
 import javax.persistence.*;
 
 @Entity

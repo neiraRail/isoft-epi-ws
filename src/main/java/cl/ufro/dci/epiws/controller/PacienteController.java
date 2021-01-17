@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController //indica que es una clase controller
 @RequestMapping("/paciente")
+@CrossOrigin
 
 public class PacienteController {
     @Autowired

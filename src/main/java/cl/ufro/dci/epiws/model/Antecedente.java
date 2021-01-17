@@ -35,7 +35,6 @@ public class Antecedente {
     @Column(name = "ant_viaje_al_extranjero")
     private String antViajeExtranjero;
 
-
     public Antecedente(Long antId, Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
         this.antId = antId;
         this.paciente = paciente;
@@ -114,4 +113,8 @@ public class Antecedente {
     public void setAntViajeExtranjero(String antViajeExtranjero) {
         this.antViajeExtranjero = antViajeExtranjero;
     }
+
 }
+
+
+
