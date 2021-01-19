@@ -5,6 +5,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class PDF {
 
@@ -55,13 +56,17 @@ public class PDF {
     }
 
     public Paragraph creaTitulo(String texto, Font fuente, int alineacion, int separacionVertical) {
-        if (alineacion >= 0 && separacionVertical > 0) {
-            Paragraph parrafo = new Paragraph(texto, fuente);
-            parrafo.setAlignment(alineacion);
-            parrafo.setSpacingBefore(separacionVertical);
-            return parrafo;
+        if (Optional.ofNullable(fuente).isPresent()) {
+            if (alineacion >= 0 && separacionVertical > 0) {
+                Paragraph parrafo = new Paragraph(texto, fuente);
+                parrafo.setAlignment(alineacion);
+                parrafo.setSpacingBefore(separacionVertical);
+                return parrafo;
+            } else {
+                throw new IllegalArgumentException("Solo números mayores que 0");
+            }
         } else {
-            throw new ArithmeticException();
+            throw new NullPointerException("La fuente es nula");
         }
     }
 }
