@@ -34,11 +34,6 @@ public class ComunaService {
         return comunaRepository.findById(idComuna);
     }
 
-
-    public Comuna findById(Long id){
-        return comunaRepository.findById(id).get();
-    }
-
     public Iterable<Comuna> listarTodo(){
         return comunaRepository.findAll();
     }

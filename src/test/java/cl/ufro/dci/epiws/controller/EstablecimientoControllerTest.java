@@ -63,8 +63,8 @@ class EstablecimientoControllerTest {
     void agregar() throws Exception {
         mvc.perform(post("/api/establecimiento/agregar/HospitaRegional/plaza/1").contentType("application/json")).andExpect(status().isOk());
         Long l = (long) 4;
-        assertEquals("Temuco",establecimientoRepository.findById(l).get().getComuna().getComNombre());
-        assertEquals("HospitaRegional",establecimientoRepository.findById(l).get().getEstNombre());
+        assertEquals("Temuco",establecimientoRepository.findById(l).orElse(null).getComuna().getComNombre());
+        assertEquals("HospitaRegional",establecimientoRepository.findById(l).orElse(null).getEstNombre());
     }
 
     @Test
