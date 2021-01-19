@@ -52,6 +52,8 @@ class EstablecimientoControllerTest {
         regionRepository.save(region);
         comunaRepository.save(comuna);
         establecimientoRepository.save(establecimiento);
+        establecimientoRepository.save(establecimiento2);
+        establecimientoRepository.save(establecimiento3);
     }
 
 
@@ -60,8 +62,9 @@ class EstablecimientoControllerTest {
     @DisplayName("Test para agregar establecimientos")
     void agregar() throws Exception {
         mvc.perform(post("/api/establecimiento/agregar/HospitaRegional/plaza/1").contentType("application/json")).andExpect(status().isOk());
-        assertEquals("Temuco",establecimientoRepository.findByEstNombre("HospitaRegional").getComuna().getComNombre());
-        assertEquals("HospitaRegional",establecimientoRepository.findByEstNombre("HospitaRegional").getEstNombre());
+        Long l = (long) 4;
+        assertEquals("Temuco",establecimientoRepository.findById(l).get().getComuna().getComNombre());
+        assertEquals("HospitaRegional",establecimientoRepository.findById(l).get().getEstNombre());
     }
 
     @Test

@@ -47,7 +47,8 @@ class ComunaControllerTest {
         mvc.perform(post("/api/comuna/agregar").contentType("application/json")
                 .param("nombre","Padre las Casas").param("regionId","1"))
                 .andExpect(status().isOk());
-        assertEquals("Padre las Casas",comunaRepository.findById(2L).get().getComNombre());
+        Long l = (long) 2;
+        assertEquals("Padre las Casas",comunaRepository.findById(l).get().getComNombre());
     }
 
     @Test
