@@ -7,24 +7,10 @@ stages:
 
 construccion:
   stage: build
-  only:
-    - feature/ft_casos
   script:
     - mvn compile
 
 pruebas:
   stage: test
-  only:
-    - feature/ft_casos
   script:
     - mvn test
-
-empaquetado:
-  stage: package
-  only:
-    - master
-  script:
-    - mvn package -B
-  artifacts:
-    paths:
-      - target/*.jar
