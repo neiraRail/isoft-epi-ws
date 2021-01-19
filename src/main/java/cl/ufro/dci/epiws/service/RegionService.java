@@ -16,12 +16,8 @@ public class RegionService {
     /** Metodo para guardar una nueva región.
      * @param nuevaRegion
      */
-    public void save(Region nuevaRegion){
+    public void guardar(Region nuevaRegion){
         regionRepository.save(nuevaRegion);
-    }
-
-    public Region findById(Long id){
-        return regionRepository.findById(id).get();
     }
 
     public Region findByNombre(String nombre){

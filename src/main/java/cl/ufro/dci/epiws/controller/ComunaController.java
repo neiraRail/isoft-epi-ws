@@ -25,8 +25,9 @@ public class ComunaController {
      */
     @PostMapping("/agregar")
     @ResponseBody
-    public String agregarComuna(@RequestParam String nombre, @RequestParam Long regionId){
-        Comuna comuna = new Comuna(1l,nombre,regionService.findById(regionId),new ArrayList<>());
+    public String agregarComuna(@RequestParam String nombre, @RequestParam int regionId){
+        Long l = (long) regionId;
+        Comuna comuna = new Comuna(nombre,regionService.find(l).get(),new ArrayList<>());
         comunaService.guardar(comuna);
         return "Se ha agregado la comuna exitosamente";
     }
@@ -46,11 +47,12 @@ public class ComunaController {
      * @return String con mensaje si es que se agrega
      */
     @DeleteMapping("/eliminar/{idComuna}")
-    public String eliminarComuna(@PathVariable Long idComuna){
-        if (comunaService.find(idComuna).isEmpty()){
+    public String eliminarComuna(@PathVariable int idComuna){
+        Long l = (long) idComuna;
+        if (comunaService.find(l).isEmpty()){
             return null;
         } else {
-            comunaService.eliminar(idComuna);
+            comunaService.eliminar(l);
         }
         return "Se ha eliminado correctamente";
     }

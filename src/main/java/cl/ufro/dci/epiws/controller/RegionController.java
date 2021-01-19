@@ -1,6 +1,7 @@
 package cl.ufro.dci.epiws.controller;
 
 import cl.ufro.dci.epiws.model.Region;
+import cl.ufro.dci.epiws.repository.RegionRepository;
 import cl.ufro.dci.epiws.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,8 @@ public class RegionController {
     @ResponseBody
     public String agregar(@RequestParam String nombre){
         Region region = new Region(nombre);
-        regionService.save(region);
-        return "it's works";
+        regionService.guardar(region);
+        return "Se ha agregado correctamente";
     }
 
     /**
@@ -44,7 +45,7 @@ public class RegionController {
     @DeleteMapping("/eliminar/{idRegion}")
     @ResponseBody
     public String eliminarRegion(@PathVariable Long idRegion){
-        if (regionService.find(idRegion).isEmpty()){
+        if (regionService.find(idRegion)==null){
             return null;
         } else {
             regionService.eliminar(idRegion);
@@ -57,11 +58,13 @@ public class RegionController {
      *
      * @return String con mensaje si es que se agrega
      */
-    @PutMapping("/editarNombre/{idRegion}")
-    public String editarNombre(@PathVariable ("idRegion") Long idRegion, @RequestBody Region region) {
-        if (regionService.existById(idRegion)) {
-            regionService.editarNombre(idRegion, region.getRgnNombre());
-
+    @PutMapping("/editar")
+    public String editarNombre(@RequestParam int idRegion, @RequestParam String nombre) {
+        Long l = (long) idRegion;
+        if (regionService.existById(l)) {
+            if (regionService.find(l).isPresent()){
+                regionService.editarNombre(l,nombre);
+            }
             return "El establecimiento se ha cambiado correctamente.";
         }
         return "No se ha podido editar el establecimiento.";

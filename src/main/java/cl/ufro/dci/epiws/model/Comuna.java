@@ -1,6 +1,8 @@
 package cl.ufro.dci.epiws.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Comuna {
 
     @ManyToOne
     @JoinColumn(name = "rgn_id")
+    @JsonBackReference
     private Region region;
 
     @OneToMany(mappedBy = "comuna")
