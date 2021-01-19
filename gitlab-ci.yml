@@ -8,16 +8,14 @@ stages:
 construccion:
   stage: build
   only:
-    - develop
-    - master
+    - feature/ft_casos
   script:
     - mvn compile
 
 pruebas:
   stage: test
   only:
-    - develop
-    - master
+    - feature/ft_casos
   script:
     - mvn test
 
