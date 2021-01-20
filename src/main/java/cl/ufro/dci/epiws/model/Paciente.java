@@ -11,7 +11,7 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "pac_run")
-    private String pacRun;
+    private Long pacRun;
 
     @Column(name = "pac_nombres")
     private String pacNombres;
@@ -69,7 +69,7 @@ public class Paciente {
     }
 
     //Constructor sin relaciones
-    public Paciente(String pacRun, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento, String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono, String pacComunaResidencia, String pacRegionResidencia) {
+    public Paciente(Long pacRun, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento, String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono, String pacComunaResidencia, String pacRegionResidencia) {
         this.pacRun = pacRun;
         this.pacNombres = pacNombres;
         this.pacApellidos = pacApellidos;
@@ -85,7 +85,7 @@ public class Paciente {
     }
 
     //Constructor con relaciones
-    public Paciente(String pacRun, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento, String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono, String pacComunaResidencia, String pacRegionResidencia, Establecimiento establecimiento, PersonalMedico medico, EstadoPaciente estado) {
+    public Paciente(Long pacRun, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento, String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono, String pacComunaResidencia, String pacRegionResidencia, Establecimiento establecimiento, PersonalMedico medico, EstadoPaciente estado) {
         this.pacRun = pacRun;
         this.pacNombres = pacNombres;
         this.pacApellidos = pacApellidos;
@@ -103,11 +103,11 @@ public class Paciente {
         this.estado = estado;
     }
 
-    public String getPacRun() {
+    public Long getPacRun() {
         return pacRun;
     }
 
-    public void setPacRun(String pacRun) {
+    public void setPacRun(Long pacRun) {
         this.pacRun = pacRun;
     }
 

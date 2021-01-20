@@ -3,7 +3,6 @@ package cl.ufro.dci.epiws.helpers;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-
 import java.io.IOException;
 import java.util.Optional;
 
@@ -69,4 +68,5 @@ public class PDF {
             throw new NullPointerException("La fuente es nula");
         }
     }
+
 }

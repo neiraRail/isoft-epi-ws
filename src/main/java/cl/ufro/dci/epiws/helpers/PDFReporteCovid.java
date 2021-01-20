@@ -1,13 +1,11 @@
 package cl.ufro.dci.epiws.helpers;
 
 import cl.ufro.dci.epiws.model.*;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,6 +34,27 @@ public class PDFReporteCovid {
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream("Formulario.pdf"));
+            document.open();
+            document.add(pdf.cargarImagen("src/main/resources/ministerio_salud_logo.png"));
+            document.add(pdf.creaTitulo("Formulario notificación inmediata y envío de reporte COVID-19", fuentes.get(0), Element.ALIGN_CENTER, 55));
+            document.add(crearTablaPaciente(pdf.crearTabla(4, 100, 40), paciente));
+            document.add(crearTablaProcedencia(pdf.crearTabla(4, 100, 40), paciente.getMedico(), paciente.getEstablecimiento()));
+            document.add(crearTablaAntecedentes(pdf.crearTabla(4, 100, 40), paciente.getAntecedentes().get(0)));
+            document.add(crearTablaSintomas(pdf.crearTabla(4, 100, 40), paciente.getCasos().get(0)));
+        } catch (DocumentException | MalformedURLException | IllegalArgumentException | NullPointerException | FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+        }
+    }
+
+    //Método no probado
+    public void exportar(Paciente paciente, HttpServletResponse response) {
+        Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, response.getOutputStream());
             document.open();
             document.add(pdf.cargarImagen("src/main/resources/ministerio_salud_logo.png"));
             document.add(pdf.creaTitulo("Formulario notificación inmediata y envío de reporte COVID-19", fuentes.get(0), Element.ALIGN_CENTER, 55));
@@ -95,7 +114,6 @@ public class PDFReporteCovid {
         return tabla;
     }
 
-    //Falta agregar Seremi
     private PdfPTable crearTablaProcedencia(PdfPTable tabla, PersonalMedico medico, Establecimiento establecimiento) {
         //Primera Fila
         tabla.addCell(pdf.crearCelda("Datos Procedencia", fuentes.get(1), 4, Element.ALIGN_CENTER));
@@ -176,28 +194,28 @@ public class PDFReporteCovid {
         return tabla;
     }
 
-    public Paciente validarDatosNulosPaciente(Optional<Paciente> paciente) {
-        if (paciente.isPresent()) {
-            if (paciente.get().getEstablecimiento() == null) {
-                paciente.get().setEstablecimiento(new Establecimiento(0l, "", "", new Region(0l, "")));
+    public Paciente validarDatosNulosPaciente(Paciente paciente) {
+        if (Optional.ofNullable(paciente).isPresent()) {
+            if (paciente.getEstablecimiento() == null) {
+                paciente.setEstablecimiento(new Establecimiento(0l, "", "", new Region(0l, "")));
             }
-            if (paciente.get().getMedico() == null) {
-                paciente.get().setMedico(new PersonalMedico(0l, "", "", "", ""));
+            if (paciente.getMedico() == null) {
+                paciente.setMedico(new PersonalMedico(0l, "", "", "", ""));
             }
-            if (paciente.get().getAntecedentes().isEmpty()) {
+            if (paciente.getAntecedentes().isEmpty()) {
                 ArrayList<Antecedente> antecedentesVacios = new ArrayList<>();
                 antecedentesVacios.add(new Antecedente(0l, false, 0, "", "", "", "", ""));
-                paciente.get().setAntecedentes(antecedentesVacios);
+                paciente.setAntecedentes(antecedentesVacios);
             }
-            if (paciente.get().getCasos().isEmpty()) {
+            if (paciente.getCasos().isEmpty()) {
                 ArrayList<Caso> casosVacio = new ArrayList<>();
                 casosVacio.add(new Caso(0l, "", false, "", 0, "", "", "", false));
-                paciente.get().setCasos(casosVacio);
+                paciente.setCasos(casosVacio);
             }
         } else {
             throw new NullPointerException("Paciente no puede ser nulo");
         }
-        return paciente.get();
+        return paciente;
     }
 
 }
