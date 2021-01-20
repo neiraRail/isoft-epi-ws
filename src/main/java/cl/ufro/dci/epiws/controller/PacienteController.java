@@ -20,11 +20,9 @@ public class PacienteController {
     private PacienteService ps;
     private  ArrayList<Paciente> pacientes=new ArrayList<>();
 
-    @PostMapping("/agregar/{rut}/{pacDv}/{pacNombres}/{pacApellidos}/{pacSexo}/{pacFechaNacimiento}/{pacNacionalidad}/{pacPuebloOriginario}/{pacDireccion}/{pacTelefono}")
+    @PostMapping("")
     @ResponseBody
-    public String agregarPaciente(@PathVariable long rut, @PathVariable String pacNombres, @PathVariable String pacApellidos,@PathVariable String pacSexo,@PathVariable String pacFechaNacimiento,@PathVariable String pacNacionalidad,@PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono)throws Exception{
-
-        Paciente paciente = new Paciente(rut,null,null,null,null,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
+    public String agregarPaciente(@RequestBody Paciente paciente)throws Exception{
         ps.save(paciente);
         return "El paciente se ha agregado";
     }
