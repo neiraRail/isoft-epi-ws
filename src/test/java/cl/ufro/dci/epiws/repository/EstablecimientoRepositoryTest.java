@@ -3,7 +3,6 @@ package cl.ufro.dci.epiws.repository;
 import cl.ufro.dci.epiws.model.Comuna;
 import cl.ufro.dci.epiws.model.Establecimiento;
 import cl.ufro.dci.epiws.model.Region;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
