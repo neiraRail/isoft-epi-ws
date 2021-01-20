@@ -39,7 +39,7 @@ public class PDFReporteCovid {
             document.add(pdf.creaTitulo("Formulario notificación inmediata y envío de reporte COVID-19", fuentes.get(0), Element.ALIGN_CENTER, 55));
             document.add(crearTablaPaciente(pdf.crearTabla(4, 100, 40), paciente));
             document.add(crearTablaProcedencia(pdf.crearTabla(4, 100, 40), paciente.getMedico(), paciente.getEstablecimiento()));
-            document.add(crearTablaAntecedentes(pdf.crearTabla(4, 100, 40), paciente.getAntecedentes().get(0)));
+            document.add(crearTablaAntecedentes(pdf.crearTabla(4, 100, 40), paciente.getAntecedenteList().get(0)));
             document.add(crearTablaSintomas(pdf.crearTabla(4, 100, 40), paciente.getCasos().get(0)));
         } catch (DocumentException | MalformedURLException | IllegalArgumentException | NullPointerException | FileNotFoundException e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class PDFReporteCovid {
             document.add(pdf.creaTitulo("Formulario notificación inmediata y envío de reporte COVID-19", fuentes.get(0), Element.ALIGN_CENTER, 55));
             document.add(crearTablaPaciente(pdf.crearTabla(4, 100, 40), paciente));
             document.add(crearTablaProcedencia(pdf.crearTabla(4, 100, 40), paciente.getMedico(), paciente.getEstablecimiento()));
-            document.add(crearTablaAntecedentes(pdf.crearTabla(4, 100, 40), paciente.getAntecedentes().get(0)));
+            document.add(crearTablaAntecedentes(pdf.crearTabla(4, 100, 40), paciente.getAntecedenteList().get(0)));
             document.add(crearTablaSintomas(pdf.crearTabla(4, 100, 40), paciente.getCasos().get(0)));
         } catch (DocumentException | MalformedURLException | IllegalArgumentException | NullPointerException | FileNotFoundException e) {
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class PDFReporteCovid {
         tabla.addCell(pdf.crearCelda(paciente.getPacApellidos(), fuentes.get(2), 3, Element.ALIGN_LEFT));
         //Cuarta Fila
         tabla.addCell(pdf.crearCelda("Run:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(String.valueOf(paciente.getPacRun()), fuentes.get(2), 1, Element.ALIGN_LEFT));
+        tabla.addCell(pdf.crearCelda(String.valueOf(paciente.getPacRut()), fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda("Teléfono:", fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda(paciente.getPacTelefono(), fuentes.get(2), 1, Element.ALIGN_LEFT));
         //Quinta Fila
@@ -105,12 +105,6 @@ public class PDFReporteCovid {
         //Decima Fila
         tabla.addCell(pdf.crearCelda("Dirección:", fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda(paciente.getPacDireccion(), fuentes.get(2), 3, Element.ALIGN_LEFT));
-        //Onceava Fila
-        tabla.addCell(pdf.crearCelda("Comuna:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(paciente.getPacComunaResidencia(), fuentes.get(2), 1, Element.ALIGN_LEFT));
-        //Doceava Fila
-        tabla.addCell(pdf.crearCelda("Región:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(paciente.getPacRegionResidencia(), fuentes.get(2), 1, Element.ALIGN_LEFT));
         return tabla;
     }
 
@@ -121,17 +115,11 @@ public class PDFReporteCovid {
         tabla.addCell(pdf.crearCelda("Profesional Responsable:", fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda(medico.getMedNombres() + medico.getMedApellidos(), fuentes.get(2), 3, Element.ALIGN_LEFT));
         //Tercera Fila
-        tabla.addCell(pdf.crearCelda("Teléfono:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(medico.getMedTelefono(), fuentes.get(2), 1, Element.ALIGN_LEFT));
-        //Cuarta Fila
-        tabla.addCell(pdf.crearCelda("Email:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(medico.getMedEmail(), fuentes.get(2), 1, Element.ALIGN_LEFT));
-        //Quinta Fila
         tabla.addCell(pdf.crearCelda("Datos Establecimiento", fuentes.get(1), 4, Element.ALIGN_CENTER));
-        //Sexta
+        //Cuarta Fila
         tabla.addCell(pdf.crearCelda("Nombre Hospital:", fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda(establecimiento.getEstNombre(), fuentes.get(2), 3, Element.ALIGN_LEFT));
-        //Septima Fila
+        //Quinta Fila
         tabla.addCell(pdf.crearCelda("Dirección Hospital:", fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda(establecimiento.getEstDireccion(), fuentes.get(2), 3, Element.ALIGN_LEFT));
         return tabla;
@@ -142,10 +130,7 @@ public class PDFReporteCovid {
         tabla.addCell(pdf.crearCelda("Antecedentes Clínicos/Epidemiológicos", fuentes.get(1), 4, Element.ALIGN_CENTER));
         //Segunda Fila
         tabla.addCell(pdf.crearCelda("Embarazo:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(antecedente.getAntEmbarazo().toString(), fuentes.get(2), 1, Element.ALIGN_LEFT));
-        //Tercera Fila
-        tabla.addCell(pdf.crearCelda("Semanas Gestación:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(String.valueOf(antecedente.getAntSemanaGestacion()), fuentes.get(2), 1, Element.ALIGN_LEFT));
+        tabla.addCell(pdf.crearCelda(String.valueOf(antecedente.getAntEmbarazo()), fuentes.get(2), 3, Element.ALIGN_LEFT));
         //Tercera Fila
         tabla.addCell(pdf.crearCelda("Enfermedad Crónica:", fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda(antecedente.getAntEnfermedadCronica(), fuentes.get(2), 3, Element.ALIGN_LEFT));
@@ -197,15 +182,15 @@ public class PDFReporteCovid {
     public Paciente validarDatosNulosPaciente(Paciente paciente) {
         if (Optional.ofNullable(paciente).isPresent()) {
             if (paciente.getEstablecimiento() == null) {
-                paciente.setEstablecimiento(new Establecimiento(0l, "", "", new Region(0l, "")));
+                paciente.setEstablecimiento(new Establecimiento(0l, "", "", new Comuna(0l, "", new Region(0l, ""))));
             }
             if (paciente.getMedico() == null) {
-                paciente.setMedico(new PersonalMedico(0l, "", "", "", ""));
+                paciente.setMedico(new PersonalMedico(0l, "", ""));
             }
-            if (paciente.getAntecedentes().isEmpty()) {
+            if (paciente.getAntecedenteList().isEmpty()) {
                 ArrayList<Antecedente> antecedentesVacios = new ArrayList<>();
-                antecedentesVacios.add(new Antecedente(0l, false, 0, "", "", "", "", ""));
-                paciente.setAntecedentes(antecedentesVacios);
+                antecedentesVacios.add(new Antecedente(0l, false, "", "", "", "", ""));
+                paciente.setAntecedenteList(antecedentesVacios);
             }
             if (paciente.getCasos().isEmpty()) {
                 ArrayList<Caso> casosVacio = new ArrayList<>();

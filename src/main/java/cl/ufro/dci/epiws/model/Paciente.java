@@ -2,6 +2,7 @@ package cl.ufro.dci.epiws.model;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
 @Table(name = "paciente")
 public class Paciente {
@@ -18,7 +19,7 @@ public class Paciente {
     private Establecimiento establecimiento;
 
     @ManyToOne
-    @JoinColumn(name="med_run")
+    @JoinColumn(name = "med_run")
     private PersonalMedico medico;
 
     @OneToMany(mappedBy = "paciente")
@@ -67,9 +68,9 @@ public class Paciente {
      * @param pacDireccion
      * @param pacTelefono
      */
-    public Paciente(long pacRut,  Establecimiento establecimiento, List<Caso> casos, List<Antecedente> antecedenteList, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento,String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono) {
+    public Paciente(long pacRut, Establecimiento establecimiento, List<Caso> casos, List<Antecedente> antecedenteList, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento, String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono) {
         this.pacRut = pacRut;
-        this.pacFechaFallecimiento= pacFechaFallecimiento;
+        this.pacFechaFallecimiento = pacFechaFallecimiento;
         this.establecimiento = establecimiento;
         this.casos = casos;
         this.antecedenteList = antecedenteList;
@@ -83,40 +84,50 @@ public class Paciente {
         this.pacTelefono = pacTelefono;
     }
 
-    public Paciente(){
+    public Paciente() {
 
     }
 
     public Long getPacRut() {
         return pacRut;
     }
+
     public void setPacRut(long pacRut) {
         this.pacRut = pacRut;
     }
-    public String getPacFechaFallecimiento(){
+
+    public String getPacFechaFallecimiento() {
         return pacFechaFallecimiento;
     }
+
     public void setPacFechaFallecimiento(String pacFechaFallecimiento) {
         this.pacFechaFallecimiento = pacFechaFallecimiento;
     }
+
     public Establecimiento getEstablecimiento() {
         return establecimiento;
     }
+
     public void setEstablecimiento(Establecimiento establecimiento) {
         this.establecimiento = establecimiento;
     }
+
     public List<Caso> getCasos() {
         return casos;
     }
+
     public void setCasos(List<Caso> casos) {
         this.casos = casos;
     }
+
     public List<Antecedente> getAntecedenteList() {
         return antecedenteList;
     }
+
     public void setAntecedenteList(List<Antecedente> antecedenteList) {
         this.antecedenteList = antecedenteList;
     }
+
     public String getPacNombres() {
         return pacNombres;
     }
@@ -189,3 +200,4 @@ public class Paciente {
         this.medico = medico;
     }
 }
+
