@@ -4,6 +4,8 @@ import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,7 @@ public class PacienteService {
     public List<Paciente> list() {
         return pacienteRepository.findAll();
     }
+
 
     public void save(Paciente paciente)throws Exception{
             pacienteRepository.save(paciente);
@@ -53,4 +56,3 @@ public class PacienteService {
         pacienteRepository.save(pacienteModificado);
     }
 }
-

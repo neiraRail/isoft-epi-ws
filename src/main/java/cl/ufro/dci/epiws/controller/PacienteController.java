@@ -1,21 +1,32 @@
 package cl.ufro.dci.epiws.controller;
+
 import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 
 @RestController //indica que es una clase controller
 @RequestMapping("/paciente")
 @CrossOrigin
 
+
 public class PacienteController {
     @Autowired
     private PacienteService ps;
-    @PostMapping("")
+    private  ArrayList<Paciente> pacientes=new ArrayList<>();
+
+    @PostMapping("/agregar/{rut}/{pacDv}/{pacNombres}/{pacApellidos}/{pacSexo}/{pacFechaNacimiento}/{pacNacionalidad}/{pacPuebloOriginario}/{pacDireccion}/{pacTelefono}")
     @ResponseBody
-    public String agregarPaciente(@RequestBody Paciente paciente)throws Exception{
+    public String agregarPaciente(@PathVariable long rut, @PathVariable String pacDv, @PathVariable String pacNombres, @PathVariable String pacApellidos,@PathVariable String pacSexo,@PathVariable String pacFechaNacimiento,@PathVariable String pacNacionalidad,@PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono)throws Exception{
+
+        Paciente paciente = new Paciente(rut,pacDv,null,null,null,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
         ps.save(paciente);
-        return "se ha agregado al paciente";
+        return "El paciente se ha agregado";
     }
     /**
      * @param rut
@@ -33,6 +44,8 @@ public class PacienteController {
             return "no encontrado";
         }
     }
+
+
     /**
      * @param rut
      * @return
@@ -52,11 +65,11 @@ public class PacienteController {
      * @return
      */
     @PostMapping("/editar/{rut}/{pacDv}/{pacNombres}/{pacApellidos}/{pacSexo}/{pacFechaNacimiento}/{pacNacionalidad}/{pacPuebloOriginario}/{pacDireccion}/{pacTelefono}")
-    public String editarPaciente(@PathVariable long rut,@PathVariable String fechaFallecimiento, @PathVariable String pacNombres,@PathVariable String pacApellidos,
+    public String editarPaciente(@PathVariable long rut,@PathVariable String pacDv, @PathVariable String pacNombres,@PathVariable String pacApellidos,
                                  @PathVariable String pacSexo,@PathVariable String pacFechaNacimiento, @PathVariable String pacNacionalidad,
                                  @PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono) {
         try {
-            ps.editarPaciente(rut, fechaFallecimiento, pacNombres, pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
+            ps.editarPaciente(rut, pacDv, pacNombres, pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
             return "editado";
         } catch (Exception e) {
             return "No encontrado";

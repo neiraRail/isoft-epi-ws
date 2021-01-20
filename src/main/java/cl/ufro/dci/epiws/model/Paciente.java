@@ -67,10 +67,9 @@ public class Paciente {
      * @param pacDireccion
      * @param pacTelefono
      */
-
     public Paciente(long pacRut,  Establecimiento establecimiento, List<Caso> casos, List<Antecedente> antecedenteList, String pacNombres, String pacApellidos, String pacSexo, String pacFechaNacimiento,String pacFechaFallecimiento, String pacNacionalidad, String pacPuebloOriginario, String pacDireccion, String pacTelefono) {
         this.pacRut = pacRut;
-        this.pacFechaFallecimiento = pacFechaFallecimiento;
+        this.pacFechaFallecimiento= pacFechaFallecimiento;
         this.establecimiento = establecimiento;
         this.casos = casos;
         this.antecedenteList = antecedenteList;
@@ -84,7 +83,6 @@ public class Paciente {
         this.pacTelefono = pacTelefono;
     }
 
-
     public Paciente(){
 
     }
@@ -95,101 +93,99 @@ public class Paciente {
     public void setPacRut(long pacRut) {
         this.pacRut = pacRut;
     }
-
     public String getPacFechaFallecimiento(){
         return pacFechaFallecimiento;
     }
-    public void setPacFechaFallecimiento(String pacFechaFallecimiento){
-            this.pacFechaFallecimiento = pacFechaFallecimiento;
-        }
+    public void setPacFechaFallecimiento(String pacFechaFallecimiento) {
+        this.pacFechaFallecimiento = pacFechaFallecimiento;
+    }
+    public Establecimiento getEstablecimiento() {
+        return establecimiento;
+    }
+    public void setEstablecimiento(Establecimiento establecimiento) {
+        this.establecimiento = establecimiento;
+    }
+    public List<Caso> getCasos() {
+        return casos;
+    }
+    public void setCasos(List<Caso> casos) {
+        this.casos = casos;
+    }
+    public List<Antecedente> getAntecedenteList() {
+        return antecedenteList;
+    }
+    public void setAntecedenteList(List<Antecedente> antecedenteList) {
+        this.antecedenteList = antecedenteList;
+    }
+    public String getPacNombres() {
+        return pacNombres;
+    }
 
-            public Establecimiento getEstablecimiento () {
-                return establecimiento;
-            }
-            public void setEstablecimiento (Establecimiento establecimiento){
-                this.establecimiento = establecimiento;
-            }
-            public List<Caso> getCasos () {
-                return casos;
-            }
-            public void setCasos (List < Caso > casos) {
-                this.casos = casos;
-            }
-            public List<Antecedente> getAntecedenteList () {
-                return antecedenteList;
-            }
-            public void setAntecedenteList (List < Antecedente > antecedenteList) {
-                this.antecedenteList = antecedenteList;
-            }
-            public String getPacNombres () {
-                return pacNombres;
-            }
+    public void setPacNombres(String pacNombres) {
+        this.pacNombres = pacNombres;
+    }
 
-            public void setPacNombres (String pacNombres){
-                this.pacNombres = pacNombres;
-            }
+    public String getPacApellidos() {
+        return pacApellidos;
+    }
 
-            public String getPacApellidos () {
-                return pacApellidos;
-            }
+    public void setPacApellidos(String pacApellidos) {
+        this.pacApellidos = pacApellidos;
+    }
 
-            public void setPacApellidos (String pacApellidos){
-                this.pacApellidos = pacApellidos;
-            }
+    public String getPacSexo() {
+        return pacSexo;
+    }
 
-            public String getPacSexo () {
-                return pacSexo;
-            }
+    public void setPacSexo(String pacSexo) {
+        this.pacSexo = pacSexo;
+    }
 
-            public void setPacSexo (String pacSexo){
-                this.pacSexo = pacSexo;
-            }
+    public String getPacFechaNacimiento() {
+        return pacFechaNacimiento;
+    }
 
-            public String getPacFechaNacimiento () {
-                return pacFechaNacimiento;
-            }
+    public void setPacFechaNacimiento(String pacFechaNacimiento) {
+        this.pacFechaNacimiento = pacFechaNacimiento;
+    }
 
-            public void setPacFechaNacimiento (String pacFechaNacimiento){
-                this.pacFechaNacimiento = pacFechaNacimiento;
-            }
+    public String getPacNacionalidad() {
+        return pacNacionalidad;
+    }
 
-            public String getPacNacionalidad () {
-                return pacNacionalidad;
-            }
+    public void setPacNacionalidad(String pacNacionalidad) {
+        this.pacNacionalidad = pacNacionalidad;
+    }
 
-            public void setPacNacionalidad (String pacNacionalidad){
-                this.pacNacionalidad = pacNacionalidad;
-            }
+    public String getPacPuebloOriginario() {
+        return pacPuebloOriginario;
+    }
 
-            public String getPacPuebloOriginario () {
-                return pacPuebloOriginario;
-            }
+    public void setPacPuebloOriginario(String pacPuebloOriginario) {
+        this.pacPuebloOriginario = pacPuebloOriginario;
+    }
 
-            public void setPacPuebloOriginario (String pacPuebloOriginario){
-                this.pacPuebloOriginario = pacPuebloOriginario;
-            }
+    public String getPacDireccion() {
+        return pacDireccion;
+    }
 
-            public String getPacDireccion () {
-                return pacDireccion;
-            }
+    public void setPacDireccion(String pacDireccion) {
+        this.pacDireccion = pacDireccion;
+    }
 
-            public void setPacDireccion (String pacDireccion){
-                this.pacDireccion = pacDireccion;
-            }
+    public String getPacTelefono() {
+        return pacTelefono;
+    }
 
-            public String getPacTelefono () {
-                return pacTelefono;
-            }
+    public void setPacTelefono(String pacTelefono) {
+        this.pacTelefono = pacTelefono;
+    }
 
-            public void setPacTelefono (String pacTelefono){
-                this.pacTelefono = pacTelefono;
-            }
+    public PersonalMedico getMedico() {
+        return medico;
+    }
 
-            public PersonalMedico getMedico () {
-                return medico;
-            }
-
-            public void setMedico (PersonalMedico medico){
-                this.medico = medico;
-            }
-        }
+    public void setMedico(PersonalMedico medico) {
+        this.medico = medico;
+    }
+}

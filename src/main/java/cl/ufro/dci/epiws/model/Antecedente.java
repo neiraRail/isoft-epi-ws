@@ -1,7 +1,6 @@
 package cl.ufro.dci.epiws.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "antecedente")
