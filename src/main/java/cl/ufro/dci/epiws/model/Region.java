@@ -1,5 +1,7 @@
 package cl.ufro.dci.epiws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Region {
     private String rgnNombre;
 
     @OneToMany(mappedBy = "region")
+    @JsonIgnoreProperties("region")
     private List<Comuna> comunaList;
 
     public Region() {
