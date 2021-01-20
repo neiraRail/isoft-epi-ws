@@ -50,7 +50,7 @@ public class CasoController {
     public Caso agregar(@PathVariable("casSintomas") String casSintomas,
                         @PathVariable("casFecha") String casFecha,
                         @PathVariable("casAsintomatico") Boolean casAsintomatico,
-                        @PathVariable("idPaciente") Long idPaciente) {
+                        @PathVariable("idPaciente") Long idPaciente) throws Exception {
         Paciente paciente = pacienteService.buscarPaciente(idPaciente).get();
         Caso caso = new Caso(casSintomas,casFecha,casAsintomatico,paciente);
         casoService.save(caso);
@@ -111,7 +111,7 @@ public class CasoController {
                            @PathVariable("newCasSintomas") String newCasSintomas,
                            @PathVariable("newCasFecha") String newCasFecha,
                            @PathVariable("newCasAsintomatico") Boolean newCasAsintomatico,
-                           @PathVariable("idPaciente") Long idPaciente){
+                           @PathVariable("idPaciente") Long idPaciente) throws Exception {
         Caso caso = casoService.findById(id);
         Paciente newCasPaciente = pacienteService.buscarPaciente(idPaciente).get();
         caso.setCasSintomas(newCasSintomas);

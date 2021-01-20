@@ -56,4 +56,8 @@ public class Region {
     public void setComunaList(List<Comuna> comunaList) {
         this.comunaList = comunaList;
     }
+
 }
+
+
+

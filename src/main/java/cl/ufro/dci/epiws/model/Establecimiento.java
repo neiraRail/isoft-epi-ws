@@ -90,4 +90,8 @@ public class Establecimiento {
     public void setPacienteList(List<Paciente> pacienteList) {
         this.pacienteList = pacienteList;
     }
+
 }
+
+
+

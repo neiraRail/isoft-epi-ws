@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AntecedenteRepository extends CrudRepository<Antecedente, Long> {
+    Iterable<Antecedente> findAllByAntEmbarazo(boolean embarazo);
 }

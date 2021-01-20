@@ -1,7 +1,9 @@
 package cl.ufro.dci.epiws.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "antecedente")
@@ -12,8 +14,12 @@ public class Antecedente {
     @Column(name = "ant_id")
     private Long antId;
 
-    @ManyToOne
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JsonIgnoreProperties("antecedenteList  ")
     @JoinColumn(name = "pac_rut")
+
+
     private Paciente paciente;
 
     @Column(name = "ant_embarazo")
@@ -35,7 +41,6 @@ public class Antecedente {
     @Column(name = "ant_viaje_al_extranjero")
     private String antViajeExtranjero;
 
-    
     public Antecedente(Long antId, Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
         this.antId = antId;
         this.paciente = paciente;
@@ -46,6 +51,18 @@ public class Antecedente {
         this.antMedicamentos = antMedicamentos;
         this.antViajeExtranjero = antViajeExtranjero;
     }
+
+
+    public Antecedente(Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
+        this.paciente = paciente;
+        this.antEmbarazo = antEmbarazo;
+        this.antEnfermedadCronica = antEnfermedadCronica;
+        this.antAlergias = antAlergias;
+        this.antTipoSangre = antTipoSangre;
+        this.antMedicamentos = antMedicamentos;
+        this.antViajeExtranjero = antViajeExtranjero;
+    }
+
 
     public Antecedente(){
 
@@ -114,4 +131,8 @@ public class Antecedente {
     public void setAntViajeExtranjero(String antViajeExtranjero) {
         this.antViajeExtranjero = antViajeExtranjero;
     }
+
 }
+
+
+
