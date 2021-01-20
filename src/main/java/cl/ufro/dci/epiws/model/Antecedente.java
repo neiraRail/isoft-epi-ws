@@ -18,8 +18,6 @@ public class Antecedente {
     @ManyToOne(cascade=CascadeType.ALL)
     @JsonIgnoreProperties("antecedenteList")
     @JoinColumn(name = "pac_rut")
-
-
     private Paciente paciente;
 
     @Column(name = "ant_embarazo")
