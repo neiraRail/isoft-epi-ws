@@ -4,7 +4,6 @@ import cl.ufro.dci.epiws.model.Region;
 import cl.ufro.dci.epiws.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -58,5 +57,4 @@ public class RegionService {
     public boolean existById(Long id) {
         return regionRepository.existsById(id);
     }
-
 }

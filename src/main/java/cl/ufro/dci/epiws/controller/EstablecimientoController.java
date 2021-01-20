@@ -5,7 +5,6 @@ import cl.ufro.dci.epiws.model.Establecimiento;
 import cl.ufro.dci.epiws.service.ComunaService;
 import cl.ufro.dci.epiws.service.EstablecimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -43,11 +42,13 @@ public class EstablecimientoController {
      * @param idEstablecimiento
      * @return null en caso que no se encuentre el registro buscado o el objeto en caso que se encuentre.
      */
-    @GetMapping("/buscar/{idEstablecimiento}")
-    @ResponseBody
-    public Establecimiento buscar(@PathVariable ("idEstablecimiento") int idEstablecimiento){
-            Long l = (long) idEstablecimiento;
-            return establecimientoService.find(l).get();
+    @GetMapping("/buscar")
+    public Establecimiento buscar(@RequestParam ("est_id") Long idEstablecimiento){
+        if (establecimientoService.find(idEstablecimiento).isEmpty()) {
+            return null;
+        } else {
+            return establecimientoService.find(idEstablecimiento).get();
+        }
     }
 
     /**
