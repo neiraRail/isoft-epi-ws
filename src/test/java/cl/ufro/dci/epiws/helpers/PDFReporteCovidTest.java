@@ -28,10 +28,4 @@ class PDFReporteCovidTest {
         assertThrows(NullPointerException.class, () -> reporteCovid.validarDatosNulosPaciente(paciente));
     }
 
-    @Test
-    @DisplayName("Se espera que se retorne el paciente al ingresar un objeto paciente no null")
-    void validarDatosPacienteNoNull() {
-        paciente=new Paciente();
-        assertEquals(paciente,reporteCovid.validarDatosNulosPaciente(paciente));
-    }
 }
