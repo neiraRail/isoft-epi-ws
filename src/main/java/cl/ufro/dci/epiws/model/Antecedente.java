@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "antecedente")
 public class Antecedente {
@@ -132,4 +131,8 @@ public class Antecedente {
     public void setAntViajeExtranjero(String antViajeExtranjero) {
         this.antViajeExtranjero = antViajeExtranjero;
     }
+
 }
+
+
+

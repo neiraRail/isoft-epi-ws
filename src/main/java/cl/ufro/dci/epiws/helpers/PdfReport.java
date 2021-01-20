@@ -86,7 +86,6 @@ public class PdfReport {
         tablaInformacionPersonal.addCell(new Phrase("", fuenteNormal));
 
         tablaInformacionPersonal.addCell(new Phrase("Rut:", fuenteNormal));
-        tablaInformacionPersonal.addCell(new Phrase(""+paciente.getPacRut()+paciente.getPacDv(), fuenteNormal));
         tablaInformacionPersonal.addCell(new Phrase("Comuna:", fuenteNormal));
         if(paciente.getEstablecimiento() == null){
             tablaInformacionPersonal.addCell(new Phrase(" "));
