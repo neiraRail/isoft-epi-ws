@@ -29,13 +29,12 @@ public class PacienteController {
         return "El paciente se ha agregado";
     }
     /**
-     * @param rut
      * @return
      */
-    @GetMapping("/buscar/{rut}")
-    public String buscaPaciente(@PathVariable long rut) throws Exception {
+    @GetMapping("buscar/")
+    public String buscaPaciente(Paciente paciente) throws Exception {
         try {
-            Paciente pacienteEncontrado = ps.buscarPaciente(rut).get();
+            Paciente pacienteEncontrado = ps.buscarPaciente(paciente.getPacRut()).get();
             return "\nNombres: " + pacienteEncontrado.getPacNombres()+"\n Apellidos: "+pacienteEncontrado.getPacApellidos()+"\n Sexo: "+pacienteEncontrado.getPacSexo()
                     +"\n FechaNacimiento: "+pacienteEncontrado.getPacFechaNacimiento()+"\n Nacionalidad: "+pacienteEncontrado.getPacNacionalidad()
                     +"\n PuebloOriginario: "+ pacienteEncontrado.getPacPuebloOriginario()+"\n Direccion: "+pacienteEncontrado.getPacDireccion()
