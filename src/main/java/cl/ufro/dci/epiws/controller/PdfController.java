@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
+import cl.ufro.dci.epiws.repository.PacienteRepository;
+
 @RestController
 @RequestMapping("/pdf")
 public class PdfController {
