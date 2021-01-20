@@ -42,12 +42,13 @@ public class EstablecimientoController {
      * @param idEstablecimiento
      * @return null en caso que no se encuentre el registro buscado o el objeto en caso que se encuentre.
      */
-    @GetMapping("/buscar")
-    public Establecimiento buscar(@RequestParam ("est_id") Long idEstablecimiento){
-        if (establecimientoService.find(idEstablecimiento).isEmpty()) {
+    @GetMapping("/buscar/{idEstablecimiento}")
+    public Establecimiento buscar(@PathVariable int idEstablecimiento){
+        Long l = (long) idEstablecimiento;
+        if (establecimientoService.find(l).isEmpty()) {
             return null;
         } else {
-            return establecimientoService.find(idEstablecimiento).get();
+            return establecimientoService.find(l).get();
         }
     }
 

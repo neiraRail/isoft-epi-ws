@@ -28,14 +28,14 @@ public class Establecimiento {
     @OneToMany(mappedBy = "establecimiento")
     private List<Paciente> pacienteList;
 
-    public Establecimiento(Long estId, String estNombre, String estDireccion, Comuna comuna) {
+    public Establecimiento(Long estId, String estNombre, String estDireccion, Comuna comuna,List<Paciente> pacienteList) {
 
         this.estId = estId;
         this.estNombre = estNombre;
         this.estDireccion = estDireccion;
         this.comuna = comuna;
 
-        this.pacienteList = new ArrayList<>();
+        this.pacienteList = pacienteList;
     }
 
     public Establecimiento() {
