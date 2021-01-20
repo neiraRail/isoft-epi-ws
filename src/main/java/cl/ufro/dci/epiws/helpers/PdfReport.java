@@ -316,7 +316,7 @@ public class PdfReport {
         if(paciente.getCasos().size() == 0){
             celda.setPhrase(new Phrase(" ", fuenteNormal));
         }else {
-            celda.setPhrase(new Phrase(paciente.getCasos().get(0).getCasFecha(), fuenteNormal));
+            celda.setPhrase(new Phrase(paciente.getCasos().get(0).getCasFechaNotificacion(), fuenteNormal));
         }
         celda.setColspan(2);
         tablaSintomas.addCell(celda);

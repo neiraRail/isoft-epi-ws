@@ -16,7 +16,7 @@ public class Antecedente {
 
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @JsonIgnoreProperties("antecedenteList  ")
+    @JsonIgnoreProperties("antecedenteList")
     @JoinColumn(name = "pac_rut")
 
 

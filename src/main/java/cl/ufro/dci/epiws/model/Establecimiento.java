@@ -1,6 +1,8 @@
 package cl.ufro.dci.epiws.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,23 +22,27 @@ public class Establecimiento {
 
     @ManyToOne
     @JoinColumn(name = "com_id")
+    @JsonBackReference
     private Comuna comuna;
 
     @OneToMany(mappedBy = "establecimiento")
     private List<Paciente> pacienteList;
 
+    public Establecimiento(Long estId, String estNombre, String estDireccion, Comuna comuna,List<Paciente> pacienteList) {
 
-
-    public Establecimiento(Long estId, String estNombre, String estDireccion, Comuna comuna) {
         this.estId = estId;
         this.estNombre = estNombre;
         this.estDireccion = estDireccion;
         this.comuna = comuna;
+
+        this.pacienteList = pacienteList;
     }
 
     public Establecimiento() {
 
     }
+
+
     //constructor sin id.
     public Establecimiento(String estNombre, String estDireccion, Comuna comuna, List<Paciente> pacienteList) {
         this.estNombre = estNombre;
