@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/comuna")
+@CrossOrigin
 public class ComunaController {
 
     @Autowired
@@ -21,6 +22,7 @@ public class ComunaController {
     /**
      * Método que permite agregar registros de regiones.
      * @param nombre
+     * @param regionId
      * @return String con mensaje si es que se agrega.
      */
     @PostMapping("/agregar")
@@ -43,7 +45,7 @@ public class ComunaController {
 
     /**
      * Método que permite eliminar registros de comunas.
-     *
+     * @param idComuna
      * @return String con mensaje si es que se agrega
      */
     @DeleteMapping("/eliminar/{idComuna}")

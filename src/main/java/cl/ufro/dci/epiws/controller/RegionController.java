@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/region")
+@CrossOrigin
 public class RegionController {
 
     @Autowired
@@ -17,7 +18,7 @@ public class RegionController {
 
     /**
      * Método que permite agregar registros de regiones.
-     *
+     * @param nombre
      *
      * @return String con mensaje si es que se agrega
      */
@@ -41,7 +42,7 @@ public class RegionController {
 
     /**
      * Método que permite eliminar registros de regiones.
-     *
+     * @param idRegion
      * @return String con mensaje si es que se agrega
      */
     @DeleteMapping("/eliminar/{idRegion}")
