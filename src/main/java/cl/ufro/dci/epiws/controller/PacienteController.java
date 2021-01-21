@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 
 @RestController //indica que es una clase controller
-@RequestMapping("/paciente")
+@RequestMapping("api/paciente")
 @CrossOrigin
 
 
