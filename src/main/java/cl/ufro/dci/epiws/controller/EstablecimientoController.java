@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 @RestController
 @RequestMapping("/api/establecimiento")
+@CrossOrigin
 public class EstablecimientoController {
 
     @Autowired
