@@ -24,7 +24,6 @@ class PacienteServiceTest {
     private PacienteService ps;
     private Paciente paciente;
     private Paciente paciente1;
-    private PacienteController pc;
     @Mock
     private PacienteRepository pacienteRepository;
     @InjectMocks
@@ -45,15 +44,18 @@ class PacienteServiceTest {
     @Test
     @DisplayName("Verifica no guardar un objeto nulo")
     void saveNulo() throws Exception {
-        Throwable exception = assertThrows(NullPointerException.class, () -> {
-            pc.agregarPaciente(null);
-        });
+//        Throwable exception = assertThrows(NullPointerException.class, () -> {
+//            pc.agregarPaciente(null);
+//        });
     }
 
     @Test
     @DisplayName("Verifica no guardar dos pacientes con el mismo rut")
     void saveIguales() throws Exception {
-
+        when(pacienteRepository.findById(123L)).thenReturn(Optional.of(paciente));
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.save(paciente);
+        });
     }
 
     @Test
@@ -63,8 +65,6 @@ class PacienteServiceTest {
         Throwable exception = assertThrows(ResponseStatusException.class, () -> {
             pacienteService.borrarPaciente(123L);
         });
-
-
     }
 
     @Test
@@ -107,6 +107,5 @@ class PacienteServiceTest {
         Throwable exception = assertThrows(ResponseStatusException.class, () -> {
             pacienteService.buscarPaciente(123L);
         });;
-
     }
 }

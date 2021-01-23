@@ -22,7 +22,9 @@ public class PacienteService {
 
 
     public void save(Paciente paciente)throws Exception{
-        pacienteRepository.save(paciente);
+        if(!pacienteRepository.existsById(paciente.getPacRut())){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+        } pacienteRepository.save(paciente);
     }
 
     public void borrarPaciente(Long id)throws Exception {
