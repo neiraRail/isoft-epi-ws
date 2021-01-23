@@ -58,15 +58,13 @@ public class PacienteController {
     }
 
     /**
-     * @param rut
-     * @return
+    // * @param rut
+    // * @return
      */
-    @PostMapping("/editar/{rut}/{pacDv}/{pacNombres}/{pacApellidos}/{pacSexo}/{pacFechaNacimiento}/{pacNacionalidad}/{pacPuebloOriginario}/{pacDireccion}/{pacTelefono}")
-    public String editarPaciente(@PathVariable long rut,@PathVariable String pacDv, @PathVariable String pacNombres,@PathVariable String pacApellidos,
-                                 @PathVariable String pacSexo,@PathVariable String pacFechaNacimiento, @PathVariable String pacNacionalidad,
-                                 @PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono) {
+    @PostMapping("/editar")
+    public String editarPaciente(@RequestBody Paciente paciente) {
         try {
-            ps.editarPaciente(rut, pacDv, pacNombres, pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
+            ps.editarPaciente(paciente.getPacRut(),paciente.getPacFechaFallecimiento(), paciente.getPacNombres(),paciente.getPacApellidos(),paciente.getPacSexo(),paciente.getPacFechaNacimiento(),paciente.getPacNacionalidad(),paciente.getPacPuebloOriginario(),paciente.getPacDireccion(),paciente.getPacTelefono());
             return "editado";
         } catch (Exception e) {
             return "No encontrado";
