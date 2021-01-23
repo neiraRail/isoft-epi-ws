@@ -3,8 +3,9 @@ package cl.ufro.dci.epiws.service;
 import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,34 +26,26 @@ public class PacienteService {
     }
 
     public void borrarPaciente(Long id)throws Exception {
-        if (buscarPaciente(id) != null) {
-            pacienteRepository.deleteById(id);
-        } else {
-            throw new NullPointerException();
+        if(!pacienteRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
         }
+        pacienteRepository.deleteById(id);
     }
 
     public Optional<Paciente> buscarPaciente(Long id)throws Exception{
-        if(!Optional.ofNullable(pacienteRepository.findById(id)).isPresent()) {
-            return pacienteRepository.findById(id);
-        }else{
-            throw new NullPointerException();
-        }
+        return Optional.ofNullable(pacienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado")));
     }
 
     public void editarPaciente(long rut,String fechaFallecimiento,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
                                String pacNacionalidad,String pacPuebloOriginario,String pacDireccion,String pacTelefono) throws Exception {
-        Paciente pacienteModificado;
-        pacienteModificado = buscarPaciente(rut).get();
-        pacienteModificado.setPacFechaFallecimiento(fechaFallecimiento);
-        pacienteModificado.setPacNombres(pacNombres);
-        pacienteModificado.setPacApellidos(pacApellidos);
-        pacienteModificado.setPacSexo(pacSexo);
-        pacienteModificado.setPacFechaNacimiento(pacFechaNacimiento);
-        pacienteModificado.setPacNacionalidad(pacNacionalidad);
-        pacienteModificado.setPacPuebloOriginario(pacPuebloOriginario);
-        pacienteModificado.setPacDireccion(pacDireccion);
-        pacienteModificado.setPacTelefono(pacTelefono);
-        pacienteRepository.save(pacienteModificado);
+        pacienteRepository.findById(rut).get().setPacFechaFallecimiento(fechaFallecimiento);
+        pacienteRepository.findById(rut).get().setPacNombres(pacNombres);
+        pacienteRepository.findById(rut).get().setPacApellidos(pacApellidos);
+        pacienteRepository.findById(rut).get().setPacSexo(pacSexo);
+        pacienteRepository.findById(rut).get().setPacFechaNacimiento(pacFechaNacimiento);
+        pacienteRepository.findById(rut).get().setPacNacionalidad(pacNacionalidad);
+        pacienteRepository.findById(rut).get().setPacPuebloOriginario(pacPuebloOriginario);
+        pacienteRepository.findById(rut).get().setPacDireccion(pacDireccion);
+        pacienteRepository.findById(rut).get().setPacTelefono(pacTelefono);
     }
 }
