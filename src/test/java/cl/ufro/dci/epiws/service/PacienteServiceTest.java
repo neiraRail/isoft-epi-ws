@@ -40,15 +40,6 @@ class PacienteServiceTest {
         mockMvc = MockMvcBuilders.standaloneSetup(pacienteRepository).build();
     }
 
-
-    @Test
-    @DisplayName("Verifica no guardar un objeto nulo")
-    void saveNulo() throws Exception {
-//        Throwable exception = assertThrows(NullPointerException.class, () -> {
-//            pc.agregarPaciente(null);
-//        });
-    }
-
     @Test
     @DisplayName("Verifica no guardar dos pacientes con el mismo rut")
     void saveIguales() throws Exception {
