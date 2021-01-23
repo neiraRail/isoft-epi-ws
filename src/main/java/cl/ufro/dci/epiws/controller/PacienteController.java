@@ -13,8 +13,7 @@ import java.util.Optional;
 
 @RestController //indica que es una clase controller
 @RequestMapping("api/paciente")
-@CrossOrigin
-
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,RequestMethod.PUT})
 
 public class PacienteController {
     @Autowired
@@ -33,7 +32,7 @@ public class PacienteController {
     /**
      * @return
      */
-    @GetMapping("buscar/")
+    @GetMapping("/buscar")
     @ResponseBody
     public String buscaPaciente(@RequestBody Paciente paciente) throws Exception {
         try {
@@ -52,7 +51,7 @@ public class PacienteController {
      * @param rut
      * @return
      */
-    @GetMapping("/eliminar/{rut}")
+    @DeleteMapping("/eliminar/{rut}")
     public String eliminarPaciente(@PathVariable long rut) throws Exception{
         try {
             ps.borrarPaciente(rut);
@@ -66,10 +65,10 @@ public class PacienteController {
     // * @param rut
     // * @return
      */
-    @PostMapping("/editar")
-    public String editarPaciente(@RequestBody Paciente paciente) {
+    @PutMapping("/editar/{rut}")
+    public String editarPaciente(@PathVariable Long rut,@RequestBody Paciente paciente) {
         try {
-            ps.editarPaciente(paciente.getPacRut(),paciente.getPacFechaFallecimiento(), paciente.getPacNombres(),paciente.getPacApellidos(),paciente.getPacSexo(),paciente.getPacFechaNacimiento(),paciente.getPacNacionalidad(),paciente.getPacPuebloOriginario(),paciente.getPacDireccion(),paciente.getPacTelefono());
+            ps.editarPaciente(rut,paciente.getPacFechaFallecimiento(), paciente.getPacNombres(),paciente.getPacApellidos(),paciente.getPacSexo(),paciente.getPacFechaNacimiento(),paciente.getPacNacionalidad(),paciente.getPacPuebloOriginario(),paciente.getPacDireccion(),paciente.getPacTelefono());
             return "editado";
         } catch (Exception e) {
             return "No encontrado";
