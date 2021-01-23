@@ -22,7 +22,9 @@ public class PacienteService {
 
 
     public void save(Paciente paciente)throws Exception{
-        pacienteRepository.save(paciente);
+        if(!pacienteRepository.existsById(paciente.getPacRut())){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+        } pacienteRepository.save(paciente);
     }
 
     public void borrarPaciente(Long id)throws Exception {
@@ -38,14 +40,16 @@ public class PacienteService {
 
     public void editarPaciente(long rut,String fechaFallecimiento,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
                                String pacNacionalidad,String pacPuebloOriginario,String pacDireccion,String pacTelefono) throws Exception {
-        pacienteRepository.findById(rut).get().setPacFechaFallecimiento(fechaFallecimiento);
-        pacienteRepository.findById(rut).get().setPacNombres(pacNombres);
-        pacienteRepository.findById(rut).get().setPacApellidos(pacApellidos);
-        pacienteRepository.findById(rut).get().setPacSexo(pacSexo);
-        pacienteRepository.findById(rut).get().setPacFechaNacimiento(pacFechaNacimiento);
-        pacienteRepository.findById(rut).get().setPacNacionalidad(pacNacionalidad);
-        pacienteRepository.findById(rut).get().setPacPuebloOriginario(pacPuebloOriginario);
-        pacienteRepository.findById(rut).get().setPacDireccion(pacDireccion);
-        pacienteRepository.findById(rut).get().setPacTelefono(pacTelefono);
+        Paciente pacienteMod = buscarPaciente(rut).get();
+        pacienteMod.setPacFechaFallecimiento(fechaFallecimiento);
+        pacienteMod.setPacNombres(pacNombres);
+        pacienteMod.setPacApellidos(pacApellidos);
+        pacienteMod.setPacSexo(pacSexo);
+        pacienteMod.setPacFechaNacimiento(pacFechaNacimiento);
+        pacienteMod.setPacNacionalidad(pacNacionalidad);
+        pacienteMod.setPacPuebloOriginario(pacPuebloOriginario);
+        pacienteMod.setPacDireccion(pacDireccion);
+        pacienteMod.setPacTelefono(pacTelefono);
+        pacienteRepository.save(pacienteMod);
     }
 }
