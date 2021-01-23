@@ -24,12 +24,8 @@ public class PacienteController {
     @ResponseBody
     public String agregarPaciente(@RequestBody Paciente paciente)throws Exception {
         if (Optional.ofNullable(paciente).isPresent()) { //si no es nulo el paciente
-            if (ps.buscarPaciente(paciente.getPacRut()).isPresent()) {
-                ps.save(paciente);
-                return "El paciente se ha agregado";
-            } else {
-                return "Objeto ingresado anteriormente";
-            }
+            ps.save(paciente);
+            return "El paciente se ha agregado";
         }else{
             throw new NullPointerException("objeto nulo");
         }
