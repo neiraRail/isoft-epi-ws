@@ -1,5 +1,6 @@
 package cl.ufro.dci.epiws.service;
 
+import cl.ufro.dci.epiws.controller.PacienteController;
 import cl.ufro.dci.epiws.model.Paciente;
 import org.aspectj.lang.annotation.Before;
 import org.hibernate.validator.constraints.br.TituloEleitoral;
@@ -20,6 +21,7 @@ class PacienteServiceTest {
     private PacienteService ps;
     private Paciente paciente1;
     private Paciente paciente2;
+    private PacienteController pc;
 
     @BeforeEach
     @DisplayName("Carga los datos iniciales para la ejecucion de las pruebas")
@@ -28,6 +30,7 @@ class PacienteServiceTest {
                 "sexo","fechanaci","nacionalidad","as","sad","ads");
         paciente2 = new Paciente();
         ps = new PacienteService();
+        pc = new PacienteController();
     }
 
 
@@ -35,13 +38,17 @@ class PacienteServiceTest {
     @DisplayName("Verifica no guardar un objeto nulo")
     void saveNulo() throws Exception {
         Throwable exception = assertThrows(NullPointerException.class, () -> {
-            ps.save(null);
+            pc.agregarPaciente(null);
         });
     }
 
     @Test
     @DisplayName("Verifica no guardar dos pacientes con el mismo rut")
     void saveIguales() throws Exception {
+       pc.agregarPaciente(paciente1);
+        Throwable exception = assertThrows(NullPointerException.class, () ->{
+            pc.agregarPaciente(paciente2);
+        });
     }
 
     @Test

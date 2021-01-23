@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController //indica que es una clase controller
 @RequestMapping("/paciente")
@@ -21,9 +22,17 @@ public class PacienteController {
 
     @PostMapping("")
     @ResponseBody
-    public String agregarPaciente(@RequestBody Paciente paciente)throws Exception{
-        ps.save(paciente);
-        return "El paciente se ha agregado";
+    public String agregarPaciente(@RequestBody Paciente paciente)throws Exception {
+        if (Optional.ofNullable(paciente).isPresent()) { //si no es nulo el paciente
+            if (ps.buscarPaciente(paciente.getPacRut()).isPresent()) {
+                ps.save(paciente);
+                return "El paciente se ha agregado";
+            } else {
+                return "Objeto ingresado anteriormente";
+            }
+        }else{
+            throw new NullPointerException("objeto nulo");
+        }
     }
     /**
      * @return

@@ -21,7 +21,7 @@ public class PacienteService {
 
 
     public void save(Paciente paciente)throws Exception{
-            pacienteRepository.save(paciente);
+        pacienteRepository.save(paciente);
     }
 
     public void borrarPaciente(Long id)throws Exception {
@@ -33,7 +33,7 @@ public class PacienteService {
     }
 
     public Optional<Paciente> buscarPaciente(Long id)throws Exception{
-        if (pacienteRepository.findById(id).isPresent()){
+        if(!Optional.ofNullable(pacienteRepository.findById(id)).isPresent()) {
             return pacienteRepository.findById(id);
         }else{
             throw new NullPointerException();
