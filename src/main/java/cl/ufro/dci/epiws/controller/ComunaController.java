@@ -1,9 +1,11 @@
 package cl.ufro.dci.epiws.controller;
 
 import cl.ufro.dci.epiws.model.Comuna;
+import cl.ufro.dci.epiws.model.Establecimiento;
 import cl.ufro.dci.epiws.service.ComunaService;
 import cl.ufro.dci.epiws.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -41,6 +43,22 @@ public class ComunaController {
     @GetMapping("/buscar")
     public Comuna buscarComuna(@RequestParam String nombre) {
         return comunaService.findByNombre(nombre);
+    }
+
+    /**
+     * éetodo para editar un registro de comuna.
+     * @param idComuna
+     * @param comuna
+     * @return
+     */
+    @PutMapping(value = "/editar/{idComuna}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String editar(@PathVariable ("idComuna") Long idComuna, @RequestBody Comuna comuna) {
+        if (comunaService.existById(idComuna)) {
+            comunaService.editarNombre(idComuna, comuna.getComNombre());
+            comunaService.editarRegion(idComuna,comuna.getRegion());
+            return "La comuna se ha cambiado correctamente.";
+        }
+        return "No se ha podido editar la comuna.";
     }
 
     /**
