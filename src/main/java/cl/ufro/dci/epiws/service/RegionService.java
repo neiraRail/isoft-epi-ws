@@ -44,10 +44,10 @@ public class RegionService {
 
     /** Metodo para editar el nombre de una región.
      * @param id
-     * @param nombre
+     * @param region
      */
-    public void editarNombre(long id, String nombre){
-        regionRepository.findById(id).get().setRgnNombre(nombre);
+    public void editarRegion(long id, Region region){
+        regionRepository.findById(id).get().setRgnNombre(region.getRgnNombre());
     }
 
     /** Metodo que verifica que exista el id de una región.
