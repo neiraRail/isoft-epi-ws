@@ -42,12 +42,10 @@ public class RegionService {
         regionRepository.deleteById(id);
     }
 
-    /** Metodo para editar el nombre de una región.
-     * @param id
-     * @param region
-     */
-    public void editarRegion(long id, Region region){
-        regionRepository.findById(id).get().setRgnNombre(region.getRgnNombre());
+    public void editarRegion(long id, String nombre){
+        Region regionModificada = regionRepository.findById(id).get();
+        regionModificada.setRgnNombre(nombre);
+        regionRepository.save(regionModificada);
     }
 
     /** Metodo que verifica que exista el id de una región.
