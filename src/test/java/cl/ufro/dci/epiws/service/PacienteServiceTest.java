@@ -67,6 +67,7 @@ class PacienteServiceTest {
     }
 
     @Test
+
     @DisplayName("verifica funcionamiento paciente nulo")
     void borrarPaciente()throws Exception{
         when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
@@ -105,5 +106,13 @@ class PacienteServiceTest {
         Throwable exception = assertThrows(ResponseStatusException.class, () -> {
             pacienteService.buscarPaciente(123L);
         });;
+    }
+    @Test
+    @DisplayName("Verifica editar paciente inexistente")
+    void editarInexistente(){
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(false);
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.editarPaciente(125L,null,null,null,null,null,null,null,null,null);
+        });
     }
 }
