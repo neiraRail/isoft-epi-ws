@@ -3,43 +3,51 @@ package cl.ufro.dci.epiws.helpers;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Optional;
 
 public class PDF {
 
-    public PDF() {
-        //Constructor vacío por framework
-    }
-
     public PdfPTable crearTabla(int numColumnas, int ancho, float separacionVertical) {
-        try {
+        if (numColumnas > 0 && ancho > 0 && separacionVertical > 0) {
             PdfPTable tabla = new PdfPTable(numColumnas);
             tabla.setWidthPercentage(ancho);
             tabla.setSpacingBefore(separacionVertical);
             return tabla;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Solo números superior a 0");
+        } else {
+            throw new IllegalArgumentException("Solo números mayores que cero");
         }
     }
 
     public PdfPCell crearCelda(String texto, Font fuente, int espacioCeldas, int alineacion) {
-        try {
-            PdfPCell celda = new PdfPCell(new Phrase(texto, fuente));
-            celda.setColspan(espacioCeldas);
-            celda.setHorizontalAlignment(alineacion);
-            if (texto != null) {
-                return celda;
+        if (Optional.ofNullable(fuente).isPresent()) {
+            if (espacioCeldas > 0 && alineacion >= 0) {
+                if (Optional.ofNullable(texto).isPresent()) {
+                    PdfPCell celda = new PdfPCell(new Phrase(texto, fuente));
+                    celda.setColspan(espacioCeldas);
+                    celda.setHorizontalAlignment(alineacion);
+                    return celda;
+                } else {
+                    PdfPCell celdaTextoVacio = new PdfPCell(new Phrase(" ", fuente));
+                    celdaTextoVacio.setColspan(espacioCeldas);
+                    celdaTextoVacio.setHorizontalAlignment(alineacion);
+                    return celdaTextoVacio;
+                }
             } else {
-                celda = new PdfPCell(new Phrase(" ", fuente));
-                celda.setColspan(espacioCeldas);
-                celda.setHorizontalAlignment(alineacion);
-                return celda;
+                throw new IllegalArgumentException("Solo números mayores que cero");
             }
-        } catch (NullPointerException e) {
-            throw new NullPointerException("La fuente no debe ser nula");
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Solo números superior a 0");
+        } else {
+            throw new NullPointerException("La Fuente no puede ser nula");
+        }
+    }
+
+    private Font comprobarFuenteNula(Font font) {
+        if (Optional.ofNullable(font).isPresent()) {
+            return font;
+        } else {
+            throw new NullPointerException("La fuente no puede ser nula");
         }
     }
 

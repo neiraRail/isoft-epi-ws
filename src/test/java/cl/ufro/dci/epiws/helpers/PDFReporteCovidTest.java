@@ -3,8 +3,6 @@ package cl.ufro.dci.epiws.helpers;
 import cl.ufro.dci.epiws.model.Paciente;
 import org.junit.jupiter.api.*;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PDFReporteCovidTest {
