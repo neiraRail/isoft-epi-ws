@@ -61,15 +61,15 @@ public class RegionController {
      *
      * @return String con mensaje si es que se agrega
      */
-    @PutMapping("/editar")
-    public String editarNombre(@RequestParam int idRegion, @RequestParam String nombre) {
+    @PutMapping("/editar/{idRegion}")
+    public String editarNombre(@PathVariable int idRegion, @RequestBody Region region) {
         Long l = (long) idRegion;
         if (regionService.existById(l)) {
             if (regionService.find(l).isPresent()){
-                regionService.editarNombre(l,nombre);
+                regionService.editarNombre(l,region.getRgnNombre());
             }
-            return "El establecimiento se ha cambiado correctamente.";
+            return "La región se ha cambiado correctamente.";
         }
-        return "No se ha podido editar el establecimiento.";
+        return "No se ha podido editar la región.";
     }
 }
