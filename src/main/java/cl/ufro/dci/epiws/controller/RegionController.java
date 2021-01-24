@@ -66,7 +66,7 @@ public class RegionController {
         Long l = (long) idRegion;
         if (regionService.existById(l)) {
             if (regionService.find(l).isPresent()){
-                regionService.editarNombre(l,region.getRgnNombre());
+                regionService.editarRegion(l,region);
             }
             return "La región se ha cambiado correctamente.";
         }
