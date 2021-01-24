@@ -21,7 +21,7 @@ public class PacienteService {
 
 
     public void save(Paciente paciente)throws Exception{
-            pacienteRepository.save(paciente);
+        pacienteRepository.save(paciente);
     }
 
     public void borrarPaciente(Long id)throws Exception {

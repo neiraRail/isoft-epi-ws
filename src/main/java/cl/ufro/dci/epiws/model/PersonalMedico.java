@@ -35,6 +35,12 @@ public class PersonalMedico {
         this.pacienteList = pacienteList;
     }
 
+    public PersonalMedico(Long medRut, String medNombres, String medApellidos) {
+        this.medRut = medRut;
+        this.medNombres = medNombres;
+        this.medApellidos = medApellidos;
+    }
+
     public Long getMedRut() {
         return medRut;
     }
