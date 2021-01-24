@@ -41,17 +41,20 @@ public class PacienteService {
 
     public void editarPaciente(long rut,String fechaFallecimiento,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
                                String pacNacionalidad,String pacPuebloOriginario,String pacDireccion,String pacTelefono) throws Exception {
-
-        Paciente pacienteMod = buscarPaciente(rut).get();
-        pacienteMod.setPacFechaFallecimiento(fechaFallecimiento);
-        pacienteMod.setPacNombres(pacNombres);
-        pacienteMod.setPacApellidos(pacApellidos);
-        pacienteMod.setPacSexo(pacSexo);
-        pacienteMod.setPacFechaNacimiento(pacFechaNacimiento);
-        pacienteMod.setPacNacionalidad(pacNacionalidad);
-        pacienteMod.setPacPuebloOriginario(pacPuebloOriginario);
-        pacienteMod.setPacDireccion(pacDireccion);
-        pacienteMod.setPacTelefono(pacTelefono);
-        pacienteRepository.save(pacienteMod);
+        if(!pacienteRepository.existsById(rut)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+        }else {
+            Paciente pacienteMod = buscarPaciente(rut).get();
+            pacienteMod.setPacFechaFallecimiento(fechaFallecimiento);
+            pacienteMod.setPacNombres(pacNombres);
+            pacienteMod.setPacApellidos(pacApellidos);
+            pacienteMod.setPacSexo(pacSexo);
+            pacienteMod.setPacFechaNacimiento(pacFechaNacimiento);
+            pacienteMod.setPacNacionalidad(pacNacionalidad);
+            pacienteMod.setPacPuebloOriginario(pacPuebloOriginario);
+            pacienteMod.setPacDireccion(pacDireccion);
+            pacienteMod.setPacTelefono(pacTelefono);
+            pacienteRepository.save(pacienteMod);
+        }
     }
 }
