@@ -43,10 +43,18 @@ class PacienteServiceTest {
     @Test
     @DisplayName("Verifica no guardar dos pacientes con el mismo rut")
     void saveIguales() throws Exception {
-        when(pacienteRepository.findById(123L)).thenReturn(Optional.of(paciente));
+        when(pacienteRepository.findById(123L)).thenReturn(Optional.empty());
         Throwable exception = assertThrows(ResponseStatusException.class, () -> {
             pacienteService.save(paciente);
         });
+    }
+
+    @Test
+    @DisplayName("Verifica correcta funcionalidad del metodo save")
+    void saveCorrecto()throws Exception{
+        when(pacienteRepository.findById(paciente.getPacRut())).thenReturn(Optional.of(paciente));
+        pacienteService.save(paciente);
+        assertEquals(pacienteService.buscarPaciente(paciente.getPacRut()).get().getPacRut(),paciente.getPacRut());
     }
 
     @Test

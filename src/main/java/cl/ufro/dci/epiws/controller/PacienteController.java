@@ -22,7 +22,7 @@ public class PacienteController {
     @PostMapping("")
     @ResponseBody
     public String agregarPaciente(@RequestBody Paciente paciente)throws Exception {
-        if (Optional.ofNullable(paciente).isPresent()) { //si no es nulo el paciente
+        if (!Optional.ofNullable(paciente).isPresent()) { //si no es nulo el paciente
             ps.save(paciente);
             return "El paciente se ha agregado";
         }else{

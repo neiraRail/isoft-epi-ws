@@ -14,5 +14,10 @@ class PacienteControllerTest {
             pc.agregarPaciente(null);
         });
     }
+    @Test
+    @DisplayName("Verifica que no existe un paciente a eliminar")
+    void borrarPacienteInexistente() throws Exception {
+
+    }
 
 }
