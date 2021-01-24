@@ -25,6 +25,8 @@ public class AntecedenteService {
         if(!pacienteRepository.existsById(pacId)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
         }
+        //Validacion embarazo
+        //Validacion Ciudad y Pais
         return antecedenteRepository.save(nuevoAntecedente);
     }
 

@@ -1,4 +1,4 @@
-package cl.ufro.dci.epiws.controller;
+package cl.ufro.dci.epiws.service;
 
 import cl.ufro.dci.epiws.model.Antecedente;
 import cl.ufro.dci.epiws.model.Paciente;
@@ -54,7 +54,7 @@ class AntecedenteServiceTest {
         antTipoSangre = "B+";
         antMedicamentos = "";
         antViajeExtranjero = "Canada";
-        antecedente = new Antecedente(paciente,antEmbarazo,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
+        antecedente = new Antecedente(paciente,antEmbarazo,4,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
         MockitoAnnotations.initMocks(this); //Inicializa el controlador y los mocks
         mockMvc = MockMvcBuilders.standaloneSetup(antecedenteService,pacienteRepository).build();
 
@@ -62,7 +62,7 @@ class AntecedenteServiceTest {
 
     @Test
     public void testBuscarAntecedenteEncuentra() {
-        when(antecedenteRepository.findById(1l)).thenReturn(Optional.of(antecedente));
+        when(antecedenteRepository.findById(1L)).thenReturn(Optional.of(antecedente));
         assertEquals(antecedente,antecedenteService.buscar(1L));
     }
 
