@@ -46,7 +46,7 @@ public class ComunaController {
     }
 
     /**
-     * éetodo para editar un registro de comuna.
+     * Método para editar un registro de comuna.
      * @param idComuna
      * @param comuna
      * @return
