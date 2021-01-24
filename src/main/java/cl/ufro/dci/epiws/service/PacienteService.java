@@ -41,21 +41,17 @@ public class PacienteService {
 
     public void editarPaciente(long rut,String fechaFallecimiento,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
                                String pacNacionalidad,String pacPuebloOriginario,String pacDireccion,String pacTelefono) throws Exception {
-        if(!pacienteRepository.existsById(rut)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente ya agregado");
-        }else {
 
-            Paciente pacienteMod = pacienteRepository.findById(rut).get();
-            pacienteMod.setPacFechaFallecimiento(fechaFallecimiento);
-            pacienteMod.setPacNombres(pacNombres);
-            pacienteMod.setPacApellidos(pacApellidos);
-            pacienteMod.setPacSexo(pacSexo);
-            pacienteMod.setPacFechaNacimiento(pacFechaNacimiento);
-            pacienteMod.setPacNacionalidad(pacNacionalidad);
-            pacienteMod.setPacPuebloOriginario(pacPuebloOriginario);
-            pacienteMod.setPacDireccion(pacDireccion);
-            pacienteMod.setPacTelefono(pacTelefono);
-            pacienteRepository.save(pacienteMod);
-        }
+        Paciente pacienteMod = buscarPaciente(rut).get();
+        pacienteMod.setPacFechaFallecimiento(fechaFallecimiento);
+        pacienteMod.setPacNombres(pacNombres);
+        pacienteMod.setPacApellidos(pacApellidos);
+        pacienteMod.setPacSexo(pacSexo);
+        pacienteMod.setPacFechaNacimiento(pacFechaNacimiento);
+        pacienteMod.setPacNacionalidad(pacNacionalidad);
+        pacienteMod.setPacPuebloOriginario(pacPuebloOriginario);
+        pacienteMod.setPacDireccion(pacDireccion);
+        pacienteMod.setPacTelefono(pacTelefono);
+        pacienteRepository.save(pacienteMod);
     }
 }
