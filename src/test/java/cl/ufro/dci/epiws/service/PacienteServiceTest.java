@@ -67,9 +67,8 @@ class PacienteServiceTest {
     }
 
     @Test
-    @DisplayName("verifica funcionamiento correcto")
+    @DisplayName("verifica funcionamiento paciente nulo")
     void borrarPaciente()throws Exception{
-        //ARREGLAR
         when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
         Throwable exception = assertThrows(ResponseStatusException.class, () -> {
             pacienteService.borrarPaciente(null);
