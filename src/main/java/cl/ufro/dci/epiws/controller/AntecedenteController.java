@@ -35,4 +35,10 @@ public class AntecedenteController {
     public Antecedente buscar(@PathVariable long id){
         return antecedenteService.buscar(id);
     }
+
+    @PutMapping("")
+    public Antecedente editar(@RequestBody Antecedente antecedente){
+        return antecedenteService.editarAntecedente(antecedente);
+    }
+
 }

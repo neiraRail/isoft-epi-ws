@@ -119,4 +119,42 @@ public class AntecedenteService {
         return partes[0]+", "+partes[1];
 
     }
+
+    public Antecedente editarAntecedente(Antecedente cambio) {
+        long antId = cambio.getAntId();
+        if(!antecedenteRepository.existsById(antId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Antecedente no encontrado");
+        }
+        Antecedente original = antecedenteRepository.findById(antId).get();
+
+        Antecedente cambiado = cambiarAntecedente(original,cambio);
+        return antecedenteRepository.save(cambiado);
+
+    }
+
+    private Antecedente cambiarAntecedente(Antecedente original, Antecedente cambio) {
+        if(cambio.getAntEmbarazo()!=null){
+            original.setAntEmbarazo(cambio.getAntEmbarazo());
+        }
+        if(cambio.getAntSemanasGest() != 0){
+            original.setAntSemanasGest(cambio.getAntSemanasGest());
+        }
+        if(!cambio.getAntEnfermedadCronica().equals("")){
+            original.setAntEnfermedadCronica(original.getAntEnfermedadCronica());
+        }
+        if(!cambio.getAntAlergias().equals("")){
+            original.setAntAlergias(cambio.getAntAlergias());
+        }
+        if(!cambio.getAntTipoSangre().equals("")){
+            original.setAntTipoSangre(cambio.getAntTipoSangre());
+        }
+        if(!cambio.getAntMedicamentos().equals("")){
+            original.setAntMedicamentos(cambio.getAntMedicamentos());
+        }
+        if(!cambio.getAntViajeExtranjero().equals("")){
+            original.setAntViajeExtranjero(cambio.getAntViajeExtranjero());
+        }
+        return original;
+
+    }
 }
