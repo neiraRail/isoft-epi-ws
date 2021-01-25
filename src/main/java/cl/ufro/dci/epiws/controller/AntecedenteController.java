@@ -31,11 +31,13 @@ public class AntecedenteController {
             return antecedenteService.findAll();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("{id}")
     public Antecedente buscar(@PathVariable long id){
         return antecedenteService.buscar(id);
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("")
     public Antecedente editar(@RequestBody Antecedente antecedente){
         return antecedenteService.editarAntecedente(antecedente);
