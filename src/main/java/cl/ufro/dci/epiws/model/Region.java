@@ -1,6 +1,9 @@
 package cl.ufro.dci.epiws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,18 +19,21 @@ public class Region {
     private String rgnNombre;
 
     @OneToMany(mappedBy = "region")
-    private List<Seremi> seremiList;
+    @JsonIgnoreProperties("region")
+    private List<Comuna> comunaList;
 
     public Region() {
     }
 
     public Region(String rgnNombre) {
         this.rgnNombre = rgnNombre;
+        this.comunaList = new ArrayList<>();
     }
 
     public Region(Long rgnId, String rgnNombre) {
         this.rgnId = rgnId;
         this.rgnNombre = rgnNombre;
+        this.comunaList = new ArrayList<>();
     }
 
     public Long getRgnId() {
@@ -46,12 +52,15 @@ public class Region {
         this.rgnNombre = rgnNombre;
     }
 
-    public List<Seremi> getSeremiList() {
-        return seremiList;
+    public List<Comuna> getComunaList() {
+        return comunaList;
     }
 
-    public void setSeremiList(List<Seremi> seremiList) {
-        this.seremiList = seremiList;
+    public void setComunaList(List<Comuna> comunaList) {
+        this.comunaList = comunaList;
     }
 
 }
+
+
+

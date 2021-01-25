@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+
 import java.util.Optional;
 
 @Service
@@ -75,16 +76,7 @@ public class CasoService {
         casoBD.setCasRazonSospecha(casoPost.getCasRazonSospecha());
         casoBD.setCasClasificacionFinal(casoPost.getCasClasificacionFinal());
         casoBD.setCasHospitalizacion(casoPost.getCasHospitalizacion());
-        Paciente pacienteBD = casoBD.getPaciente();
-        pacienteBD.setPacNombres(casoPost.getPaciente().getPacNombres());
-        pacienteBD.setPacApellidos(casoPost.getPaciente().getPacApellidos());
-        pacienteBD.setPacSexo(casoPost.getPaciente().getPacSexo());
-        pacienteBD.setPacFechaNacimiento(casoPost.getPaciente().getPacFechaNacimiento());
-        pacienteBD.setPacNacionalidad(casoPost.getPaciente().getPacNacionalidad());
-        pacienteBD.setPacPuebloOriginario(casoPost.getPaciente().getPacPuebloOriginario());
-        pacienteBD.setPacDireccion(casoPost.getPaciente().getPacDireccion());
-        pacienteBD.setPacTelefono(casoPost.getPaciente().getPacTelefono());
-        pacienteBD = pacienteRepository.save(pacienteBD);
+        Paciente pacienteBD = pacienteRepository.getOne(casoPost.getPaciente().getPacRut());
         casoBD.setPaciente(pacienteBD);
         return casoRepository.save(casoBD);
     }

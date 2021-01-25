@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "estado_paciente")
-public class Estado {
+public class EstadoPaciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,9 @@ public class Estado {
     @JoinColumn(name = "etd_id")
     private List<Paciente> pacienteList = new ArrayList<>();
 
-    public Estado() {}
+    public EstadoPaciente() {}
 
-    public Estado(Long etdId, String etdNombre, List<Paciente> pacienteList) {
+    public EstadoPaciente(Long etdId, String etdNombre, List<Paciente> pacienteList) {
         this.etdId = etdId;
         this.etdNombre = etdNombre;
         this.pacienteList = pacienteList;

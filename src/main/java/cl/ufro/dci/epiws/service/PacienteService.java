@@ -19,6 +19,7 @@ public class PacienteService {
         return pacienteRepository.findAll();
     }
 
+
     public void save(Paciente paciente)throws Exception{
         pacienteRepository.save(paciente);
     }

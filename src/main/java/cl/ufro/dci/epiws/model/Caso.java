@@ -13,6 +13,8 @@ public class Caso {
     @Column(name = "cas_id")
     private Long casId;
 
+
+
     @Column(name = "cas_fecha")
     private String casFechaNotificacion;
 

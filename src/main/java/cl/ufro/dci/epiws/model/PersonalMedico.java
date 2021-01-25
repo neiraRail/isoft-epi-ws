@@ -74,4 +74,8 @@ public class PersonalMedico {
     public void setPacienteList(List<Paciente> pacienteList) {
         this.pacienteList = pacienteList;
     }
+
 }
+
+
+

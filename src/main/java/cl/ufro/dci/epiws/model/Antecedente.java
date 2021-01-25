@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "antecedente")
 public class Antecedente {
@@ -17,10 +16,8 @@ public class Antecedente {
 
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @JsonIgnoreProperties("antecedenteList  ")
+    @JsonIgnoreProperties("antecedenteList")
     @JoinColumn(name = "pac_rut")
-
-
     private Paciente paciente;
 
     @Column(name = "ant_embarazo")
@@ -132,4 +129,8 @@ public class Antecedente {
     public void setAntViajeExtranjero(String antViajeExtranjero) {
         this.antViajeExtranjero = antViajeExtranjero;
     }
+
 }
+
+
+
