@@ -6,6 +6,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,7 +136,8 @@ class PDFTest {
     @Test
     void cargarImagenCorrecta() throws IOException, BadElementException {
         Image imagen = pdf.cargarImagen("src/main/resources/ministerio_salud_logo.png");
-        assertEquals("/home/rodrigo/Workspace/epi-ws/src/main/resources/ministerio_salud_logo.png", imagen.getUrl().getPath());
+        Path ruta = Paths.get("src/main/resources/ministerio_salud_logo.png").toAbsolutePath();
+        assertEquals(String.valueOf(ruta), imagen.getUrl().getPath());
     }
 
     @Test
