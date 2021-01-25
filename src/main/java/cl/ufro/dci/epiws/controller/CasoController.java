@@ -61,7 +61,7 @@ public class CasoController {
      * @return ResponseEntity<Caso> que retorna la instancia del caso editado.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Caso> editCaso(@RequestBody Caso casoPost, @PathVariable("id") Long id) {
+    public ResponseEntity<Caso> editCaso(@PathVariable Long id,@RequestBody Caso casoPost) {
         return ResponseEntity.ok(casoService.editCaso(casoPost,id));
     }
 
@@ -71,7 +71,7 @@ public class CasoController {
      * @return ResponseEntity<String> que describe si hizo o no la acción.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCaso(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteCaso(@PathVariable Long id) {
         casoService.deleteById(id);
         return ResponseEntity.ok("El caso fue removido");
     }

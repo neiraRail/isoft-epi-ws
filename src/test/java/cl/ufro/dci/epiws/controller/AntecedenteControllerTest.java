@@ -10,9 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.checkerframework.checker.units.qual.A;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "classpath:application-test.properties")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AntecedenteControllerTest {
     @Autowired
     protected AntecedenteService antecedenteService;
@@ -83,8 +82,8 @@ class AntecedenteControllerTest {
     private String pacDireccion;
     private String pacTelefono;
 
-    @BeforeEach
-    void setUp() throws Exception {
+    @BeforeAll
+    void setUp(){
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 
         antecedentes = new ArrayList<>();
@@ -102,24 +101,41 @@ class AntecedenteControllerTest {
         pacPuebloOriginario = null;
         pacDireccion = "Fco Pizarro 333";
         pacTelefono = "979567634";
-        paciente = new Paciente(102020L,establecimiento,casos,antecedenteList,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacFechaFallecimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
-
-
+        paciente = new Paciente(166020L,establecimiento,casos,antecedenteList,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacFechaFallecimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
 
         antEmbarazo = true;
         antEnfermedadCronica = "Cancer";
         antAlergias = "Mani, Penicilina";
         antTipoSangre = "B+";
         antMedicamentos = "";
-        antViajeExtranjero = "Canada";
+        antViajeExtranjero = "Canada, Chile";
         antecedente = new Antecedente(paciente,antEmbarazo,4,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
 
         pacienteService.save(paciente);
         antecedenteService.guardar(antecedente);
 
-
         this.antecedentes.add(antecedente);
+    }
 
+
+
+    @Test
+    @DisplayName("Verifica el funcionamiento del metodo getAll del controlador")
+    void testAGetAll() throws Exception {
+
+        String requestJson = listToJsonString(antecedentes);
+        //Ejecuta peticion get, que retorna un json de todos los antecedentes
+        this.mockMvc.perform(get("/api/antecedentes/")).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(requestJson));
+    }
+
+    @Test
+    void buscar() throws Exception {
+        String responseJson = antecedenteToJsonString(antecedente);
+        this.mockMvc.perform(get("/api/antecedentes/1"))
+                .andExpect(status().isOk()) //verifica que el código de estado debe ser 200
+                .andExpect(content().json(responseJson)); //verifica que el json de respuesta sea el que esperamos
     }
 
     @Test
@@ -138,24 +154,6 @@ class AntecedenteControllerTest {
                 .andExpect(content().json(responseJson)); //verifica que el json de respuesta sea el que esperamos
     }
 
-
-    @Test
-    @DisplayName("Verifica el funcionamiento del metodo getAll del controlador")
-    void testGetAll() throws Exception {
-        //Guardamos un nuevo antecedente
-        antecedente = new Antecedente(paciente,antEmbarazo,0,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
-        antecedenteService.guardar(antecedente);
-        antecedente.setAntId(2L);
-        antecedentes.add(antecedente);
-
-        String requestJson = listToJsonString(antecedentes);
-        //Ejecuta peticion get, que retorna un json de todos los antecedentes
-        this.mockMvc.perform(get("/api/antecedentes/"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(requestJson));
-    }
-
-
     @Test
     void borrarAntecedente() throws Exception {
 
@@ -166,13 +164,7 @@ class AntecedenteControllerTest {
     }
 
 
-    @Test
-    void buscar() throws Exception {
-        String responseJson = antecedenteToJsonString(antecedente);
-        this.mockMvc.perform(get("/api/antecedentes/1"))
-                .andExpect(status().isOk()) //verifica que el código de estado debe ser 200
-                .andExpect(content().json(responseJson)); //verifica que el json de respuesta sea el que esperamos
-    }
+
 
     private String listToJsonString(List<Antecedente> antecedentes) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();

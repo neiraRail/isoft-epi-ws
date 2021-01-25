@@ -76,8 +76,6 @@ public class CasoService {
         casoBD.setCasRazonSospecha(casoPost.getCasRazonSospecha());
         casoBD.setCasClasificacionFinal(casoPost.getCasClasificacionFinal());
         casoBD.setCasHospitalizacion(casoPost.getCasHospitalizacion());
-        Paciente pacienteBD = pacienteRepository.getOne(casoPost.getPaciente().getPacRut());
-        casoBD.setPaciente(pacienteBD);
         return casoRepository.save(casoBD);
     }
 

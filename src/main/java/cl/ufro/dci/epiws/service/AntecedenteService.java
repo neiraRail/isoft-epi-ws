@@ -33,6 +33,9 @@ public class AntecedenteService {
 
     private boolean validarDatosAntecedente(Antecedente antecedente){
         long pacId = antecedente.getPaciente().getPacRut();
+        if(antecedente.getAntSemanasGest()==null){
+            antecedente.setAntSemanasGest(0);
+        }
         if(!pacienteRepository.existsById(pacId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
 
@@ -40,6 +43,7 @@ public class AntecedenteService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de Sangre vacio o invalido");
 
         else if(!antecedente.getAntEmbarazo()){
+
             if(antecedente.getAntSemanasGest()!=0){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Semanas de gestación no aplican");
             }
