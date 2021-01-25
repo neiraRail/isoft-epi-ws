@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 
 @Service
 public class AntecedenteService {
@@ -21,11 +24,39 @@ public class AntecedenteService {
      * @return
      */
     public Antecedente guardar(Antecedente nuevoAntecedente){
-        long pacId = nuevoAntecedente.getPaciente().getPacRut();
-        if(!pacienteRepository.existsById(pacId)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+        if(validarDatosAntecedente(nuevoAntecedente)){
+            return antecedenteRepository.save(nuevoAntecedente);
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return antecedenteRepository.save(nuevoAntecedente);
+    }
+
+    private boolean validarDatosAntecedente(Antecedente antecedente){
+        long pacId = antecedente.getPaciente().getPacRut();
+        if(!pacienteRepository.existsById(pacId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+
+        else if(!validarCampoTipoSangre(antecedente.getAntTipoSangre()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de Sangre vacio o invalido");
+
+        else if(!antecedente.getAntEmbarazo()){
+            if(antecedente.getAntSemanasGest()!=0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Semanas de gestación no aplican");
+            }
+        }
+        else if(!validarSemanas(antecedente.getAntSemanasGest()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Semanas no valido");
+
+        //Validacion Ciudad y Pais
+        String antViaje = antecedente.getAntViajeExtranjero();
+        if(validarCampoAntViaje(antViaje)){
+            if(!antViaje.equals(""))
+            antecedente.setAntViajeExtranjero(reformatearAntViaje(antViaje));
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Antecedente de Viaje no valido");
+        }
+
+        return true;
     }
 
     /** Método que permite borrar un antecedente clínico a partir de su id
@@ -58,5 +89,34 @@ public class AntecedenteService {
      */
     public Iterable<Antecedente> buscarPorEmbarazo(boolean embarazo){
         return antecedenteRepository.findAllByAntEmbarazo(embarazo);
+    }
+
+    private boolean validarSemanas(Integer any) {
+        return any >= 0 && any < 42;
+    }
+
+    public boolean validarCampoTipoSangre(String tipoSangre){
+        if(tipoSangre==null){
+            return false;
+        }
+        else {
+            return tipoSangre.matches("^([ABO]|AB)[+-]$");
+        }
+    }
+
+    public boolean validarCampoAntViaje(String antViaje) {
+        return antViaje.matches("^\\s*[a-z\\sA-Z]*\\s*,\\s*[a-z\\sA-Z]*\\s*$") || antViaje.matches("");
+    }
+
+    public String reformatearAntViaje(String string) {
+        String[] partes = string.split(",");
+        String[] result = new String[2];
+        for (int i =0; i<partes.length;i++) {
+            partes[i] = partes[i].trim();
+            partes[i] = partes[i].substring(0, 1).toUpperCase() + partes[i].substring(1);
+        }
+
+        return partes[0]+", "+partes[1];
+
     }
 }
