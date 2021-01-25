@@ -9,28 +9,32 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController //indica que es una clase controller
-@RequestMapping("/paciente")
-@CrossOrigin
-
+@RequestMapping("/api/paciente")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,RequestMethod.PUT})
 
 public class PacienteController {
     @Autowired
     private PacienteService ps;
-    private  ArrayList<Paciente> pacientes=new ArrayList<>();
 
     @PostMapping("")
     @ResponseBody
-    public String agregarPaciente(@RequestBody Paciente paciente)throws Exception{
-        ps.save(paciente);
-        return "El paciente se ha agregado";
+    public String agregarPaciente(@RequestBody Paciente paciente)throws Exception {
+        if (!Optional.ofNullable(paciente).isPresent()) { //si no es nulo el paciente
+            ps.save(paciente);
+            return "El paciente se ha agregado";
+        }else{
+            throw new NullPointerException("objeto nulo");
+        }
     }
     /**
      * @return
      */
-    @GetMapping("buscar/")
-    public String buscaPaciente(Paciente paciente) throws Exception {
+    @GetMapping("/buscar")
+    @ResponseBody
+    public String buscaPaciente(@RequestBody Paciente paciente) throws Exception {
         try {
             Paciente pacienteEncontrado = ps.buscarPaciente(paciente.getPacRut()).get();
             return "\nNombres: " + pacienteEncontrado.getPacNombres()+"\n Apellidos: "+pacienteEncontrado.getPacApellidos()+"\n Sexo: "+pacienteEncontrado.getPacSexo()
@@ -47,7 +51,7 @@ public class PacienteController {
      * @param rut
      * @return
      */
-    @GetMapping("/eliminar/{rut}")
+    @DeleteMapping("/eliminar/{rut}")
     public String eliminarPaciente(@PathVariable long rut) throws Exception{
         try {
             ps.borrarPaciente(rut);
@@ -58,15 +62,13 @@ public class PacienteController {
     }
 
     /**
-     * @param rut
-     * @return
+    // * @param rut
+    // * @return
      */
-    @PostMapping("/editar/{rut}/{pacDv}/{pacNombres}/{pacApellidos}/{pacSexo}/{pacFechaNacimiento}/{pacNacionalidad}/{pacPuebloOriginario}/{pacDireccion}/{pacTelefono}")
-    public String editarPaciente(@PathVariable long rut,@PathVariable String pacDv, @PathVariable String pacNombres,@PathVariable String pacApellidos,
-                                 @PathVariable String pacSexo,@PathVariable String pacFechaNacimiento, @PathVariable String pacNacionalidad,
-                                 @PathVariable String pacPuebloOriginario,@PathVariable String pacDireccion,@PathVariable String pacTelefono) {
+    @PutMapping("/editar/{rut}")
+    public String editarPaciente(@PathVariable Long rut,@RequestBody Paciente paciente) {
         try {
-            ps.editarPaciente(rut, pacDv, pacNombres, pacApellidos,pacSexo,pacFechaNacimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
+            ps.editarPaciente(rut,paciente.getPacFechaFallecimiento(), paciente.getPacNombres(),paciente.getPacApellidos(),paciente.getPacSexo(),paciente.getPacFechaNacimiento(),paciente.getPacNacionalidad(),paciente.getPacPuebloOriginario(),paciente.getPacDireccion(),paciente.getPacTelefono());
             return "editado";
         } catch (Exception e) {
             return "No encontrado";
