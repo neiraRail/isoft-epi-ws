@@ -144,6 +144,7 @@ class AntecedenteServiceTest {
     public void testValidarTipoSangreTrue(String tipo){
         assertTrue(antecedenteService.validarCampoTipoSangre(tipo));
     }
+
     @ParameterizedTest
     @ValueSource(strings = {"A", "C-", "","BA-"})
     public void testValidarTipoSangreFalse(String tipo){
@@ -156,13 +157,12 @@ class AntecedenteServiceTest {
         assertTrue(antecedenteService.validarCampoAntViaje(antViaje));
 
     }
+
     @ParameterizedTest
     @ValueSource(strings = {"Temuco1,Chile","Santiago de Chile  , _Chile","Valdiviachile","osorno chile"})
     public void testValidarAntViajeFalse(String antViaje){
         assertFalse(antecedenteService.validarCampoAntViaje(antViaje));
     }
-
-
 
     @Test
     public void testEliminarAntecedenteNoExistente(){
@@ -179,6 +179,23 @@ class AntecedenteServiceTest {
         for(int i = 0; i<3; i++){
             assertEquals(result[i],antecedenteService.reformatearAntViaje(strings[i]));
         }
+    }
+
+    @Test
+    public void testEditarAntecedenteCorrecto(){
+        Antecedente antecedenteCambio = new Antecedente(1L,paciente,
+                null,0,"","",
+                "","","Temuco, Chile");
+        Antecedente antecedenteCambiado = new Antecedente(1L,paciente,
+                antEmbarazo,4,antEnfermedadCronica,antAlergias,
+                antTipoSangre,antMedicamentos,"Temuco, Chile");
+
+        when(antecedenteRepository.save(any(Antecedente.class))).thenReturn(antecedenteCambiado);
+        when(antecedenteRepository.existsById(any(Long.class))).thenReturn(true);
+        when(antecedenteRepository.findById(any(Long.class))).thenReturn(Optional.of(antecedente));
+
+
+        assertEquals(antecedenteCambiado,antecedenteService.editarAntecedente(antecedenteCambio));
     }
 
 

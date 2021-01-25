@@ -155,6 +155,7 @@ class AntecedenteControllerTest {
     }
 
     @Test
+    @DisplayName("Verifica el funcionamiento del metodo borrar del controlador")
     void borrarAntecedente() throws Exception {
 
         //Ejecuta peticion post, que retorna, en este caso, un json del caso creado
@@ -164,6 +165,15 @@ class AntecedenteControllerTest {
     }
 
 
+
+    @Test
+    @DisplayName("Verifica el funcionamiento del metodo buscar del controlador")
+    void buscarAntecedente() throws Exception {
+        String responseJson = antecedenteToJsonString(antecedente);
+        this.mockMvc.perform(get("/api/antecedentes/1"))
+                .andExpect(status().isOk()) //verifica que el código de estado debe ser 200
+                .andExpect(content().json(responseJson)); //verifica que el json de respuesta sea el que esperamos
+    }
 
 
     private String listToJsonString(List<Antecedente> antecedentes) throws JsonProcessingException {
