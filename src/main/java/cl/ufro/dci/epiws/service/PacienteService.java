@@ -23,7 +23,7 @@ public class PacienteService {
 
     public void save(Paciente paciente)throws Exception{
         if(pacienteRepository.existsById(paciente.getPacRut())){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente ya agregado");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Paciente ya agregado");
         }
         pacienteRepository.save(paciente);
     }
