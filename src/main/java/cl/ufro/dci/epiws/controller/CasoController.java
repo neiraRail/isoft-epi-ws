@@ -61,7 +61,7 @@ public class CasoController {
      * @return ResponseEntity<Caso> que retorna la instancia del caso editado.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Caso> editCaso(@RequestBody Caso casoPost, @PathVariable("id") Long id) {
+    public ResponseEntity<Caso> editCaso(@PathVariable Long id,@RequestBody Caso casoPost) {
         return ResponseEntity.ok(casoService.editCaso(casoPost,id));
     }
 
