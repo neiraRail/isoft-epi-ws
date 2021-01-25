@@ -31,34 +31,43 @@ class ComunaRepositoryTest {
 
     Region region;
     Comuna comuna;
-
+    Comuna comuna2;
     @BeforeAll
     void preparacion(){
         region = new Region("Araucania");
         comuna = new Comuna("Temuco",region,new ArrayList<>());
+        comuna2 = new Comuna("inventada",region,new ArrayList<>());
         regionRepository.save(region);
         comunaRepository.save(comuna);
+        comunaRepository.save(comuna2);
     }
 
     @Test
     @DisplayName("Test de agregado de comuna")
-    public void agregado() {
+    void agregado() {
         Optional<Comuna> found = comunaRepository.findById(comuna.getComId());
         assertEquals("Temuco",found.get().getComNombre());
     }
 
     @Test
     @DisplayName("Test de edicion de comuna")
-    public void edicion(){
+    void edicion(){
         comunaRepository.findById(comuna.getComId()).get().setComNombre("Lautaro");
         assertEquals("Lautaro",comunaRepository.findByComNombre("Lautaro").get().getComNombre());
     }
 
     @Test
     @DisplayName("test de eliminado de comuna")
-    public void eliminacion(){
+    void eliminacion(){
         comunaRepository.deleteById(comuna.getComId());
         assertEquals(false,comunaRepository.existsById(comuna.getComId()));
+    }
+
+    @Test
+    @DisplayName("test de buscado de comuna")
+    void buscar(){
+        Comuna resultado = comunaRepository.findByComNombre("inventada").get();
+        assertEquals("inventada",resultado.getComNombre());
     }
 
 }

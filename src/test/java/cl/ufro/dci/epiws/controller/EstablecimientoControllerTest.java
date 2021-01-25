@@ -5,6 +5,8 @@ import cl.ufro.dci.epiws.repository.ComunaRepository;
 import cl.ufro.dci.epiws.repository.EstablecimientoRepository;
 import cl.ufro.dci.epiws.repository.RegionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,18 +14,21 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class EstablecimientoControllerTest {
+
+    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
 
     @Autowired
@@ -38,6 +43,8 @@ class EstablecimientoControllerTest {
     @Autowired
     private EstablecimientoRepository establecimientoRepository;
 
+    @Autowired
+    private WebApplicationContext wac;
 
     @BeforeAll
     void preparacion(){
@@ -84,4 +91,19 @@ class EstablecimientoControllerTest {
         assertFalse(establecimientoRepository.existsById(2L));
     }
 
+    /*@Test
+    @DisplayName("Test para editar establecimiento")
+    void editar() throws Exception {
+        Establecimiento establecimiento4 = new Establecimiento("hospital 4",
+                "senador estebanes", new Comuna(), new ArrayList<>());
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(establecimiento4);
+
+        mvc.perform(put("/api/establecimiento/editar/3").contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk());
+    }*/
 }

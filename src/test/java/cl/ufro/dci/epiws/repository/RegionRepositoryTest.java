@@ -1,5 +1,6 @@
 package cl.ufro.dci.epiws.repository;
 
+import cl.ufro.dci.epiws.model.Comuna;
 import cl.ufro.dci.epiws.model.Region;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ class RegionRepositoryTest {
 
     @Test
     @DisplayName("Test de agregado de region")
-    public void agregar(){
+    void agregar(){
         Region region2 = new Region("Metropolitana de Santiago");
         regionRepository.save(region2);
         assertEquals("Metropolitana de Santiago",regionRepository.findByRgnNombre("Metropolitana de Santiago").get().getRgnNombre());
@@ -39,16 +40,23 @@ class RegionRepositoryTest {
 
     @Test
     @DisplayName("Test de edicion de region")
-    public void editar(){
+    void editar(){
         regionRepository.findById(region.getRgnId()).get().setRgnNombre("Atacama");
         assertEquals("Atacama",regionRepository.findByRgnNombre("Atacama").get().getRgnNombre());
     }
 
     @Test
     @DisplayName("Test de eliminado de region")
-    public void eliminar(){
+    void eliminar(){
         regionRepository.deleteById(region.getRgnId());
         assertEquals(false,regionRepository.existsById(region.getRgnId()));
+    }
+
+    @Test
+    @DisplayName("test de buscado de region")
+    void buscar(){
+        Region resultado = regionRepository.findByRgnNombre("Arica y Parinacota").get();
+        assertEquals("Arica y Parinacota",resultado.getRgnNombre());
     }
 
 }
