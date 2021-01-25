@@ -23,7 +23,6 @@ public class Establecimiento {
 
     @ManyToOne
     @JoinColumn(name = "com_id")
-    @JsonBackReference
     private Comuna comuna;
 
     @OneToMany(mappedBy = "establecimiento")
