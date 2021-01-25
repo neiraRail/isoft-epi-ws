@@ -23,7 +23,7 @@ public class Antecedente {
     private Boolean antEmbarazo;
 
     @Column(name = "ant_semanas_gest")
-    private Integer antSemanasGest;
+    private Integer antSemanasGestacion;
 
     @Column(name = "and_enfermedad_cronica")
     private String antEnfermedadCronica;
@@ -44,7 +44,7 @@ public class Antecedente {
         this.antId = antId;
         this.paciente = paciente;
         this.antEmbarazo = antEmbarazo;
-        this.antSemanasGest = antSemanasGest;
+        this.antSemanasGestacion = antSemanasGest;
         this.antEnfermedadCronica = antEnfermedadCronica;
         this.antAlergias = antAlergias;
         this.antTipoSangre = antTipoSangre;
@@ -55,7 +55,7 @@ public class Antecedente {
     public Antecedente(Paciente paciente, Boolean antEmbarazo, Integer antSemanasGest, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
         this.paciente = paciente;
         this.antEmbarazo = antEmbarazo;
-        this.antSemanasGest = antSemanasGest;
+        this.antSemanasGestacion = antSemanasGest;
         this.antEnfermedadCronica = antEnfermedadCronica;
         this.antAlergias = antAlergias;
         this.antTipoSangre = antTipoSangre;
@@ -66,7 +66,7 @@ public class Antecedente {
     public Antecedente(Long antId, Boolean antEmbarazo, Integer antSemanasGest, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
         this.antId = antId;
         this.antEmbarazo = antEmbarazo;
-        this.antSemanasGest = antSemanasGest;
+        this.antSemanasGestacion = antSemanasGest;
         this.antEnfermedadCronica = antEnfermedadCronica;
         this.antAlergias = antAlergias;
         this.antTipoSangre = antTipoSangre;
@@ -142,12 +142,12 @@ public class Antecedente {
         this.antViajeExtranjero = antViajeExtranjero;
     }
 
-    public int getAntSemanasGest() {
-        return antSemanasGest;
+    public Integer getAntSemanasGest() {
+        return antSemanasGestacion;
     }
 
     public void setAntSemanasGest(Integer antSemanasGest) {
-        this.antSemanasGest = antSemanasGest;
+        this.antSemanasGestacion = antSemanasGest;
     }
 }
 
