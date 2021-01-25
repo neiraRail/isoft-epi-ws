@@ -51,7 +51,7 @@ class ComunaControllerTest {
         assertEquals("Padre las Casas",comunaRepository.findById(l).get().getComNombre());
     }
 
-    /*@Test
+    @Test
     @DisplayName("Test para buscar comunas")
     void buscar() throws Exception {
         String region = mvc.perform(get("/api/comuna/buscar")
@@ -59,7 +59,7 @@ class ComunaControllerTest {
                 .andReturn().getResponse().getContentAsString();
         Comuna est = new ObjectMapper().readValue(region, Comuna.class);
         assertEquals("Temuco",est.getComNombre());
-    }*/
+    }
 
     @Test
     @DisplayName("Test para eliminar comunas")
