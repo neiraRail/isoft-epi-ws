@@ -48,7 +48,7 @@ public class CasoController {
     /**
      * Método que se encarga de agregar casos a través de parámetros dados por la interfaz.
      * @param caso Caso a agregar.
-     * @return Instancia especifica del caso.
+     * @return ResponseEntity<String> que retorna la instancia del caso agregado.
      */
     @PostMapping("")
     public ResponseEntity<Caso> postCaso(@RequestBody Caso caso) {
@@ -56,13 +56,10 @@ public class CasoController {
     }
 
     /**
-     * Método que dandole una caso y una id que lo identifica, cambia todos los atributos de este objeto. Para mantener
-     * un atributo intacto se debe poner la misma entrada que esta actualmente.
      * @param casoPost objeto con parámetros modificados
      * @param id id Id del caso a editar
-     * @return instancia del objeto modificado
+     * @return ResponseEntity<Caso> que retorna la instancia del caso editado.
      */
-
     @PutMapping("/{id}")
     public ResponseEntity<Caso> editCaso(@RequestBody Caso casoPost, @PathVariable Long id) {
         return ResponseEntity.ok(casoService.editCaso(casoPost,id));
@@ -71,22 +68,24 @@ public class CasoController {
     /**
      * Método que borra un caso a través de su id.
      * @param id Id del caso que se quiere borrar.
-     * @return Boolean que describe si hizo o no la acción.
+     * @return ResponseEntity<String> que describe si hizo o no la acción.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCaso(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteCaso(@PathVariable Long id) {
         casoService.deleteById(id);
-        return ResponseEntity.ok("El estudiante fue removido");
+        return ResponseEntity.ok("El caso fue removido");
     }
 
     /**
      * Método que busca a través de la id un caso especifico.
      * @param id del caso requerido
-     * @return caso buscado o nulo si este no existe.
+     * @return caso buscado si este no existe.
      */
     @GetMapping("/{id}")
     public Caso findCaso(@PathVariable("id") Long id) {
         return casoService.findById(id);
+
     }
 
 }
+
