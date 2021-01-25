@@ -26,6 +26,7 @@ public class PdfController {
     }
 
     //Método no probado
+    @CrossOrigin("*")
     @GetMapping(path = "/exportar/{pacRut}/")
     public void exportarPDF(@PathVariable("pacRut") Long pacRut, HttpServletResponse response) {
         Paciente paciente = pacienteRepository.findById(pacRut).get();
