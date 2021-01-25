@@ -138,9 +138,9 @@ public class AntecedenteService {
     private Antecedente cambiarAntecedente(Antecedente original, Antecedente cambio) {
         if(cambio.getAntEmbarazo()!=null){
             original.setAntEmbarazo(cambio.getAntEmbarazo());
-        }
-        if(cambio.getAntSemanasGest() != 0){
-            original.setAntSemanasGest(cambio.getAntSemanasGest());
+            if(cambio.getAntSemanasGest() != 0){
+                original.setAntSemanasGest(cambio.getAntSemanasGest());
+            }
         }
         if(!cambio.getAntEnfermedadCronica().equals("")){
             original.setAntEnfermedadCronica(original.getAntEnfermedadCronica());
