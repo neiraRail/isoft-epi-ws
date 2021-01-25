@@ -50,6 +50,7 @@ public class AntecedenteService {
         //Validacion Ciudad y Pais
         String antViaje = antecedente.getAntViajeExtranjero();
         if(validarCampoAntViaje(antViaje)){
+            if(!antViaje.equals(""))
             antecedente.setAntViajeExtranjero(reformatearAntViaje(antViaje));
         }else{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Antecedente de Viaje no valido");
@@ -91,7 +92,7 @@ public class AntecedenteService {
     }
 
     private boolean validarSemanas(Integer any) {
-        return any > 0 && any < 42;
+        return any >= 0 && any < 42;
     }
 
     public boolean validarCampoTipoSangre(String tipoSangre){
@@ -104,7 +105,7 @@ public class AntecedenteService {
     }
 
     public boolean validarCampoAntViaje(String antViaje) {
-        return antViaje.matches("^\\s*[a-z\\sA-Z]*\\s*,\\s*[a-z\\sA-Z]*\\s*$");
+        return antViaje.matches("^\\s*[a-z\\sA-Z]*\\s*,\\s*[a-z\\sA-Z]*\\s*$") || antViaje.matches("");
     }
 
     public String reformatearAntViaje(String string) {

@@ -151,7 +151,7 @@ class AntecedenteServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Temuco,Chile","Santiago de Chile  , Chile","Valdivia,chile","osorno ,chile"})
+    @ValueSource(strings = {"Temuco,Chile","Santiago de Chile  , Chile","Valdivia,chile","osorno ,chile",""})
     public void testValidarAntViaje(String antViaje){
         assertTrue(antecedenteService.validarCampoAntViaje(antViaje));
 
