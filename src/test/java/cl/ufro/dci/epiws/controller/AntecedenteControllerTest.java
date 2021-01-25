@@ -84,7 +84,7 @@ class AntecedenteControllerTest {
     private String pacTelefono;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 
         antecedentes = new ArrayList<>();

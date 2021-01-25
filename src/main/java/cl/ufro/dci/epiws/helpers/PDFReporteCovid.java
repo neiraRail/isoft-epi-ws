@@ -189,7 +189,7 @@ public class PDFReporteCovid {
             }
             if (paciente.getAntecedenteList().isEmpty()) {
                 ArrayList<Antecedente> antecedentesVacios = new ArrayList<>();
-                antecedentesVacios.add(new Antecedente(0l, false, "", "", "", "", ""));
+                antecedentesVacios.add(new Antecedente(0l, false,0, "", "", "", "", ""));
                 paciente.setAntecedenteList(antecedentesVacios);
             }
             if (paciente.getCasos().isEmpty()) {

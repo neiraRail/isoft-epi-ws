@@ -7,6 +7,8 @@ import cl.ufro.dci.epiws.repository.PacienteRepository;
 import cl.ufro.dci.epiws.service.AntecedenteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -53,7 +55,7 @@ class AntecedenteServiceTest {
         antAlergias = "";
         antTipoSangre = "B+";
         antMedicamentos = "";
-        antViajeExtranjero = "Canada";
+        antViajeExtranjero = "Canada, Toronto";
         antecedente = new Antecedente(paciente,antEmbarazo,4,antEnfermedadCronica,antAlergias,antTipoSangre,antMedicamentos,antViajeExtranjero);
         MockitoAnnotations.initMocks(this); //Inicializa el controlador y los mocks
         mockMvc = MockMvcBuilders.standaloneSetup(antecedenteService,pacienteRepository).build();
@@ -83,8 +85,83 @@ class AntecedenteServiceTest {
     public void testGuardarAntecedenteYNoExistePaciente(){
         when(pacienteRepository.existsById(any(long.class))).thenReturn(false);
         when(antecedenteRepository.save(any(Antecedente.class))).thenReturn(antecedente);
-        assertThrows(ResponseStatusException.class,()->antecedenteService.guardar(antecedente));
+        Throwable e = assertThrows(ResponseStatusException.class,()->antecedenteService.guardar(antecedente));
+
+        assertEquals("404 NOT_FOUND \"Paciente no encontrado\"",e.getMessage());
     }
+
+    @Test
+    public void testGuardarConSemanasNoValidas(){
+        antecedente.setAntSemanasGest(50);
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
+        Throwable e = assertThrows(ResponseStatusException.class,()->antecedenteService.guardar(antecedente));
+
+        assertEquals("400 BAD_REQUEST \"Semanas no valido\"",e.getMessage());
+    }
+
+    @Test
+    public void testGuardarSinTipoSangre(){
+        antecedente.setAntTipoSangre("");
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
+        Throwable e = assertThrows(ResponseStatusException.class,()->antecedenteService.guardar(antecedente));
+
+        assertEquals("400 BAD_REQUEST \"Tipo de Sangre vacio o invalido\"",e.getMessage());
+
+    }
+
+    @Test
+    public void testGuardarTipoSangreNulo(){
+        antecedente.setAntTipoSangre(null);
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
+        Throwable e = assertThrows(ResponseStatusException.class,()->antecedenteService.guardar(antecedente));
+
+        assertEquals("400 BAD_REQUEST \"Tipo de Sangre vacio o invalido\"",e.getMessage());
+
+    }
+
+    @Test
+    public void testGuardarAntViajeInvalido(){
+        antecedente.setAntViajeExtranjero("candad2");
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
+        Throwable e = assertThrows(ResponseStatusException.class,()->antecedenteService.guardar(antecedente));
+
+        assertEquals("400 BAD_REQUEST \"Antecedente de Viaje no valido\"",e.getMessage());
+
+    }
+
+    @Test
+    public void testGuardarNoEmbarazadaConSemanas(){
+        antecedente.setAntEmbarazo(false);
+        antecedente.setAntSemanasGest(14);
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
+        Throwable e = assertThrows(ResponseStatusException.class,()->antecedenteService.guardar(antecedente));
+
+        assertEquals("400 BAD_REQUEST \"Semanas de gestación no aplican\"",e.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"A+", "B-", "AB+","O-"})
+    public void testValidarTipoSangreTrue(String tipo){
+        assertTrue(antecedenteService.validarCampoTipoSangre(tipo));
+    }
+    @ParameterizedTest
+    @ValueSource(strings = {"A", "C-", "","BA-"})
+    public void testValidarTipoSangreFalse(String tipo){
+        assertFalse(antecedenteService.validarCampoTipoSangre(tipo));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Temuco,Chile","Santiago de Chile  , Chile","Valdivia,chile","osorno ,chile"})
+    public void testValidarAntViaje(String antViaje){
+        assertTrue(antecedenteService.validarCampoAntViaje(antViaje));
+
+    }
+    @ParameterizedTest
+    @ValueSource(strings = {"Temuco1,Chile","Santiago de Chile  , _Chile","Valdiviachile","osorno chile"})
+    public void testValidarAntViajeFalse(String antViaje){
+        assertFalse(antecedenteService.validarCampoAntViaje(antViaje));
+    }
+
 
 
     @Test
@@ -92,6 +169,16 @@ class AntecedenteServiceTest {
         when(antecedenteRepository.existsById(any(long.class))).thenReturn(false);
         assertThrows(ResponseStatusException.class,()->antecedenteService.borrar(1L));
 
+    }
+
+    @Test
+    public void testReformateoAntViaje(){
+        String[] strings = {"  temuco,chile"," Temuco, chile", "New York , USA"};
+        String[] result = {"Temuco, Chile", "Temuco, Chile","New York, USA"};
+
+        for(int i = 0; i<3; i++){
+            assertEquals(result[i],antecedenteService.reformatearAntViaje(strings[i]));
+        }
     }
 
 
