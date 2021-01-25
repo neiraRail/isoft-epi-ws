@@ -28,7 +28,7 @@ class PDFReporteCovidTest {
         casos = new ArrayList<>();
         tabla = new PdfPTable(4);
 
-        antecedentes.add(new Antecedente(0l, false, "", "", "", "", ""));
+        antecedentes.add(new Antecedente(0l, false, 0, "", "", "", "", ""));
         casos.add(new Caso(0l, "", false, "", 0, "", "", "", false));
 
         paciente.setMedico(personalMedico);

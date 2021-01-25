@@ -129,7 +129,10 @@ public class PDFReporteCovid {
         tabla.addCell(pdf.crearCelda("Antecedentes Clínicos/Epidemiológicos", fuentes.get(1), 4, Element.ALIGN_CENTER));
         //Segunda Fila
         tabla.addCell(pdf.crearCelda("Embarazo:", fuentes.get(2), 1, Element.ALIGN_LEFT));
-        tabla.addCell(pdf.crearCelda(String.valueOf(antecedente.getAntEmbarazo()), fuentes.get(2), 3, Element.ALIGN_LEFT));
+        tabla.addCell(pdf.crearCelda(String.valueOf(antecedente.getAntEmbarazo()), fuentes.get(2), 1, Element.ALIGN_LEFT));
+
+        tabla.addCell(pdf.crearCelda("Semanas de Gestación:", fuentes.get(2), 1, Element.ALIGN_LEFT));
+        tabla.addCell(pdf.crearCelda(String.valueOf(antecedente.getAntSemanasGest()), fuentes.get(2), 1, Element.ALIGN_LEFT));
         //Tercera Fila
         tabla.addCell(pdf.crearCelda("Enfermedad Crónica:", fuentes.get(2), 1, Element.ALIGN_LEFT));
         tabla.addCell(pdf.crearCelda(antecedente.getAntEnfermedadCronica(), fuentes.get(2), 3, Element.ALIGN_LEFT));
@@ -188,7 +191,7 @@ public class PDFReporteCovid {
             }
             if (paciente.getAntecedenteList() == null) {
                 ArrayList<Antecedente> antecedentesVacios = new ArrayList<>();
-                antecedentesVacios.add(new Antecedente(0l, false,0, "", "", "", "", ""));
+                antecedentesVacios.add(new Antecedente(0l, false, 0, "", "", "", "", ""));
                 paciente.setAntecedenteList(antecedentesVacios);
             }
             if (paciente.getCasos() == null) {
