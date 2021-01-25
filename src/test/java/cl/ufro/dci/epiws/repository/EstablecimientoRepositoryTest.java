@@ -32,6 +32,7 @@ class EstablecimientoRepositoryTest {
     Region region;
     Comuna comuna;
     Establecimiento establecimiento;
+    Establecimiento establecimiento2;
 
     @BeforeAll
      void preparacion(){
@@ -40,27 +41,36 @@ class EstablecimientoRepositoryTest {
         regionRepository.save(region);
         comunaRepository.save(comuna);
         establecimiento = new Establecimiento((long) 1,"Hospital regional","plaza",comuna,new ArrayList<>());
+        establecimiento2 = new Establecimiento("Hospital inventado","plaza",comuna,new ArrayList<>());
         establecimientoRepository.save(establecimiento);
+        establecimientoRepository.save(establecimiento2);
     }
 
     @Test
     @DisplayName("Test de agregado de establecimiento")
-    public void agregado() {
+    void agregado() {
         Establecimiento found = establecimientoRepository.findByEstNombre("Hospital regional");
         assertEquals("Hospital regional",found.getEstNombre());
     }
 
     @Test
     @DisplayName("Test de edicion de establecimiento")
-    public void edicion(){
+    void edicion(){
         establecimientoRepository.findByEstNombre("Hospital regional").setEstDireccion("av. alemania");
         assertEquals("av. alemania",establecimientoRepository.findByEstNombre("Hospital regional").getEstDireccion());
     }
 
     @Test
     @DisplayName("test de eliminado de establecimiento")
-    public void eliminacion(){
+    void eliminacion(){
         establecimientoRepository.deleteById(1L);
         assertEquals(false,establecimientoRepository.existsById(1L));
+    }
+
+    @Test
+    @DisplayName("test de buscado de establecimiento")
+    void buscar(){
+        Establecimiento resultado = establecimientoRepository.findByEstNombre("Hospital inventado");
+        assertEquals("Hospital inventado",resultado.getEstNombre());
     }
 }

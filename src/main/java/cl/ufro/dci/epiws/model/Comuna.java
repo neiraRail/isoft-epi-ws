@@ -23,7 +23,7 @@ public class Comuna {
     private Region region;
 
     @OneToMany(mappedBy = "comuna")
-    @JsonIgnoreProperties("comuna")
+    @JsonIgnoreProperties(value = "comuna",allowSetters = true)
     private List<Establecimiento> establecimientoList;
 
     public Comuna() {
@@ -40,6 +40,13 @@ public class Comuna {
         this.comNombre = comNombre;
         this.region = region;
         this.establecimientoList = establecimientoList;
+    }
+
+
+    public Comuna(Long comId, String comNombre, Region region) {
+        this.comId = comId;
+        this.comNombre = comNombre;
+        this.region = region;
     }
 
     public Long getComId() {

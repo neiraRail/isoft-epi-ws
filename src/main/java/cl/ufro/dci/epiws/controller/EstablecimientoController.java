@@ -7,6 +7,8 @@ import cl.ufro.dci.epiws.service.EstablecimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
+
 import java.util.ArrayList;
 
 /**
@@ -14,6 +16,7 @@ import java.util.ArrayList;
  */
 @RestController
 @RequestMapping("/api/establecimiento")
+@CrossOrigin
 public class EstablecimientoController {
 
     @Autowired
@@ -21,6 +24,7 @@ public class EstablecimientoController {
 
     @Autowired
     private ComunaService comunaService;
+
 
     /**
      * Método que permite agregar registros de establecimientos.

@@ -3,6 +3,7 @@ package cl.ufro.dci.epiws.controller;
 import cl.ufro.dci.epiws.model.Region;
 import cl.ufro.dci.epiws.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/region")
+@CrossOrigin
 public class RegionController {
 
     @Autowired
@@ -17,7 +19,7 @@ public class RegionController {
 
     /**
      * Método que permite agregar registros de regiones.
-     *
+     * @param nombre
      *
      * @return String con mensaje si es que se agrega
      */
@@ -41,7 +43,7 @@ public class RegionController {
 
     /**
      * Método que permite eliminar registros de regiones.
-     *
+     * @param idRegion
      * @return String con mensaje si es que se agrega
      */
     @DeleteMapping("/eliminar/{idRegion}")
@@ -57,18 +59,17 @@ public class RegionController {
 
     /**
      * Método que permite editar registros de regiones.
-     *
+     * @param idRegion
+     * @param region
      * @return String con mensaje si es que se agrega
      */
-    @PutMapping("/editar")
-    public String editarNombre(@RequestParam int idRegion, @RequestParam String nombre) {
-        Long l = (long) idRegion;
-        if (regionService.existById(l)) {
-            if (regionService.find(l).isPresent()){
-                regionService.editarNombre(l,nombre);
-            }
-            return "El establecimiento se ha cambiado correctamente.";
+    @PutMapping(value = "/editar/{idRegion}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String editarNombre(@PathVariable ("idRegion") long idRegion, @RequestBody Region region) {
+        if(regionService.existById(idRegion)) {
+            regionService.editarRegion(idRegion, region.getRgnNombre());
+
+            return "La región se ha editado correctamente";
         }
-        return "No se ha podido editar el establecimiento.";
+        return "No se ha podido editar la región";
     }
 }

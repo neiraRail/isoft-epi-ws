@@ -19,7 +19,7 @@ public class Region {
     private String rgnNombre;
 
     @OneToMany(mappedBy = "region")
-    @JsonIgnoreProperties("region")
+    @JsonIgnoreProperties(value = "region",allowSetters = true)
     private List<Comuna> comunaList;
 
     public Region() {

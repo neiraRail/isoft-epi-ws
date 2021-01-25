@@ -13,30 +13,28 @@ public class Caso {
     @Column(name = "cas_id")
     private Long casId;
 
-
-
     @Column(name = "cas_fecha")
     private String casFechaNotificacion;
 
     @Column(name = "cas_asintomatico")
     private Boolean casAsintomatico;
 
-    @Column(name="cas_fecha_primeros_sintomas")
+    @Column(name = "cas_fecha_primeros_sintomas")
     private String casFechaPrimerosSintomas;
 
-    @Column(name="cas_semana_epidemiologica")
+    @Column(name = "cas_semana_epidemiologica")
     private int casSemanaEpidemiologica;
 
     @Column(name = "cas_sintomas")
     private String casSintomas;
 
-    @Column(name="cas_razon_sospecha")
+    @Column(name = "cas_razon_sospecha")
     private String casRazonSospecha;
 
-    @Column(name="cas_clasificacion_final")
+    @Column(name = "cas_clasificacion_final")
     private String casClasificacionFinal;
 
-    @Column(name="cas_hospitalizacion")
+    @Column(name = "cas_hospitalizacion")
     private Boolean casHospitalizacion;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -44,7 +42,8 @@ public class Caso {
     @JoinColumn(name = "pac_rut")
     private Paciente paciente;
 
-    public Caso() {}
+    public Caso() {
+    }
 
     public Caso(String casFechaNotificacion, Boolean casAsintomatico, String casFechaPrimerosSintomas, int casSemanaEpidemiologica, String casSintomas, String casRazonSospecha, String casClasificacionFinal, Boolean casHospitalizacion) {
         this.casFechaNotificacion = casFechaNotificacion;
@@ -67,6 +66,18 @@ public class Caso {
         this.casClasificacionFinal = casClasificacionFinal;
         this.casHospitalizacion = casHospitalizacion;
         this.paciente = paciente;
+    }
+
+    public Caso(Long casId, String casFechaNotificacion, Boolean casAsintomatico, String casFechaPrimerosSintomas, int casSemanaEpidemiologica, String casSintomas, String casRazonSospecha, String casClasificacionFinal, Boolean casHospitalizacion) {
+        this.casId = casId;
+        this.casFechaNotificacion = casFechaNotificacion;
+        this.casAsintomatico = casAsintomatico;
+        this.casFechaPrimerosSintomas = casFechaPrimerosSintomas;
+        this.casSemanaEpidemiologica = casSemanaEpidemiologica;
+        this.casSintomas = casSintomas;
+        this.casRazonSospecha = casRazonSospecha;
+        this.casClasificacionFinal = casClasificacionFinal;
+        this.casHospitalizacion = casHospitalizacion;
     }
 
     public Long getCasId() {

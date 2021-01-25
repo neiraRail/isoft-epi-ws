@@ -14,8 +14,7 @@ public class Antecedente {
     @Column(name = "ant_id")
     private Long antId;
 
-
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JsonIgnoreProperties("antecedenteList")
     @JoinColumn(name = "pac_rut")
     private Paciente paciente;
@@ -23,6 +22,8 @@ public class Antecedente {
     @Column(name = "ant_embarazo")
     private Boolean antEmbarazo;
 
+    @Column(name = "ant_semanas_gest")
+    private Integer antSemanasGest;
 
     @Column(name = "and_enfermedad_cronica")
     private String antEnfermedadCronica;
@@ -39,10 +40,11 @@ public class Antecedente {
     @Column(name = "ant_viaje_al_extranjero")
     private String antViajeExtranjero;
 
-    public Antecedente(Long antId, Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
+    public Antecedente(Long antId, Paciente paciente, Boolean antEmbarazo, Integer antSemanasGest, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
         this.antId = antId;
         this.paciente = paciente;
         this.antEmbarazo = antEmbarazo;
+        this.antSemanasGest = antSemanasGest;
         this.antEnfermedadCronica = antEnfermedadCronica;
         this.antAlergias = antAlergias;
         this.antTipoSangre = antTipoSangre;
@@ -50,10 +52,10 @@ public class Antecedente {
         this.antViajeExtranjero = antViajeExtranjero;
     }
 
-
-    public Antecedente(Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
+    public Antecedente(Paciente paciente, Boolean antEmbarazo, Integer antSemanasGest, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
         this.paciente = paciente;
         this.antEmbarazo = antEmbarazo;
+        this.antSemanasGest = antSemanasGest;
         this.antEnfermedadCronica = antEnfermedadCronica;
         this.antAlergias = antAlergias;
         this.antTipoSangre = antTipoSangre;
@@ -61,6 +63,16 @@ public class Antecedente {
         this.antViajeExtranjero = antViajeExtranjero;
     }
 
+    public Antecedente(Long antId, Boolean antEmbarazo, Integer antSemanasGest, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
+        this.antId = antId;
+        this.antEmbarazo = antEmbarazo;
+        this.antSemanasGest = antSemanasGest;
+        this.antEnfermedadCronica = antEnfermedadCronica;
+        this.antAlergias = antAlergias;
+        this.antTipoSangre = antTipoSangre;
+        this.antMedicamentos = antMedicamentos;
+        this.antViajeExtranjero = antViajeExtranjero;
+    }
 
     public Antecedente(){
 
@@ -130,6 +142,13 @@ public class Antecedente {
         this.antViajeExtranjero = antViajeExtranjero;
     }
 
+    public int getAntSemanasGest() {
+        return antSemanasGest;
+    }
+
+    public void setAntSemanasGest(Integer antSemanasGest) {
+        this.antSemanasGest = antSemanasGest;
+    }
 }
 
 
