@@ -21,21 +21,21 @@ public class PacienteService {
     }
 
 
-    public void save(Paciente paciente)throws Exception{
+    public void save(Paciente paciente){
         if(pacienteRepository.existsById(paciente.getPacRut())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Paciente ya agregado");
         }
         pacienteRepository.save(paciente);
     }
 
-    public void borrarPaciente(Long id)throws Exception {
+    public void borrarPaciente(Long id) {
         if(!pacienteRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
         }
         pacienteRepository.deleteById(id);
     }
 
-    public Optional<Paciente> buscarPaciente(Long id)throws Exception{
+    public Optional<Paciente> buscarPaciente(Long id){
         return Optional.ofNullable(pacienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado")));
     }
 
