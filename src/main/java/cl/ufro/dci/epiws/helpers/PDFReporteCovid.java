@@ -50,7 +50,6 @@ public class PDFReporteCovid {
         }
     }
 
-    //Método no probado
     public void exportar(Paciente paciente, HttpServletResponse response) {
         Document document = new Document();
         try {
@@ -187,12 +186,12 @@ public class PDFReporteCovid {
             if (paciente.getMedico() == null) {
                 paciente.setMedico(new PersonalMedico(0l, "", ""));
             }
-            if (paciente.getAntecedenteList()==null) {
+            if (paciente.getAntecedenteList() == null) {
                 ArrayList<Antecedente> antecedentesVacios = new ArrayList<>();
                 antecedentesVacios.add(new Antecedente(0l, false, "", "", "", "", ""));
                 paciente.setAntecedenteList(antecedentesVacios);
             }
-            if (paciente.getCasos()==null) {
+            if (paciente.getCasos() == null) {
                 ArrayList<Caso> casosVacio = new ArrayList<>();
                 casosVacio.add(new Caso(0l, "", false, "", 0, "", "", "", false));
                 paciente.setCasos(casosVacio);

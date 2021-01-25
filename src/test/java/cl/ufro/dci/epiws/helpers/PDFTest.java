@@ -1,11 +1,11 @@
 package cl.ufro.dci.epiws.helpers;
 
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import org.junit.jupiter.api.*;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -132,7 +132,25 @@ class PDFTest {
     }
 
     @Test
-    void cargarImagen() {
+    void cargarImagenCorrecta() throws IOException, BadElementException {
+        Image imagen = pdf.cargarImagen("src/main/resources/ministerio_salud_logo.png");
+        assertEquals("/home/rodrigo/Workspace/epi-ws/src/main/resources/ministerio_salud_logo.png", imagen.getUrl().getPath());
     }
+
+    @Test
+    void cargarImagenNula() {
+        assertThrows(NullPointerException.class, () -> pdf.cargarImagen(null));
+    }
+
+    @Test
+    void cargarImagenRutaMala() {
+        assertThrows(IOException.class, () -> pdf.cargarImagen("-1"));
+    }
+
+    @Test
+    void cargarImagenRutaMala2() {
+        assertThrows(IOException.class, () -> pdf.cargarImagen(" "));
+    }
+
 
 }

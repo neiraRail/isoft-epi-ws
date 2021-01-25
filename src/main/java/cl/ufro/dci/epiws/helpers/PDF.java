@@ -4,7 +4,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -43,16 +42,8 @@ public class PDF {
         }
     }
 
-    private Font comprobarFuenteNula(Font font) {
-        if (Optional.ofNullable(font).isPresent()) {
-            return font;
-        } else {
-            throw new NullPointerException("La fuente no puede ser nula");
-        }
-    }
-
     public Image cargarImagen(String rutaImagen) throws IOException, BadElementException {
-        if (rutaImagen != null) {
+        if (Optional.ofNullable(rutaImagen).isPresent()) {
             Image imagen = Image.getInstance(rutaImagen);
             imagen.setAbsolutePosition(25, 755);
             imagen.scaleAbsolute(90, 90);
