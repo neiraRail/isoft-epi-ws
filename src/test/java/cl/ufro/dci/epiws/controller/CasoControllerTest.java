@@ -29,9 +29,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -61,9 +59,13 @@ class CasoControllerTest {
     private ArrayList<Caso> casos;
 
     private Caso caso;
+    private Caso casoIlusorio;
     private Paciente paciente;
+    private Paciente pacienteIlusorio;
 
     private Long pacRut;
+    private Long pacRutIlusorio;
+
     private Establecimiento establecimiento;
     private ArrayList<Caso> casosPaciente;
     private ArrayList<Antecedente> antecedenteList;
@@ -90,7 +92,9 @@ class CasoControllerTest {
     public void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 
-        pacRut =  176892L;
+        pacRut =  199426010L;
+        pacRutIlusorio = 777777777777777L;
+
         establecimiento = null;
         casosPaciente = new ArrayList<>();
         antecedenteList = new ArrayList<>();
@@ -116,20 +120,20 @@ class CasoControllerTest {
         casos = new ArrayList<>();
 
         paciente = new Paciente(pacRut,establecimiento,casosPaciente,antecedenteList,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacFechaFallecimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
+        pacienteIlusorio = new Paciente(pacRutIlusorio,establecimiento,casosPaciente,antecedenteList,pacNombres,pacApellidos,pacSexo,pacFechaNacimiento,pacFechaFallecimiento,pacNacionalidad,pacPuebloOriginario,pacDireccion,pacTelefono);
         caso = new Caso(casFechaNotificacion,casAsintomatico,casFechaPrimerosSintomas,casSemanaEpidemiologica,casSintomas,casRazonSospecha,casClasificacionFinal,casHospitalizacion,paciente);
-        pacienteService.save(paciente);
-
-        casoService.save(caso);
-        this.casos.add(caso);
+        casoIlusorio = new Caso(casFechaNotificacion,casAsintomatico,casFechaPrimerosSintomas,casSemanaEpidemiologica,casSintomas,casRazonSospecha,casClasificacionFinal,casHospitalizacion,pacienteIlusorio);
     }
 
     @Test
     @DisplayName("Verifica el funcionamiento del controlador que guarda casos en la base de datos")
     void testPostCaso() throws Exception {
+        pacienteService.save(paciente);
+        casoService.save(caso);
         String requestJson = casoToJsonString(caso);
         caso.setCasId(2L);
         String responseJson = casoToJsonString(caso);
-        //Ejecuta peticion post, que retorna, en este caso, un json del caso creado
+        //Ejecuta petición post, que retorna, en este caso, un json del caso creado
         this.mockMvc.perform(post("/api/casos/")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
@@ -141,11 +145,22 @@ class CasoControllerTest {
     @Test
     @DisplayName("Verifica el funcionamiento del controlador que entrega los casos almacenados en la base de datos")
     void testGetAllCasos() throws Exception {
+        pacienteService.save(pacienteIlusorio);
+        casoService.save(casoIlusorio);
+        this.casos.add(casoIlusorio);
         String requestJson = listToJsonString(casos);
-        //Ejecuta peticion get, que retorna un json de todos los casos
+        //Ejecuta petición get, que retorna un json de todos los casos
         this.mockMvc.perform(get("/api/casos/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(requestJson));
+    }
+
+    @Test
+    @DisplayName("Verifica el funcionamiento del controlador que elimina los casos de la base de datos")
+    void testDeleteCaso() throws Exception {
+        //Ejecuta petición delete, que retorna un status que determina si se realizo o no la eliminación
+        this.mockMvc.perform(delete("/api/casos/1"))
+                .andExpect(status().isOk());
     }
 
     private String listToJsonString(List<Caso> casos) throws JsonProcessingException { //Convierte una lista de JSON a String
