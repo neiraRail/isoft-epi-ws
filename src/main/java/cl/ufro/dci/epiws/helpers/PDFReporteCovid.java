@@ -41,10 +41,10 @@ public class PDFReporteCovid {
             document.add(crearTablaProcedencia(pdf.crearTabla(4, 100, 40), paciente.getMedico(), paciente.getEstablecimiento()));
             document.add(crearTablaAntecedentes(pdf.crearTabla(4, 100, 40), paciente.getAntecedenteList().get(0)));
             document.add(crearTablaSintomas(pdf.crearTabla(4, 100, 40), paciente.getCasos().get(0)));
-        } catch (DocumentException | MalformedURLException | IllegalArgumentException | NullPointerException | FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (DocumentException | MalformedURLException | IllegalArgumentException | FileNotFoundException e) {
+            e.getClass();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getClass();
         } finally {
             document.close();
         }
@@ -72,7 +72,7 @@ public class PDFReporteCovid {
     }
 
     //Falta agregar estado de paciente
-    private PdfPTable crearTablaPaciente(PdfPTable tabla, Paciente paciente) {
+    public PdfPTable crearTablaPaciente(PdfPTable tabla, Paciente paciente) {
         //Primera Fila
         tabla.addCell(pdf.crearCelda("Información Paciente", fuentes.get(1), 4, Element.ALIGN_CENTER));
         //Segunda Fila
@@ -108,7 +108,7 @@ public class PDFReporteCovid {
         return tabla;
     }
 
-    private PdfPTable crearTablaProcedencia(PdfPTable tabla, PersonalMedico medico, Establecimiento establecimiento) {
+    public PdfPTable crearTablaProcedencia(PdfPTable tabla, PersonalMedico medico, Establecimiento establecimiento) {
         //Primera Fila
         tabla.addCell(pdf.crearCelda("Datos Procedencia", fuentes.get(1), 4, Element.ALIGN_CENTER));
         //Segunda Fila
@@ -125,7 +125,7 @@ public class PDFReporteCovid {
         return tabla;
     }
 
-    private PdfPTable crearTablaAntecedentes(PdfPTable tabla, Antecedente antecedente) {
+    public PdfPTable crearTablaAntecedentes(PdfPTable tabla, Antecedente antecedente) {
         //Primera Fila
         tabla.addCell(pdf.crearCelda("Antecedentes Clínicos/Epidemiológicos", fuentes.get(1), 4, Element.ALIGN_CENTER));
         //Segunda Fila
@@ -149,7 +149,7 @@ public class PDFReporteCovid {
         return tabla;
     }
 
-    private PdfPTable crearTablaSintomas(PdfPTable tabla, Caso caso) {
+    public PdfPTable crearTablaSintomas(PdfPTable tabla, Caso caso) {
         //Primera Fila
         tabla.addCell(pdf.crearCelda("Síntomas", fuentes.get(1), 4, Element.ALIGN_CENTER));
         //Segunda Fila
@@ -187,12 +187,12 @@ public class PDFReporteCovid {
             if (paciente.getMedico() == null) {
                 paciente.setMedico(new PersonalMedico(0l, "", ""));
             }
-            if (paciente.getAntecedenteList().isEmpty()) {
+            if (paciente.getAntecedenteList()==null) {
                 ArrayList<Antecedente> antecedentesVacios = new ArrayList<>();
                 antecedentesVacios.add(new Antecedente(0l, false, "", "", "", "", ""));
                 paciente.setAntecedenteList(antecedentesVacios);
             }
-            if (paciente.getCasos().isEmpty()) {
+            if (paciente.getCasos()==null) {
                 ArrayList<Caso> casosVacio = new ArrayList<>();
                 casosVacio.add(new Caso(0l, "", false, "", 0, "", "", "", false));
                 paciente.setCasos(casosVacio);
