@@ -1,6 +1,5 @@
 package cl.ufro.dci.epiws.service;
 
-import cl.ufro.dci.epiws.controller.PacienteController;
 import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,6 @@ import static org.mockito.Mockito.when;
 @DisplayName("Pruebas de la clase PacienteService")
 class PacienteServiceTest {
     private MockMvc mockMvc;
-    private PacienteService ps;
     private Paciente paciente;
     private Paciente paciente1;
     @Mock
