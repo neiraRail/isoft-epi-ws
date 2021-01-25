@@ -2,6 +2,7 @@ package cl.ufro.dci.epiws.service;
 
 import cl.ufro.dci.epiws.model.Comuna;
 import cl.ufro.dci.epiws.model.Establecimiento;
+import cl.ufro.dci.epiws.model.Region;
 import cl.ufro.dci.epiws.repository.ComunaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class ComunaService {
         comunaRepository.deleteById(id);
     }
 
-    /** Metodo para editar el nombre de una comuna.
+    /** Método para editar el nombre de una comuna.
      * @param id
      * @param nombre
      */
@@ -56,7 +57,18 @@ public class ComunaService {
         comunaRepository.save(comunaModificada);
     }
 
-    /** Metodo que verifica que exista el id de una comuna.
+    /**
+     * Método para editar la region de una comuna.
+     * @param id
+     * @param region
+     */
+    public void  editarRegion(Long id, Region region){
+        if (comunaRepository.findById(id).isPresent()) {
+            comunaRepository.findById(id).get().setRegion(region);
+        }
+    }
+
+    /** Método que verifica que exista el id de una comuna.
      * @param id
      *
      */

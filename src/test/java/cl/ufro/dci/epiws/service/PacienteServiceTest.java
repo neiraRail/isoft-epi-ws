@@ -1,103 +1,116 @@
 package cl.ufro.dci.epiws.service;
 
 import cl.ufro.dci.epiws.model.Paciente;
-import org.aspectj.lang.annotation.Before;
-import org.hibernate.validator.constraints.br.TituloEleitoral;
-import org.junit.jupiter.api.BeforeAll;
+import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.server.ResponseStatusException;
+import static org.mockito.ArgumentMatchers.any;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @DisplayName("Pruebas de la clase PacienteService")
 class PacienteServiceTest {
-
-    private PacienteService ps;
+    private MockMvc mockMvc;
+    private Paciente paciente;
     private Paciente paciente1;
-    private Paciente paciente2;
+    @Mock
+    private PacienteRepository pacienteRepository;
+    @InjectMocks
+    private PacienteService pacienteService;
 
     @BeforeEach
     @DisplayName("Carga los datos iniciales para la ejecucion de las pruebas")
     void setUp(){
-        paciente1 = new Paciente(123,null,null,null,null,"nombre","apellido",
+        paciente = new Paciente(123,null,null,null,null,"nombre","apellido",
                 "sexo","fechanaci","nacionalidad","as","sad","ads");
-        paciente2 = new Paciente();
-        ps = new PacienteService();
-    }
-
-
-    @Test
-    @DisplayName("Verifica no guardar un objeto nulo")
-    void saveNulo() throws Exception {
-        Throwable exception = assertThrows(NullPointerException.class, () -> {
-            ps.save(null);
-        });
+        paciente1 = new Paciente(124,null,null,null,null,"nombre","apellido",
+                "sexo","fechanaci","nacionalidad","as","sad","ads");
+        MockitoAnnotations.initMocks(this); //Inicializa el controlador y los mocks
+        mockMvc = MockMvcBuilders.standaloneSetup(pacienteRepository).build();
     }
 
     @Test
     @DisplayName("Verifica no guardar dos pacientes con el mismo rut")
     void saveIguales() throws Exception {
+        when(pacienteRepository.existsById(paciente.getPacRut())).thenReturn(true);
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.save(paciente);
+        });
     }
 
     @Test
-    @DisplayName("Verifica no guardar vacio")
-    void saveVacio() throws Exception {
+    @DisplayName("Verifica correcta funcionalidad del metodo save")
+    void saveCorrecto()throws Exception{
+        when(pacienteRepository.findById(paciente.getPacRut())).thenReturn(Optional.of(paciente));
+        pacienteService.save(paciente);
+        assertEquals(pacienteService.buscarPaciente(paciente.getPacRut()).get().getPacRut(),paciente.getPacRut());
     }
 
     @Test
-    @DisplayName("verifica borrar Nulo")
-    void borrarPacienteInexistente() {
-
+    @DisplayName("Verifica que no existe un paciente a eliminar")
+    void borrarPacienteInexistente() throws Exception {
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(false);
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.borrarPaciente(123L);
+        });
     }
 
     @Test
-    @DisplayName("verifica funcionamiento correcto")
-    void borrarPaciente(){
 
-    }
-    @Test
-    @DisplayName("Verifica borrar vacio")
-    void borrarPacienteVacio(){
-
+    @DisplayName("verifica funcionamiento paciente nulo")
+    void borrarPaciente()throws Exception{
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(true);
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.borrarPaciente(null);
+        });
     }
 
     @Test
     @DisplayName("Verifica paciente inexistente")
-    void buscarPacienteInexistente() {
-
+    void buscarPacienteInexistente() throws Exception {
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(false);
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.buscarPaciente(123L);
+        });
     }
 
     @Test
-    @DisplayName("verifica datos incorrectos")
-    void buscarPacienteIncorrecto(){
-
+    @DisplayName("verifica que los datos recogidos son incorrectos")
+    void buscarPacienteIncorrecto()throws Exception{
+        when(pacienteRepository.findById(123L)).thenReturn(Optional.of(paciente));
+        when(pacienteRepository.findById(124L)).thenReturn(Optional.of(paciente1));
+        assertNotEquals(paciente.getPacRut(),pacienteService.buscarPaciente(124L).get().getPacRut());
     }
 
     @Test
-    @DisplayName("Verifica datos ingresados nulos")
-    void buscarPacienteNulo(){
-
-    }
-
-    @Test
-    @DisplayName("Verifica datos mal ingresados")
-    void editarPacienteInexistente() {
-
+    @DisplayName("Verifica que el paciente se encuentra")
+    void buscarPacienteCorrecto() throws Exception {
+        when(pacienteRepository.findById(123L)).thenReturn(Optional.of(paciente));
+        assertEquals(paciente.getPacRut(),pacienteService.buscarPaciente(123L).get().getPacRut());
     }
     @Test
-    @DisplayName("Verifica datos incompletos")
-    void editarPacienteIncompleto(){
-
+    @DisplayName("Verifica cuando el paciente  no es encontrado")
+    void buscarPacienteNoEncontrado() throws Exception {
+        when(pacienteRepository.findById(123L)).thenReturn(Optional.empty());
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.buscarPaciente(123L);
+        });;
     }
-
     @Test
-    @DisplayName("Verifica entrada correcta de datos")
-    void editarPacienteTest(){
-
+    @DisplayName("Verifica editar paciente inexistente")
+    void editarInexistente(){
+        when(pacienteRepository.existsById(any(long.class))).thenReturn(false);
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> {
+            pacienteService.editarPaciente(125L,null,null,null,null,null,null,null,null,null);
+        });
     }
 }
