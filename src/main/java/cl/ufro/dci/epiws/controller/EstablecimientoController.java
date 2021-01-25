@@ -5,12 +5,16 @@ import cl.ufro.dci.epiws.model.Establecimiento;
 import cl.ufro.dci.epiws.service.ComunaService;
 import cl.ufro.dci.epiws.service.EstablecimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
 
-import java.util.List;
-
+/**
+ *  Clase controlador para administrar establecimientos.
+ */
 @RestController
 @RequestMapping("/api/establecimiento")
+@CrossOrigin
 public class EstablecimientoController {
 
     @Autowired
@@ -25,10 +29,11 @@ public class EstablecimientoController {
      * @param direccion
      * @return String con mensaje si es que se agrega
      */
-    @PostMapping("/agregar/{nombre}/{direccion}")
+    @PostMapping("/agregar/{nombre}/{direccion}/{idComuna}")
     @ResponseBody
-    public String agregar(@PathVariable String nombre, @PathVariable String direccion){
-        Establecimiento establecimiento = new Establecimiento(nombre,direccion,null,null);
+    public String agregar(@PathVariable String nombre, @PathVariable String direccion, @PathVariable int idComuna){
+        Long l = (long) idComuna;
+        Establecimiento establecimiento = new Establecimiento(nombre, direccion, comunaService.find(l).orElse(null), new ArrayList<>());
         establecimientoService.guardar(establecimiento);
         return "El establecimiento se ha agregado correctamente.";
     }
@@ -38,12 +43,13 @@ public class EstablecimientoController {
      * @param idEstablecimiento
      * @return null en caso que no se encuentre el registro buscado o el objeto en caso que se encuentre.
      */
-    @GetMapping("/buscar")
-    public Establecimiento buscar(@RequestParam ("est_id") Long idEstablecimiento){
-        if (establecimientoService.find(idEstablecimiento).isEmpty()) {
+    @GetMapping("/buscar/{idEstablecimiento}")
+    public Establecimiento buscar(@PathVariable int idEstablecimiento){
+        Long l = (long) idEstablecimiento;
+        if (establecimientoService.find(l).isEmpty()) {
             return null;
         } else {
-            return establecimientoService.find(idEstablecimiento).get();
+            return establecimientoService.find(l).get();
         }
     }
 
@@ -61,6 +67,7 @@ public class EstablecimientoController {
      * @return String con mensaje en caso que se elimine o no el registro de establecimiento.
      */
     @DeleteMapping("/eliminar/{idEstablecimiento}")
+    @ResponseBody
     public String eliminar(@PathVariable ("idEstablecimiento") Long idEstablecimiento){
         if (establecimientoService.find(idEstablecimiento).isEmpty()){
             return null;
@@ -76,7 +83,7 @@ public class EstablecimientoController {
      * @param establecimiento
      * @return String con mensaje en caso que se edite o no el registro de establecimiento.
      */
-    @PutMapping("/editar/{idEstablecimiento}")
+    @PutMapping(value = "/editar/{idEstablecimiento}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String editar(@PathVariable ("idEstablecimiento") Long idEstablecimiento, @RequestBody Establecimiento establecimiento) {
         if (establecimientoService.existById(idEstablecimiento)) {
             establecimientoService.editarNombre(idEstablecimiento, establecimiento.getEstNombre());

@@ -2,35 +2,47 @@ package cl.ufro.dci.epiws.service;
 
 import cl.ufro.dci.epiws.model.Antecedente;
 import cl.ufro.dci.epiws.repository.AntecedenteRepository;
+import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
 
 @Service
 public class AntecedenteService {
     @Autowired
     private AntecedenteRepository antecedenteRepository;
+    @Autowired
+    private PacienteRepository pacienteRepository;
 
     /** Método que permite guardar un nuevo antecedente clínico
      * @param nuevoAntecedente
+     * @return
      */
-    public void guardar(Antecedente nuevoAntecedente){
-        antecedenteRepository.save(nuevoAntecedente);
+    public Antecedente guardar(Antecedente nuevoAntecedente){
+        long pacId = nuevoAntecedente.getPaciente().getPacRut();
+        if(!pacienteRepository.existsById(pacId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+        }
+        return antecedenteRepository.save(nuevoAntecedente);
     }
 
     /** Método que permite borrar un antecedente clínico a partir de su id
      * @param id
      */
     public void borrar(Long id){
+        if(!antecedenteRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Antecedente no encontrado");
+        }
         antecedenteRepository.deleteById(id);
     }
 
     /** Método que retorna un antecedente clínico a partir de su id
      * @param id
      */
-    public Optional<Antecedente> buscar(Long id){
-        return antecedenteRepository.findById(id);
+    public Antecedente buscar(Long id){
+        return antecedenteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Antecedente no encontrado"));
     }
 
     /** Método que retorna todos los antecedentes clínicos guardados
@@ -38,45 +50,13 @@ public class AntecedenteService {
     public Iterable<Antecedente> findAll(){
         return antecedenteRepository.findAll();
     }
-    /** Método que permite  editar Embarazo del antecedente clínico
-     * @param id
+
+    /**
+     * Método que busca todos los antecedentes que tengan embarazo true or false
      * @param embarazo
+     * @return
      */
-    public void editarEmbarazo(Long id, Boolean embarazo){
-        antecedenteRepository.findById(id).get().setAntEmbarazo(embarazo);
+    public Iterable<Antecedente> buscarPorEmbarazo(boolean embarazo){
+        return antecedenteRepository.findAllByAntEmbarazo(embarazo);
     }
-    /** Método que permite editar enefermedades crónicas del antecedente clínico
-     * @param id
-     * @param enfermedad
-     */
-    public void editarEnfermedadCronica(Long id, String enfermedad){
-        antecedenteRepository.findById(id).get().setAntEnfermedadCronica(enfermedad);
-    }
-    
-    public void editarAlergias(Long id, String alergias){
-        antecedenteRepository.findById(id).get().setAntAlergias(alergias);
-    }
-
-    /** Método que permite editar los medicaementos del antecedente clínico
-     * @param id
-     * @param medicamentos
-     */
-    public void editarTipoMedicamentos(Long id, String medicamentos){
-        antecedenteRepository.findById(id).get().setAntMedicamentos(medicamentos);
-    }
-
-    /** Método que permite editar los antecedentes de viaje al extrajero del antecedente clínico
-     * @param id
-     * @param antecedenteViaje
-     */
-    public void editarViaje(Long id, String antecedenteViaje){
-        antecedenteRepository.findById(id).get().setAntViajeExtranjero(antecedenteViaje);
-    }
-
-
-
-
-
-
-
 }

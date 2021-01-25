@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController //indica que es una clase controller
-@RequestMapping("api/paciente")
+@RequestMapping("/api/paciente")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,RequestMethod.PUT})
 
 public class PacienteController {

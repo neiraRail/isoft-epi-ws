@@ -1,5 +1,8 @@
 package cl.ufro.dci.epiws.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,13 +14,13 @@ public class Antecedente {
     @Column(name = "ant_id")
     private Long antId;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JsonIgnoreProperties("antecedenteList")
     @JoinColumn(name = "pac_rut")
     private Paciente paciente;
 
     @Column(name = "ant_embarazo")
     private Boolean antEmbarazo;
-
 
     @Column(name = "and_enfermedad_cronica")
     private String antEnfermedadCronica;
@@ -37,6 +40,26 @@ public class Antecedente {
     public Antecedente(Long antId, Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
         this.antId = antId;
         this.paciente = paciente;
+        this.antEmbarazo = antEmbarazo;
+        this.antEnfermedadCronica = antEnfermedadCronica;
+        this.antAlergias = antAlergias;
+        this.antTipoSangre = antTipoSangre;
+        this.antMedicamentos = antMedicamentos;
+        this.antViajeExtranjero = antViajeExtranjero;
+    }
+
+    public Antecedente(Paciente paciente, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
+        this.paciente = paciente;
+        this.antEmbarazo = antEmbarazo;
+        this.antEnfermedadCronica = antEnfermedadCronica;
+        this.antAlergias = antAlergias;
+        this.antTipoSangre = antTipoSangre;
+        this.antMedicamentos = antMedicamentos;
+        this.antViajeExtranjero = antViajeExtranjero;
+    }
+
+    public Antecedente(Long antId, Boolean antEmbarazo, String antEnfermedadCronica, String antAlergias, String antTipoSangre, String antMedicamentos, String antViajeExtranjero) {
+        this.antId = antId;
         this.antEmbarazo = antEmbarazo;
         this.antEnfermedadCronica = antEnfermedadCronica;
         this.antAlergias = antAlergias;
