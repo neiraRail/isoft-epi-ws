@@ -43,7 +43,7 @@ class PacienteServiceTest {
     @Test
     @DisplayName("Verifica no guardar dos pacientes con el mismo rut")
     void saveIguales() throws Exception {
-        when(pacienteRepository.findById(123L)).thenReturn(Optional.empty());
+        when(pacienteRepository.existsById(paciente.getPacRut())).thenReturn(true);
         Throwable exception = assertThrows(ResponseStatusException.class, () -> {
             pacienteService.save(paciente);
         });
