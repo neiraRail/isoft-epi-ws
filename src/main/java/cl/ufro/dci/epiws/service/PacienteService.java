@@ -3,8 +3,9 @@ package cl.ufro.dci.epiws.service;
 import cl.ufro.dci.epiws.model.Paciente;
 import cl.ufro.dci.epiws.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,38 +22,39 @@ public class PacienteService {
 
 
     public void save(Paciente paciente)throws Exception{
+        if(pacienteRepository.existsById(paciente.getPacRut())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Paciente ya agregado");
+        }
         pacienteRepository.save(paciente);
     }
 
     public void borrarPaciente(Long id)throws Exception {
-        if (buscarPaciente(id) != null) {
-            pacienteRepository.deleteById(id);
-        } else {
-            throw new NullPointerException();
+        if(!pacienteRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
         }
+        pacienteRepository.deleteById(id);
     }
 
     public Optional<Paciente> buscarPaciente(Long id)throws Exception{
-        if (pacienteRepository.findById(id).isPresent()){
-            return pacienteRepository.findById(id);
-        }else{
-            throw new NullPointerException();
-        }
+        return Optional.ofNullable(pacienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado")));
     }
 
     public void editarPaciente(long rut,String fechaFallecimiento,String pacNombres,String pacApellidos,String pacSexo,String pacFechaNacimiento,
                                String pacNacionalidad,String pacPuebloOriginario,String pacDireccion,String pacTelefono) throws Exception {
-        Paciente pacienteModificado;
-        pacienteModificado = buscarPaciente(rut).get();
-        pacienteModificado.setPacFechaFallecimiento(fechaFallecimiento);
-        pacienteModificado.setPacNombres(pacNombres);
-        pacienteModificado.setPacApellidos(pacApellidos);
-        pacienteModificado.setPacSexo(pacSexo);
-        pacienteModificado.setPacFechaNacimiento(pacFechaNacimiento);
-        pacienteModificado.setPacNacionalidad(pacNacionalidad);
-        pacienteModificado.setPacPuebloOriginario(pacPuebloOriginario);
-        pacienteModificado.setPacDireccion(pacDireccion);
-        pacienteModificado.setPacTelefono(pacTelefono);
-        pacienteRepository.save(pacienteModificado);
+        if(!pacienteRepository.existsById(rut)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
+        }else {
+            Paciente pacienteMod = buscarPaciente(rut).get();
+            pacienteMod.setPacFechaFallecimiento(fechaFallecimiento);
+            pacienteMod.setPacNombres(pacNombres);
+            pacienteMod.setPacApellidos(pacApellidos);
+            pacienteMod.setPacSexo(pacSexo);
+            pacienteMod.setPacFechaNacimiento(pacFechaNacimiento);
+            pacienteMod.setPacNacionalidad(pacNacionalidad);
+            pacienteMod.setPacPuebloOriginario(pacPuebloOriginario);
+            pacienteMod.setPacDireccion(pacDireccion);
+            pacienteMod.setPacTelefono(pacTelefono);
+            pacienteRepository.save(pacienteMod);
+        }
     }
 }
